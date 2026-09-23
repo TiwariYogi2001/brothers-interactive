@@ -379,6 +379,9 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   border: 1px solid var(--border); cursor: zoom-in; will-change: transform;
   transition: transform 0.4s var(--ease), box-shadow 0.4s, border-color 0.4s, opacity 0.4s;
   animation: cardIn 0.5s var(--ease) both;
+  /* Skip layout/paint/animation work entirely for the ~48 of 60 cards that
+     are off-screen at any moment — this is what actually fixes scroll lag. */
+  content-visibility: auto; contain-intrinsic-size: 0 420px;
 }
 .work-card.hidden { display: none; }
 @keyframes cardIn { from { opacity: 0; transform: translateY(18px) scale(0.98); } to { opacity: 1; transform: none; } }
@@ -389,18 +392,20 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .work-card.tilt { transition: transform 0.12s linear, box-shadow 0.4s, border-color 0.4s; }
 .related-grid .work-card { margin-bottom: 0; }
 @keyframes cardBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); } }
-/* Slow shine sweeping down the frame; sits below the title/zoom icon and vignette. */
+/* Slow shine sweeping down the frame; sits below the title/zoom icon and vignette.
+   Animates transform (GPU compositor only) instead of background-position, which
+   would force a full repaint of every card on every frame at this scale. */
 .work-card::before {
-  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit;
-  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.4) 48%, transparent 62%);
-  background-size: 100% 260%; background-position: 0 -160%; background-repeat: no-repeat;
-  mix-blend-mode: overlay; animation: cardShine 6.5s linear infinite; animation-delay: calc(var(--i, 0) * -0.71s);
+  content: ""; position: absolute; left: 0; right: 0; top: -50%; height: 50%; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  mix-blend-mode: overlay; will-change: transform;
+  animation: cardShine 6.5s linear infinite; animation-delay: calc(var(--i, 0) * -0.71s);
 }
 .work-card::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, transparent 45%, rgba(7,8,15,0.92) 100%); opacity: 0.85; transition: opacity 0.4s;
 }
-@keyframes cardShine { 0% { background-position: 0 -160%; } 100% { background-position: 0 160%; } }
+@keyframes cardShine { 0% { transform: translateY(0); } 100% { transform: translateY(300%); } }
 .work-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 24px rgba(var(--accent-rgb),0.35); }
 .work-card:hover img { animation-play-state: paused; transform: scale(1.07) !important; }
 .work-info { position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 2; display: flex; flex-direction: column; gap: 4px; }
