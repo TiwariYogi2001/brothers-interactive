@@ -980,13 +980,13 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 }
 .art-cursor.zoom .label { opacity: 1; transform: none; }
 .art-cursor-ring {
-  position: fixed; left: 0; top: 0; width: 38px; height: 38px; border-radius: 50%; pointer-events: none; z-index: 2999; opacity: 0;
+  position: fixed; left: 0; top: 0; width: 26px; height: 26px; border-radius: 50%; pointer-events: none; z-index: 2999; opacity: 0;
   border: 1.5px solid rgba(var(--accent-rgb), 0.75); box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.35), inset 0 0 12px rgba(var(--accent-rgb), 0.15);
   transition: width 0.25s var(--ease), height 0.25s var(--ease), opacity 0.3s, border-color 0.3s, border-style 0.3s; will-change: transform;
 }
 .art-cursor-ring.on { opacity: 1; }
-.art-cursor-ring.hover { width: 60px; height: 60px; border-color: var(--accent-2); }
-.art-cursor-ring.zoom { width: 84px; height: 84px; border-style: dashed; border-color: var(--accent); }
+.art-cursor-ring.hover { width: 42px; height: 42px; border-color: var(--accent-2); }
+.art-cursor-ring.zoom { width: 58px; height: 58px; border-style: dashed; border-color: var(--accent); }
 [data-theme="arctic"] .art-cursor .c-handle { fill: #1b2233; }
 
 /* cursor glow */
