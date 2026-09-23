@@ -23,7 +23,19 @@
   };
   var BASE = "https://brothersinteractive.com/projects/";
   var BLOG_URL = "https://brothersinteractive.com/blog";
+  /* Portfolio pieces live in data/portfolio.json (not here) so the /admin
+     CMS can add new ones without touching any code. Loaded synchronously
+     so the rest of this file can keep assuming PROJECTS is ready. */
   var PROJECTS = BI.PROJECTS || [];
+  try {
+    var portfolioXhr = new XMLHttpRequest();
+    portfolioXhr.open("GET", "../data/portfolio.json", false);
+    portfolioXhr.send(null);
+    if (portfolioXhr.status === 200) {
+      var loaded = JSON.parse(portfolioXhr.responseText);
+      if (Array.isArray(loaded) && loaded.length) PROJECTS = loaded;
+    }
+  } catch (e) {}
   var GAMES = BI.GAMES || [];
   var CASES = BI.CASES || [];
   var POSTS = BI.POSTS || [];
