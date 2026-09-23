@@ -557,6 +557,8 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .lightbox.open .lightbox-figure { transform: none; }
 .lightbox-figure img { max-height: 78vh; max-width: 100%; border-radius: var(--radius); border: 1px solid var(--border-strong); box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 40px rgba(var(--accent-rgb),0.25); object-fit: contain; }
 .lightbox-figure figcaption { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; justify-content: center; text-align: center; }
+.lightbox-thumbs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.lightbox-thumbs:empty { display: none; }
 .lightbox-cat { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-2); }
 .lightbox-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; text-transform: uppercase; }
 .lightbox-link { font-size: 0.9rem; color: var(--accent); }

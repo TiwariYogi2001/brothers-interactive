@@ -78,9 +78,9 @@
      ------------------------------------------------------------------ */
   var grid = $("#portfolioGrid");
   var loadMoreBtn = $("#loadMoreBtn");
-  var PAGE = 12;
+  var PAGE = 12; // still used for the staggered fade-in animation, not for hiding items
   var activeFilter = "all";
-  var shown = PAGE;
+  var shown = Infinity; // show the whole portfolio at once, no "Load More" needed
   var visibleList = [];
 
   /* A fresh random order on every page load, so the portfolio never looks the same twice */
@@ -122,7 +122,7 @@
     btn.classList.add("active");
     btn.setAttribute("aria-selected", "true");
     activeFilter = btn.dataset.filter;
-    shown = PAGE;
+    shown = Infinity;
     // animate old cards out, then render the new set (cards animate in with a stagger)
     grid.classList.add("leaving");
     setTimeout(function () { renderGrid(); grid.classList.remove("leaving"); }, 220);
@@ -143,6 +143,7 @@
   var lbCat = $("#lightboxCat");
   var lbTitle = $("#lightboxTitle");
   var lbLink = $("#lightboxLink");
+  var lbThumbs = $("#lightboxThumbs");
   var lbPos = 0; // position within visibleList
   var lbFigure = $(".lightbox-figure", lb);
   var lbOrigin = null; // element the lightbox was opened from (for the zoom animation)
@@ -223,6 +224,10 @@
       lbTitle.textContent = p.t;
       lbLink.href = "asset.html?id=" + p.id;
       lbLink.textContent = "Asset details & breakdown \u2192";
+      var variants = [p.i].concat(p.imgs || []);
+      lbThumbs.innerHTML = variants.length > 1 ? variants.map(function (u, i) {
+        return '<button class="asset-thumb' + (i === 0 ? ' active' : '') + '" data-src="' + u + '" aria-label="View ' + (i + 1) + '"><img src="' + u + '" alt="" loading="lazy" /></button>';
+      }).join("") : "";
     };
     if (!dir || reduceMotion) { swap(); return; }
     lbImg.className = "loaded " + (dir > 0 ? "slide-out-left" : "slide-out-right");
@@ -256,6 +261,12 @@
   grid.addEventListener("keydown", function (e) {
     var card = e.target.closest(".work-card");
     if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); visibleList = filtered(); openLightbox(+card.dataset.index); }
+  });
+  lbThumbs.addEventListener("click", function (e) {
+    var btn = e.target.closest(".asset-thumb");
+    if (!btn) return;
+    $$(".asset-thumb", lbThumbs).forEach(function (b) { b.classList.toggle("active", b === btn); });
+    lbImg.src = btn.dataset.src;
   });
   $("#lightboxClose").addEventListener("click", closeLightbox);
   $("#lightboxPrev").addEventListener("click", function () { stepLightbox(-1); });
