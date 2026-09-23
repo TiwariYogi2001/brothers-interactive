@@ -987,7 +987,10 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 [data-theme="arctic"] .cursor-glow { mix-blend-mode: multiply; background: radial-gradient(circle, rgba(var(--accent-rgb), 0.08), transparent 60%); }
 
 /* ---------- Theme switcher ---------- */
-.theme-switcher { position: fixed; left: 22px; bottom: 22px; z-index: 950; display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 12px; }
+/* position:relative + a footprint that matches only the visible toggle button:
+   the panel below is position:absolute so its (invisible-when-closed) box
+   never blocks clicks to whatever page content sits under/around it. */
+.theme-switcher { position: fixed; left: 22px; bottom: 22px; z-index: 950; width: 52px; height: 52px; }
 .theme-toggle {
   width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
   background: var(--surface); border: 1px solid var(--accent); color: var(--accent); box-shadow: var(--glow); transition: transform 0.3s, background 0.3s, color 0.3s;
@@ -995,6 +998,7 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 .theme-toggle svg { width: 24px; height: 24px; }
 .theme-toggle:hover { transform: translateY(-2px); background: var(--accent); color: var(--on-accent); }
 .theme-panel {
+  position: absolute; left: 0; bottom: calc(100% + 12px);
   background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 16px; min-width: 240px;
   box-shadow: 0 24px 60px rgba(0,0,0,0.45); opacity: 0; transform: translateY(10px) scale(0.98); pointer-events: none; transition: opacity 0.25s, transform 0.25s var(--ease);
 }
@@ -1111,7 +1115,7 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
   .lightbox-nav { width: 44px; height: 44px; font-size: 1.6rem; }
   .lightbox-prev { left: 8px; } .lightbox-next { right: 8px; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
-  .theme-switcher { left: 14px; bottom: 14px; }
+  .theme-switcher { left: 14px; bottom: 14px; width: 46px; height: 46px; }
   .theme-toggle { width: 46px; height: 46px; }
 }
 

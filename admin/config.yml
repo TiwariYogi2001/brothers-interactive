@@ -5,6 +5,12 @@ backend:
 # Netlify Identity handles login; Git Gateway commits changes to GitHub for you.
 # Both are enabled once from the Netlify dashboard — see admin/README.md.
 
+# When this page is opened on localhost AND a local proxy server (`npx decap-server`)
+# is running, the CMS uses that instead of the backend above — no login needed,
+# and it writes straight to the real files in this project. Safe to leave in for
+# production too: it only ever activates on localhost.
+local_backend: true
+
 media_folder: "assets/img/portfolio"
 public_folder: "../assets/img/portfolio"
 
