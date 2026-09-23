@@ -6,7 +6,9 @@
 html/    all pages (index.html, team.html, careers.html, styles.html, credits.html, asset.html, privacy.html, 404.html)
 css/     style.css
 js/      data.js, script.js
+data/    portfolio.json (the portfolio pieces — editable via /admin, see below)
 assets/  images, PDF, everything else
+admin/   the /admin content-upload page (Decap CMS) — see admin/README.md
 ```
 
 ## Files
@@ -20,9 +22,11 @@ assets/  images, PDF, everything else
 | `html/credits.html` | Game credits and press |
 | `html/asset.html` | Detail page for any portfolio piece (`asset.html?id=mOZqAe`) |
 | `html/privacy.html`, `html/404.html` | Legal and not-found pages |
-| `css/style.css` | All styling, including the six colour themes |
+| `css/style.css` | All styling, including the colour themes |
 | `js/script.js` | Behaviour: filters, lightbox, forms, estimator, sliders, theme switcher |
-| `js/data.js` | **All content.** Portfolio, games, case studies, roles, testimonials, settings. Edit this, not script.js |
+| `js/data.js` | Settings, games, case studies, roles, testimonials. Edit this, not script.js |
+| `data/portfolio.json` | The portfolio pieces shown in the grid. Edit by hand, or via `/admin` (see below) |
+| `admin/` | A private page at `/admin` for adding new portfolio pieces (title, images, description) without touching code. One-time setup needed — see `admin/README.md` |
 | `assets/img/` | Optimised WebP images used by the site |
 | `assets/portfolio`, `assets/games`, `assets/brand` | Original downloads. Safe to delete once you are happy with the WebP versions |
 | `assets/brothers-interactive-capabilities.pdf` | Downloadable capabilities deck |
@@ -38,7 +42,7 @@ Open `js/data.js`. Every list has a comment above it showing the shape of an ent
 - **Open roles**: add to `ROLES` and they appear on the home page and careers page.
 - **Testimonials**: add to `TESTIMONIALS` and the block appears on the home page.
 - **Press**: add to `PRESS` and it appears on credits.html.
-- **Portfolio**: each entry in `PROJECTS` has a title, category, main image, extra images, description and tags. Add `sketchfab: "MODEL_ID"` to any entry to show an interactive 3D viewer on its detail page and in the lightbox.
+- **Portfolio**: lives in `data/portfolio.json`, not `data.js` — edit it directly, or use `/admin` (see `admin/README.md`) to add pieces without touching JSON. Each entry has a title, category, main image, extra images, description and tags. Add `sketchfab: "MODEL_ID"` to any entry to show an interactive 3D viewer on its detail page and in the lightbox.
 - **Client logos**: add `logo: "assets/img/logos/name.webp"` to a `CLIENTS` entry once you have permission to use the logo.
 
 ## Forms without a backend
