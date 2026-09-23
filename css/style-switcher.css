@@ -1,0 +1,36 @@
+/* =====================================================================
+   Brothers Interactive — Visual style switcher UI
+   Additive only. Load AFTER css/style.css. Pairs with js/style-switcher.js.
+   Sits next to the existing colour-theme switcher; does not modify it.
+   ===================================================================== */
+
+.style-switcher { position: fixed; left: 90px; bottom: 22px; z-index: 950; display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 12px; }
+.style-toggle {
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface); border: 1px solid var(--accent-2); color: var(--accent-2); box-shadow: var(--glow-2);
+  transition: transform 0.3s, background 0.3s, color 0.3s;
+}
+.style-toggle svg { width: 24px; height: 24px; }
+.style-toggle:hover { transform: translateY(-2px); background: var(--accent-2); color: var(--on-accent); }
+
+.style-panel {
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 16px; min-width: 230px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45); opacity: 0; transform: translateY(10px) scale(0.98); pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s var(--ease);
+}
+.style-switcher.open .style-panel { opacity: 1; transform: none; pointer-events: auto; }
+.style-panel-title { margin: 0 0 10px; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); }
+
+.style-opt {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border-radius: var(--radius-sm);
+  font-size: 1.02rem; font-weight: 600; color: var(--text-muted); text-align: left; transition: background 0.2s, color 0.2s;
+}
+.style-opt:hover { background: var(--tint); color: var(--text-strong); }
+.style-opt.active { color: var(--text-strong); background: var(--accent-2-soft); }
+.style-sw { width: 34px; height: 22px; flex: none; background: var(--bg-2); }
+.style-opt.active .style-sw { box-shadow: 0 0 0 2px var(--accent-2); }
+
+@media (max-width: 768px) {
+  .style-switcher { left: 76px; bottom: 14px; }
+  .style-toggle { width: 46px; height: 46px; }
+}
