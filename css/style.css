@@ -555,7 +555,8 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .lightbox.open, .video-modal.open { opacity: 1; pointer-events: auto; }
 .lightbox-figure { margin: 0; max-width: min(92vw, 1100px); max-height: 92vh; display: flex; flex-direction: column; align-items: center; gap: 14px; transform: scale(0.96); transition: transform 0.35s var(--ease); }
 .lightbox.open .lightbox-figure { transform: none; }
-.lightbox-figure img { max-height: 78vh; max-width: 100%; border-radius: var(--radius); border: 1px solid var(--border-strong); box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 40px rgba(var(--accent-rgb),0.25); object-fit: contain; }
+.lightbox-figure img { width: min(88vw, 1000px); height: min(70vh, 700px); border-radius: var(--radius); border: 1px solid var(--border-strong); box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 40px rgba(var(--accent-rgb),0.25); object-fit: contain; transition: opacity 0.18s ease; }
+.lightbox-figure img.fading { opacity: 0; }
 .lightbox-figure figcaption { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; justify-content: center; text-align: center; }
 .lightbox-thumbs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 .lightbox-thumbs:empty { display: none; }

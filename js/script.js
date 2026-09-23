@@ -264,9 +264,13 @@
   });
   lbThumbs.addEventListener("click", function (e) {
     var btn = e.target.closest(".asset-thumb");
-    if (!btn) return;
+    if (!btn || btn.classList.contains("active")) return;
     $$(".asset-thumb", lbThumbs).forEach(function (b) { b.classList.toggle("active", b === btn); });
-    lbImg.src = btn.dataset.src;
+    lbImg.classList.add("fading");
+    setTimeout(function () {
+      lbImg.src = btn.dataset.src;
+      lbImg.classList.remove("fading");
+    }, 160);
   });
   $("#lightboxClose").addEventListener("click", closeLightbox);
   $("#lightboxPrev").addEventListener("click", function () { stepLightbox(-1); });
