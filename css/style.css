@@ -382,15 +382,27 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 }
 .work-card.hidden { display: none; }
 @keyframes cardIn { from { opacity: 0; transform: translateY(18px) scale(0.98); } to { opacity: 1; transform: none; } }
-.work-card img { width: 100%; height: auto; display: block; transition: transform 0.7s var(--ease), filter 0.5s, opacity 0.6s; }
+.work-card img {
+  width: 100%; height: auto; display: block; transition: transform 0.7s var(--ease), filter 0.5s, opacity 0.6s;
+  animation: cardBreathe 9s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -0.53s);
+}
 .work-card.tilt { transition: transform 0.12s linear, box-shadow 0.4s, border-color 0.4s; }
 .related-grid .work-card { margin-bottom: 0; }
+@keyframes cardBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); } }
+/* Slow shine sweeping down the frame; sits below the title/zoom icon and vignette. */
+.work-card::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.4) 48%, transparent 62%);
+  background-size: 100% 260%; background-position: 0 -160%; background-repeat: no-repeat;
+  mix-blend-mode: overlay; animation: cardShine 6.5s linear infinite; animation-delay: calc(var(--i, 0) * -0.71s);
+}
 .work-card::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, transparent 45%, rgba(7,8,15,0.92) 100%); opacity: 0.85; transition: opacity 0.4s;
 }
+@keyframes cardShine { 0% { background-position: 0 -160%; } 100% { background-position: 0 160%; } }
 .work-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 24px rgba(var(--accent-rgb),0.35); }
-.work-card:hover img { transform: scale(1.07); }
+.work-card:hover img { animation-play-state: paused; transform: scale(1.07) !important; }
 .work-info { position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 2; display: flex; flex-direction: column; gap: 4px; }
 .work-cat { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-2); }
 .work-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; text-transform: uppercase; color: #fff; }

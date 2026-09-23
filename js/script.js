@@ -115,7 +115,7 @@
       grid.innerHTML = slice.map(function (p, idx) {
         var ar = p.w && p.h ? 'aspect-ratio:' + p.w + '/' + p.h + ';' : '';
         return (
-          '<article class="work-card ripple-host" data-index="' + PROJECTS.indexOf(p) + '" style="' + ar + 'animation-delay:' + (idx % PAGE) * 40 + 'ms" tabindex="0" role="button" aria-label="Open ' + esc(p.t) + '">' +
+          '<article class="work-card ripple-host" data-index="' + PROJECTS.indexOf(p) + '" style="' + ar + '--i:' + idx + ';animation-delay:' + (idx % PAGE) * 40 + 'ms" tabindex="0" role="button" aria-label="Open ' + esc(p.t) + '">' +
             '<img src="' + p.i + '" alt="' + esc(p.t) + '" loading="lazy"' + (p.w ? ' width="' + p.w + '" height="' + p.h + '"' : '') + ' />' +
             '<span class="work-zoom" aria-hidden="true">&#x2922;</span>' +
             '<div class="work-info"><span class="work-cat">' + esc(CAT[p.c]) + '</span><span class="work-title">' + esc(p.t) + '</span></div>' +
