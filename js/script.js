@@ -920,6 +920,44 @@
       if (tag) tag.textContent = CAT[p.c] || p.t;
       slot.el.style.aspectRatio = p.w + " / " + p.h;
     });
+
+    /* Cluster the cards tightly regardless of each image's height: chain
+       card A off the main card's real bottom, and card B off card A's,
+       instead of relying on fixed percentages tuned for one aspect ratio.
+       Desktop layout only — the mobile breakpoint uses its own square grid. */
+    if (window.innerWidth > 900) {
+      var mainEl = heroSlots[0] && heroSlots[0].el;
+      var aEl = heroSlots[1] && heroSlots[1].el;
+      var bEl = heroSlots[2] && heroSlots[2].el;
+      if (mainEl) {
+        var vTop = heroVisual.getBoundingClientRect().top;
+        var mTop = mainEl.getBoundingClientRect().top - vTop;
+        var mHeight = mainEl.getBoundingClientRect().height;
+        var bottomMost = mTop + mHeight;
+
+        if (aEl) {
+          var aTop = mTop + mHeight * 0.4;
+          aEl.style.top = aTop + "px";
+          aEl.style.bottom = "auto";
+          var aHeight = aEl.getBoundingClientRect().height;
+          bottomMost = Math.max(bottomMost, aTop + aHeight);
+
+          if (bEl) {
+            var bTop = aTop + aHeight * 0.5;
+            bEl.style.top = bTop + "px";
+            bEl.style.bottom = "auto";
+            bottomMost = Math.max(bottomMost, bTop + bEl.getBoundingClientRect().height);
+          }
+        } else if (bEl) {
+          var bTopAlt = mTop + mHeight * 0.5;
+          bEl.style.top = bTopAlt + "px";
+          bEl.style.bottom = "auto";
+          bottomMost = Math.max(bottomMost, bTopAlt + bEl.getBoundingClientRect().height);
+        }
+
+        heroVisual.style.minHeight = Math.ceil(bottomMost + 24) + "px";
+      }
+    }
   }
 
   /* ------------------------------------------------------------------

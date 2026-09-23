@@ -330,8 +330,8 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase;
   background: rgba(7,8,15,0.75); border: 1px solid var(--accent); color: var(--accent); backdrop-filter: blur(6px);
 }
-.hero-card--main { width: 62%; aspect-ratio: 4 / 5; right: 8%; top: 0; animation: float 7s ease-in-out infinite; }
-.hero-card--small { width: 40%; aspect-ratio: 4 / 5; }
+.hero-card--main { width: 68%; aspect-ratio: 4 / 5; right: 4%; top: 0; animation: float 7s ease-in-out infinite; }
+.hero-card--small { width: 46%; aspect-ratio: 4 / 5; }
 .hero-card--a { left: 0; top: 18%; animation: float 8s ease-in-out infinite reverse; box-shadow: 0 30px 60px rgba(0,0,0,0.6), var(--glow-2); }
 .hero-card--b { right: 0; bottom: 0; animation: float 9s ease-in-out infinite; }
 /* Use on any hero-card holding a landscape image instead of a portrait one, so it isn't cropped to fit a 4:5 frame. */
