@@ -101,6 +101,14 @@
     var m = String(v).match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{6,})/);
     return m ? m[1] : v;
   }
+  /* A link typed without http(s):// (e.g. "www.linkedin.com/...") would
+     otherwise resolve as a relative path on the current page and 404.
+     Leaves mailto:, tel:, #anchors and already-absolute URLs untouched. */
+  function normalizeUrl(u) {
+    u = String(u || "").trim();
+    if (!u || /^(https?:|mailto:|tel:|#)/i.test(u)) return u;
+    return "https://" + u;
+  }
 
   /* ==================================================================
      HOME PAGE ONLY — everything inside this block needs the portfolio,
@@ -603,7 +611,7 @@
     if (CFG.availability) { pill.hidden = false; $(".avail-text", pill).textContent = CFG.availability; if (CFG.availabilityNote) pill.title = CFG.availabilityNote; }
     else pill.hidden = true;
   }
-  $$("[data-booking]").forEach(function (a) { if (CFG.bookingUrl) { a.href = CFG.bookingUrl; a.hidden = false; } else { a.hidden = true; } });
+  $$("[data-booking]").forEach(function (a) { if (CFG.bookingUrl) { a.href = normalizeUrl(CFG.bookingUrl); a.hidden = false; } else { a.hidden = true; } });
   $$("[data-deck]").forEach(function (a) {
     if (CFG.deckPdf) { a.href = CFG.deckPdf; a.addEventListener("click", function () { track("deck_downloaded"); }); } else { a.hidden = true; }
   });
@@ -737,7 +745,7 @@
       $("#assetMain").src = b.dataset.src; $$(".asset-thumb").forEach(function (x) { x.classList.toggle("active", x === b); });
     });
     $("#assetTags").innerHTML = (P.tags || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("");
-    $("#assetSrc").href = P.src || BASE + P.id;
+    $("#assetSrc").href = normalizeUrl(P.src) || BASE + P.id;
     var view3d = $("#asset3d");
     if (view3d) {
       if (P.sketchfab) { view3d.hidden = false; $("iframe", view3d).src = "https://sketchfab.com/models/" + P.sketchfab + "/embed?autostart=0&ui_theme=dark"; }
@@ -769,8 +777,8 @@
     }).join("");
     var pl = $("#pressList");
     if (pl) pl.innerHTML = PRESS.length
-      ? PRESS.map(function (p) { return '<li class="role"><div><strong>' + esc(p.t) + '</strong><span>' + esc(p.d || "") + '</span></div><p>' + esc(p.src || "") + '</p>' + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener">Read &rarr;</a>' : '') + '</li>'; }).join("")
-      : '<li class="role role--empty">Press mentions, ArtStation features and awards will appear here once added to data.js under PRESS.</li>';
+      ? PRESS.map(function (p) { return '<li class="role"><div><strong>' + esc(p.t) + '</strong><span>' + esc(p.d || "") + '</span></div><p>' + esc(p.src || "") + '</p>' + (p.url ? '<a href="' + esc(normalizeUrl(p.url)) + '" target="_blank" rel="noopener">Read &rarr;</a>' : '') + '</li>'; }).join("")
+      : '<li class="role role--empty">Press mentions, ArtStation features and awards will appear here once added via /admin.</li>';
   }
 
   /* ------------------------------------------------------------------
@@ -1020,8 +1028,9 @@
       var photo = m.photo ? '<img src="' + m.photo + '" alt="' + esc(m.name) + '" loading="lazy" />' : "";
       var tags = (m.tags || []).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
       var links = (m.links || []).map(function (l) {
-        var external = /^https?:\/\//i.test(l.url);
-        return '<a href="' + esc(l.url) + '"' + (external ? ' target="_blank" rel="noopener"' : "") + ">" + esc(l.label) + "</a>";
+        var href = normalizeUrl(l.url);
+        var external = /^https?:\/\//i.test(href);
+        return '<a href="' + esc(href) + '"' + (external ? ' target="_blank" rel="noopener"' : "") + ">" + esc(l.label) + "</a>";
       }).join("");
       return (
         '<article class="team-card reveal">' +

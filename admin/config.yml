@@ -174,7 +174,7 @@ collections:
                 summary: "{{fields.label}}"
                 fields:
                   - { label: "Label", name: "label", widget: "string", hint: "e.g. \"LinkedIn\" or \"Email\"" }
-                  - { label: "URL", name: "url", widget: "string", hint: "For email use mailto:name@example.com" }
+                  - { label: "URL", name: "url", widget: "string", hint: "Include https:// (e.g. https://www.linkedin.com/...). For email use mailto:name@example.com" }
 
   - name: "sculpt-to-final"
     label: "Sculpt to Final"
@@ -273,7 +273,7 @@ collections:
             fields:
               - { label: "Title", name: "t", widget: "string" }
               - { label: "Publication", name: "src", widget: "string" }
-              - { label: "URL", name: "url", widget: "string" }
+              - { label: "URL", name: "url", widget: "string", hint: "Include https://" }
               - { label: "Date", name: "d", widget: "string", hint: "As text, e.g. \"Mar 2025\"." }
 
   - name: "settings"
