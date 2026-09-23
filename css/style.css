@@ -334,6 +334,8 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .hero-card--small { width: 40%; aspect-ratio: 4 / 5; }
 .hero-card--a { left: 0; top: 18%; animation: float 8s ease-in-out infinite reverse; box-shadow: 0 30px 60px rgba(0,0,0,0.6), var(--glow-2); }
 .hero-card--b { right: 0; bottom: 0; animation: float 9s ease-in-out infinite; }
+/* Use on any hero-card holding a landscape image instead of a portrait one, so it isn't cropped to fit a 4:5 frame. */
+.hero-card--wide { aspect-ratio: 16 / 9; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 
 .scroll-hint {
