@@ -33,7 +33,8 @@
     portfolioXhr.send(null);
     if (portfolioXhr.status === 200) {
       var loaded = JSON.parse(portfolioXhr.responseText);
-      if (Array.isArray(loaded) && loaded.length) PROJECTS = loaded;
+      var loadedList = Array.isArray(loaded) ? loaded : (loaded && loaded.items) || [];
+      if (loadedList.length) PROJECTS = loadedList;
     }
   } catch (e) {}
   var GAMES = BI.GAMES || [];

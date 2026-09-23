@@ -1,0 +1,93 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Netlify Identity handles login; Git Gateway commits changes to GitHub for you.
+# Both are enabled once from the Netlify dashboard — see admin/README.md.
+
+media_folder: "assets/img/portfolio"
+public_folder: "../assets/img/portfolio"
+
+collections:
+  - name: "portfolio"
+    label: "Portfolio"
+    label_singular: "Portfolio Piece"
+    description: "Add, edit or remove the work shown in the Portfolio section of the homepage. Changes go live automatically within a minute or two of saving."
+    files:
+      - name: "items"
+        label: "Portfolio Pieces"
+        file: "data/portfolio.json"
+        format: "json"
+        fields:
+          - label: "Pieces"
+            name: "items"
+            widget: "list"
+            label_singular: "Piece"
+            summary: "{{fields.t}} — {{fields.c}}"
+            fields:
+              - label: "Title"
+                name: "t"
+                widget: "string"
+                hint: "The name shown under the artwork, e.g. \"Nitro CR7\""
+
+              - label: "Category"
+                name: "c"
+                widget: "select"
+                options:
+                  - { label: "Realistic Humans", value: "realistic-humans" }
+                  - { label: "Realistic Creatures", value: "realistic-creatures" }
+                  - { label: "Realistic Hairs", value: "realistic-hairs" }
+                  - { label: "Stylized Human", value: "stylized-human" }
+                  - { label: "Stylized Creature", value: "stylized-creature" }
+                  - { label: "Props", value: "props" }
+                  - { label: "Mid Night Walk", value: "mid-night-walk" }
+                  - { label: "Lost In Random", value: "lost-in-random" }
+
+              - label: "ID"
+                name: "id"
+                widget: "string"
+                hint: "Any short unique code, letters and numbers, no spaces (e.g. AB12cd). Used in the piece's direct link — must not match any existing piece's ID."
+
+              - label: "Main Image"
+                name: "i"
+                widget: "image"
+                hint: "The image shown in the portfolio grid and as the first photo when opened."
+
+              - label: "Additional Images"
+                name: "imgs"
+                widget: "list"
+                required: false
+                label_singular: "Image"
+                field: { label: "Image", name: "image", widget: "image" }
+                hint: "Optional — other angles or close-ups of the same piece, shown as thumbnails when it's opened."
+
+              - label: "Description"
+                name: "desc"
+                widget: "text"
+                hint: "Shown on the piece's detail page. A short paragraph is enough."
+
+              - label: "Tags"
+                name: "tags"
+                widget: "list"
+                required: false
+                hint: "Optional keywords, one per line."
+
+              - label: "Original page link"
+                name: "src"
+                widget: "string"
+                required: false
+                hint: "Optional — a URL for the \"View on...\" link, if this piece has its own page elsewhere."
+
+              - label: "Image width (px)"
+                name: "w"
+                widget: "number"
+                value_type: "int"
+                required: false
+                hint: "Optional — leave blank if unsure. Helps the page lay out smoothly while the image loads."
+
+              - label: "Image height (px)"
+                name: "h"
+                widget: "number"
+                value_type: "int"
+                required: false
+                hint: "Optional — leave blank if unsure."
