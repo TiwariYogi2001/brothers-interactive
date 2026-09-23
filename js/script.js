@@ -898,6 +898,31 @@
   });
 
   /* ------------------------------------------------------------------
+     Hero visual — random portfolio pieces on every load, each card
+     framed to that image's real aspect ratio (no cropping/cutting)
+     ------------------------------------------------------------------ */
+  var heroVisual = $(".hero-visual");
+  if (heroVisual && PROJECTS.length) {
+    var heroSlots = [
+      { el: $(".hero-card--main", heroVisual), eager: true },
+      { el: $(".hero-card--a", heroVisual), eager: false },
+      { el: $(".hero-card--b", heroVisual), eager: false }
+    ].filter(function (s) { return s.el; });
+
+    var heroPool = PROJECTS.filter(function (p) { return p.i && p.w && p.h; })
+      .sort(function () { return Math.random() - 0.5; });
+
+    heroSlots.forEach(function (slot, i) {
+      var p = heroPool[i % heroPool.length];
+      if (!p) return;
+      var img = $("img", slot.el), tag = $(".hero-card-tag", slot.el);
+      if (img) { img.src = p.i; img.alt = p.t; img.loading = slot.eager ? "eager" : "lazy"; }
+      if (tag) tag.textContent = CAT[p.c] || p.t;
+      slot.el.style.aspectRatio = p.w + " / " + p.h;
+    });
+  }
+
+  /* ------------------------------------------------------------------
      Footer year + late reveal pass for elements rendered above
      ------------------------------------------------------------------ */
   $$("#year, .year").forEach(function (el) { el.textContent = new Date().getFullYear(); });
