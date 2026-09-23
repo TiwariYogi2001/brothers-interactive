@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "name": "Tarun Nagar",
+      "role": "Chief Executive Officer",
+      "initials": "TN",
+      "photo": "",
+      "bio": "Leads the studio's direction, client relationships and production planning. Founded Brothers Interactive in 2017 with the goal of building a character team that ships games rather than only portfolio pieces.",
+      "tags": ["Studio direction", "Client partnerships", "Production"],
+      "links": [
+        { "label": "LinkedIn", "url": "https://www.linkedin.com/company/brothers-interactive" },
+        { "label": "Email", "url": "mailto:business@brothersinteractive.com" }
+      ]
+    },
+    {
+      "name": "Arun Nagar",
+      "role": "Leadership Team",
+      "initials": "AN",
+      "photo": "",
+      "bio": "Part of the founding leadership. Works across art quality and day-to-day studio operations, keeping the team's output consistent from the first blockout to final engine delivery.",
+      "tags": ["Art quality", "Operations", "Team growth"],
+      "links": [
+        { "label": "LinkedIn", "url": "https://www.linkedin.com/company/brothers-interactive" }
+      ]
+    },
+    {
+      "name": "Sourabh Gupta",
+      "role": "Leadership Team",
+      "initials": "SG",
+      "photo": "",
+      "bio": "Senior member of the leadership group with a focus on character production and mentoring artists through the studio's pipeline.",
+      "tags": ["Character production", "Mentoring", "Pipeline"],
+      "links": [
+        { "label": "LinkedIn", "url": "https://www.linkedin.com/company/brothers-interactive" }
+      ]
+    },
+    {
+      "name": "Kamlesh Bagara",
+      "role": "Leadership Team",
+      "initials": "KB",
+      "photo": "",
+      "bio": "Senior member of the leadership group, working on asset quality, technical standards and engine-ready delivery for client projects.",
+      "tags": ["Technical art", "Quality", "Delivery"],
+      "links": [
+        { "label": "LinkedIn", "url": "https://www.linkedin.com/company/brothers-interactive" }
+      ]
+    }
+  ]
+}

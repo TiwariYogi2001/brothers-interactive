@@ -6,9 +6,9 @@
 html/    all pages (index.html, team.html, careers.html, styles.html, credits.html, asset.html, privacy.html, 404.html)
 css/     style.css
 js/      data.js, script.js
-data/    portfolio.json (the portfolio pieces — editable via /admin, see below)
+data/    portfolio.json + games/testimonials/team/pairs/clients/posts/roles/press/config.json — all editable via /admin, see below
 assets/  images, PDF, everything else
-admin/   the /admin content-upload page (Decap CMS) — see admin/README.md
+admin/   the /admin content editor (Decap CMS) — see admin/README.md
 ```
 
 ## Files
@@ -23,10 +23,10 @@ admin/   the /admin content-upload page (Decap CMS) — see admin/README.md
 | `html/asset.html` | Detail page for any portfolio piece (`asset.html?id=mOZqAe`) |
 | `html/privacy.html`, `html/404.html` | Legal and not-found pages |
 | `css/style.css` | All styling, including the colour themes |
-| `js/script.js` | Behaviour: filters, lightbox, forms, estimator, sliders, theme switcher |
-| `js/data.js` | Settings, games, case studies, roles, testimonials. Edit this, not script.js |
-| `data/portfolio.json` | The portfolio pieces shown in the grid. Edit by hand, or via `/admin` (see below) |
-| `admin/` | A private page at `/admin` for adding new portfolio pieces (title, images, description) without touching code. One-time setup needed — see `admin/README.md` |
+| `js/script.js` | Behaviour: filters, lightbox, forms, estimator, sliders, theme switcher. Also loads every `data/*.json` file at runtime |
+| `js/data.js` | Fallback values only (used if a `data/*.json` fetch ever fails) plus `ESTIMATOR`, the quote-estimator pricing table, which isn't in the CMS |
+| `data/*.json` | All editable content — portfolio, games, reviews, team, sculpt-to-final pairs, clients, blog posts, careers, press, site settings. Edit by hand, or via `/admin` (see below and `admin/README.md`) |
+| `admin/` | A private page at `/admin` for editing the site's content without touching code. One-time setup needed — see `admin/README.md` |
 | `assets/img/` | Optimised WebP images used by the site |
 | `assets/portfolio`, `assets/games`, `assets/brand` | Original downloads. Safe to delete once you are happy with the WebP versions |
 | `assets/brothers-interactive-capabilities.pdf` | Downloadable capabilities deck |
@@ -36,14 +36,19 @@ All paths inside the HTML/JS files that point at `css/`, `js/` or `assets/` use 
 
 ## Edit content
 
-Open `js/data.js`. Every list has a comment above it showing the shape of an entry.
+Easiest: use `/admin` (see `admin/README.md`) — a form for every section below,
+no file editing. Everything it edits lives in `data/*.json`, which you can
+also open and edit directly if you prefer:
 
-- **Settings** (`CONFIG`): availability text, Formspree form id, booking link, analytics domain, showreel video id.
-- **Open roles**: add to `ROLES` and they appear on the home page and careers page.
-- **Testimonials**: add to `TESTIMONIALS` and the block appears on the home page.
-- **Press**: add to `PRESS` and it appears on credits.html.
-- **Portfolio**: lives in `data/portfolio.json`, not `data.js` — edit it directly, or use `/admin` (see `admin/README.md`) to add pieces without touching JSON. Each entry has a title, category, main image, extra images, description and tags. Add `sketchfab: "MODEL_ID"` to any entry to show an interactive 3D viewer on its detail page and in the lightbox.
-- **Client logos**: add `logo: "assets/img/logos/name.webp"` to a `CLIENTS` entry once you have permission to use the logo.
+- **Settings** (`data/config.json`): availability text, Formspree form id, booking link, analytics domain, showreel video id, contact email/address, capabilities deck PDF.
+- **Open roles** (`data/roles.json`): appear on the home page and careers page.
+- **Reviews** (`data/testimonials.json`): appear on the home page. Each has a `sample: true/false` flag — turn it off once it's a real, approved quote.
+- **Press** (`data/press.json`): appears on credits.html.
+- **Portfolio** (`data/portfolio.json`): each entry has a title, category, main image, extra images, description and tags. Add `sketchfab: "MODEL_ID"` to any entry to show an interactive 3D viewer on its detail page and in the lightbox.
+- **Games** (`data/games.json`), **Team** (`data/team.json`), **Sculpt to Final** (`data/pairs.json`), **Clients** (`data/clients.json`), **Blog posts** (`data/posts.json`) — same pattern, all in `/admin`.
+- **Client logos**: add a `logo` image to a client entry once you have permission to use the logo; leave it empty to show the name as plain text instead.
+
+`js/data.js` still exists but now only holds `ESTIMATOR` (the quote-estimator pricing table) and fallback copies of the above, used only if a `data/*.json` fetch ever fails. Editing `data.js` no longer changes the live site for anything covered above — edit the JSON files (or `/admin`) instead.
 
 ## Forms without a backend
 

@@ -23,28 +23,43 @@
   };
   var BASE = "https://brothersinteractive.com/projects/";
   var BLOG_URL = "https://brothersinteractive.com/blog";
-  /* Portfolio pieces live in data/portfolio.json (not here) so the /admin
-     CMS can add new ones without touching any code. Loaded synchronously
-     so the rest of this file can keep assuming PROJECTS is ready. */
-  var PROJECTS = BI.PROJECTS || [];
-  try {
-    var portfolioXhr = new XMLHttpRequest();
-    portfolioXhr.open("GET", "../data/portfolio.json", false);
-    portfolioXhr.send(null);
-    if (portfolioXhr.status === 200) {
-      var loaded = JSON.parse(portfolioXhr.responseText);
-      var loadedList = Array.isArray(loaded) ? loaded : (loaded && loaded.items) || [];
-      if (loadedList.length) PROJECTS = loadedList;
+
+  /* All editable content lives in data/*.json (not data.js) so the /admin
+     CMS can change it without touching any code. Loaded synchronously here
+     so the rest of this file can keep assuming the data is ready. A file
+     with no CMS-made changes yet just 404s and the data.js fallback (if any)
+     is used instead — nothing breaks either way. */
+  function loadJSON(name) {
+    try {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "../data/" + name + ".json", false);
+      xhr.send(null);
+      if (xhr.status === 200) return JSON.parse(xhr.responseText);
+    } catch (e) {}
+    return null;
+  }
+  function loadList(name, fallback) {
+    var loaded = loadJSON(name);
+    var list = Array.isArray(loaded) ? loaded : (loaded && loaded.items) || null;
+    return list && list.length ? list : (fallback || []);
+  }
+
+  var PROJECTS = loadList("portfolio", BI.PROJECTS);
+  var GAMES = loadList("games", BI.GAMES);
+  var CASES = loadList("cases", BI.CASES);
+  var POSTS = loadList("posts", BI.POSTS);
+  var TESTIMONIALS = loadList("testimonials", BI.TESTIMONIALS);
+  var ROLES = loadList("roles", BI.ROLES);
+  var PAIRS = loadList("pairs", BI.PAIRS);
+  var CLIENTS = loadList("clients", BI.CLIENTS);
+  var PRESS = loadList("press", BI.PRESS);
+  var TEAM = loadList("team", []);
+  (function () {
+    var loadedCfg = loadJSON("config");
+    if (loadedCfg && typeof loadedCfg === "object") {
+      for (var k in loadedCfg) { if (loadedCfg[k] !== "" && loadedCfg[k] != null) CFG[k] = loadedCfg[k]; }
     }
-  } catch (e) {}
-  var GAMES = BI.GAMES || [];
-  var CASES = BI.CASES || [];
-  var POSTS = BI.POSTS || [];
-  var TESTIMONIALS = BI.TESTIMONIALS || [];
-  var ROLES = BI.ROLES || [];
-  var PAIRS = BI.PAIRS || [];
-  var CLIENTS = BI.CLIENTS || [];
-  var PRESS = BI.PRESS || [];
+  })();
   var EMAIL = CFG.email || "business@brothersinteractive.com";
 
   /* Analytics hook: no-op until CONFIG.plausibleDomain is set */
@@ -79,6 +94,13 @@
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  /* Accepts a bare YouTube ID (what the CMS asks for) or a pasted-in-by-mistake
+     full URL (watch?v=, youtu.be/, embed/) and always returns just the ID. */
+  function ytId(v) {
+    if (!v) return "";
+    var m = String(v).match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{6,})/);
+    return m ? m[1] : v;
+  }
 
   /* ==================================================================
      HOME PAGE ONLY — everything inside this block needs the portfolio,
@@ -296,7 +318,7 @@
   var gamesGrid = $("#gamesGrid");
   gamesGrid.innerHTML = GAMES.map(function (g, i) {
     return (
-      '<article class="game-card reveal" data-yt="' + g.yt + '" tabindex="0" role="button" aria-label="Play trailer: ' + esc(g.t) + '" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
+      '<article class="game-card reveal" data-yt="' + esc(ytId(g.yt)) + '" tabindex="0" role="button" aria-label="Play trailer: ' + esc(g.t) + '" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
         '<img src="' + g.i + '" alt="' + esc(g.t) + ' key art" loading="lazy" />' +
         '<span class="game-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
         '<div class="game-info"><div><span class="game-studio">' + esc(g.s || "") + '</span><span class="game-title">' + esc(g.t) + '</span></div><span class="game-tag">Watch trailer</span></div>' +
@@ -307,6 +329,7 @@
   var vm = $("#videoModal");
   var vmFrame = $("#videoIframe");
   function openVideo(id) {
+    id = ytId(id);
     track("trailer_played", { video: id });
     vmFrame.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
     vm.classList.add("open");
@@ -355,7 +378,7 @@
       : '<div class="case-pieces case-pieces--nda"><span class="case-pieces-label">Asset breakdowns available on request</span></div>';
     return (
       '<article class="case-card reveal' + (i % 2 ? ' case-card--flip' : '') + '">' +
-        '<div class="case-media" data-yt="' + c.yt + '" role="button" tabindex="0" aria-label="Play trailer: ' + esc(c.t) + '">' +
+        '<div class="case-media" data-yt="' + esc(ytId(c.yt)) + '" role="button" tabindex="0" aria-label="Play trailer: ' + esc(c.t) + '">' +
           '<img src="' + c.img + '" alt="' + esc(c.t) + ' key art" loading="lazy" />' +
           '<span class="game-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
         '</div>' +
@@ -742,7 +765,7 @@
       return '<li class="credit-card reveal"><img src="' + g.i + '" alt="' + esc(g.t) + ' key art" loading="lazy" />' +
         '<div><span class="game-studio">' + esc(g.s || "") + '</span><h3>' + esc(g.t) + '</h3>' +
         '<p>Character and asset production support.</p>' +
-        '<a href="https://www.youtube.com/watch?v=' + g.yt + '" target="_blank" rel="noopener">Watch trailer &rarr;</a></div></li>';
+        '<a href="https://www.youtube.com/watch?v=' + esc(ytId(g.yt)) + '" target="_blank" rel="noopener">Watch trailer &rarr;</a></div></li>';
     }).join("");
     var pl = $("#pressList");
     if (pl) pl.innerHTML = PRESS.length
@@ -986,6 +1009,33 @@
         heroVisual.style.minHeight = Math.ceil(bottomMost + 24) + "px";
       }
     }
+  }
+
+  /* ------------------------------------------------------------------
+     Team grid (team.html only) — rendered from data/team.json
+     ------------------------------------------------------------------ */
+  var teamGrid = $("#teamGrid");
+  if (teamGrid && TEAM.length) {
+    teamGrid.innerHTML = TEAM.map(function (m) {
+      var photo = m.photo ? '<img src="' + m.photo + '" alt="' + esc(m.name) + '" loading="lazy" />' : "";
+      var tags = (m.tags || []).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+      var links = (m.links || []).map(function (l) {
+        var external = /^https?:\/\//i.test(l.url);
+        return '<a href="' + esc(l.url) + '"' + (external ? ' target="_blank" rel="noopener"' : "") + ">" + esc(l.label) + "</a>";
+      }).join("");
+      return (
+        '<article class="team-card reveal">' +
+          '<div class="team-photo" data-initials="' + esc(m.initials || "") + '">' + photo + '</div>' +
+          '<div class="team-body">' +
+            "<h3>" + esc(m.name) + "</h3>" +
+            '<span class="team-role">' + esc(m.role || "") + "</span>" +
+            "<p>" + esc(m.bio || "") + "</p>" +
+            (tags ? '<ul class="team-tags">' + tags + "</ul>" : "") +
+            (links ? '<div class="team-links">' + links + "</div>" : "") +
+          "</div>" +
+        "</article>"
+      );
+    }).join("");
   }
 
   /* ------------------------------------------------------------------
