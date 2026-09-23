@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Style previews — Brothers Interactive</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #0a0b12; color: #e8ecf5; font-family: system-ui, sans-serif; padding: 48px 24px; }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.8rem; margin-bottom: 8px; }
+  p.lead { color: #9aa3b8; margin-bottom: 40px; max-width: 640px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  a.card { display: block; padding: 26px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); text-decoration: none; color: inherit; transition: transform .2s, border-color .2s; }
+  a.card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.3); }
+  a.card h2 { margin: 0 0 8px; font-size: 1.15rem; }
+  a.card p { margin: 0; color: #9aa3b8; font-size: 0.95rem; line-height: 1.5; }
+  .note { margin-top: 40px; font-size: 0.9rem; color: #6b7389; }
+  code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Style previews</h1>
+    <p class="lead">These are standalone previews of the homepage in three alternate visual styles. They are separate copies — nothing in <code>html/</code>, <code>css/style.css</code> or <code>js/</code> was changed to make these. The existing colour-theme switcher (bottom-left on each preview) still works normally.</p>
+    <div class="grid">
+      <a class="card" href="../html/index.html">
+        <h2>Original</h2>
+        <p>The current live site, unchanged, for comparison.</p>
+      </a>
+      <a class="card" href="brutalist.html">
+        <h2>Neo-Brutalist</h2>
+        <p>Square corners, thick borders, hard offset shadows, no glow. Bold and graphic.</p>
+      </a>
+      <a class="card" href="glass.html">
+        <h2>Frosted Glass</h2>
+        <p>Translucent blurred cards, soft large corners, layered depth. Airy and modern.</p>
+      </a>
+      <a class="card" href="minimal.html">
+        <h2>Studio Editorial</h2>
+        <p>No neon glow or grid, quiet borders, refined serif headings. Calm and portfolio-like.</p>
+      </a>
+    </div>
+    <p class="note">To remove these previews entirely: delete the <code>style-previews/</code> and <code>css/variants/</code> folders. Nothing else is affected.</p>
+  </div>
+</body>
+</html>

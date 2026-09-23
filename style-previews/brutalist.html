@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brothers Interactive | 3D Characters for Games</title>
+  <meta name="description" content="Brothers Interactive is a 3D game art studio specializing in high-quality characters, props, and weapons for games. Since 2017 we have worked with Saber Interactive, Thunderful, Midwinter, Slipgate Ironworks and more." />
+  <meta name="keywords" content="3D character outsourcing, game art outsourcing, 3D character artist studio, game character modeling, props and weapons, texturing, rigging, Unreal, Unity" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Brothers Interactive | 3D Characters for Games" />
+  <meta property="og:description" content="3D game art studio specializing in characters, props and weapons for indie and AAA games. Credits include Warhammer 40,000: Space Marine 2, Ready Or Not, Lost in Random and The Midnight Walk." />
+  <meta property="og:image" content="../assets/img/brand/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:url" content="https://brothersinteractive.com/" />
+  <link rel="canonical" href="https://brothersinteractive.com/" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Brothers Interactive",
+    "url": "https://brothersinteractive.com/",
+    "logo": "https://brothersinteractive.com/assets/img/brand/logo.webp",
+    "description": "3D game art studio specializing in characters, props and weapons for indie and AAA games.",
+    "foundingDate": "2017",
+    "email": "business@brothersinteractive.com",
+    "address": { "@type": "PostalAddress", "streetAddress": "79/5 Shipra Path, Mansarovar", "addressLocality": "Jaipur", "addressRegion": "Rajasthan", "postalCode": "302017", "addressCountry": "IN" },
+    "sameAs": [
+      "https://www.artstation.com/brothersinteractive",
+      "https://www.linkedin.com/company/brothers-interactive",
+      "https://www.instagram.com/brothersinteractive",
+      "https://www.facebook.com/Brothersinteractive"
+    ],
+    "knowsAbout": ["3D character art", "game art outsourcing", "creature modeling", "props and weapons", "texturing", "rigging", "Unreal Engine", "Unity"]
+  }
+  </script>
+  <link rel="icon" href="../assets/img/brand/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/variants/brutalist.css" />
+  <script>try { var q = (location.search.match(/[?&]theme=([a-z]+)/) || [])[1]; var t = q || localStorage.getItem("bi-theme"); if (t && t !== "neon") document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+</head>
+<body>
+  <div style="position:fixed;top:0;left:0;right:0;z-index:99999;padding:10px 16px;text-align:center;font:700 13px/1.4 system-ui,sans-serif;letter-spacing:.04em;background:#000;color:#fff;border-bottom:3px solid #fff">STYLE PREVIEW — Neo-Brutalist — not on the live site — <a href="index.html" style="color:inherit;text-decoration:underline">back to gallery</a></div>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--cyan" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--magenta" aria-hidden="true"></div>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!--NAV-->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="#home" class="brand" aria-label="Brothers Interactive home">
+        <img src="../assets/img/brand/logo.webp" alt="Brothers Interactive logo" class="brand-logo" width="52" height="52" />
+        <span class="brand-text">
+          <span class="brand-name">Brothers <em>Interactive</em></span>
+          <span class="brand-tag">Specialized in 3D Characters for Games</span>
+        </span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="Primary">
+        <ul>
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+          <li><a href="#games" class="nav-link">Games</a></li>
+          <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="styles.html" class="nav-link">Styles</a></li>
+          <li><a href="#about" class="nav-link">Studio</a></li>
+          <li><a href="team.html" class="nav-link">Team</a></li>
+          <li><a href="careers.html" class="nav-link">Careers</a></li>
+          <li><a href="#contact" class="nav-link nav-link--cta">Contact</a></li>
+        </ul>
+      </nav>
+      <span class="availability" id="availability" hidden><span class="dot"></span><span class="avail-text"></span></span>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <!--/NAV-->
+
+  <main id="main">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> 3D Game Art Studio &middot; Est. 2017</p>
+          <h1 class="hero-title">
+            <span class="line">We build the</span>
+            <span class="line glitch" data-text="CHARACTERS">CHARACTERS</span>
+            <span class="line">players remember.</span>
+          </h1>
+          <p class="hero-sub">
+            Brothers Interactive is a 3D game art studio specializing in creating high-quality characters,
+            props, and weapons for games. From indie to AAA, we deliver detailed, optimized, engine-ready assets.
+          </p>
+          <div class="hero-actions">
+            <a href="#portfolio" class="btn btn--primary">View Portfolio</a>
+            <button type="button" class="btn btn--ghost btn--play" id="showreelBtn">Play showreel</button>
+            <a href="#contact" class="btn btn--link">Start a Project &rarr;</a>
+          </div>
+          <ul class="hero-stats">
+            <li><span class="stat-num" data-count="2017">0</span><span class="stat-label">Founded</span></li>
+            <li><span class="stat-num" data-count="59" data-suffix="+">0</span><span class="stat-label">Portfolio pieces</span></li>
+            <li><span class="stat-num" data-count="11" data-suffix="+">0</span><span class="stat-label">Shipped games</span></li>
+          </ul>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="hero-card hero-card--main">
+            <img src="../assets/img/portfolio/the-adventures-mozqae.webp" alt="The Adventures, stylized human character" loading="eager" />
+            <span class="hero-card-tag">Stylized Human</span>
+          </div>
+          <div class="hero-card hero-card--small hero-card--a">
+            <img src="../assets/img/portfolio/swat-v2-dykqqq.webp" alt="SWAT V2 realistic human character" loading="lazy" />
+            <span class="hero-card-tag">Realistic Human</span>
+          </div>
+          <div class="hero-card hero-card--small hero-card--b">
+            <img src="../assets/img/portfolio/monster-lizard-jwalrd.webp" alt="Monster Lizard realistic creature" loading="lazy" />
+            <span class="hero-card-tag">Realistic Creature</span>
+          </div>
+        </div>
+      </div>
+
+      <a href="#portfolio" class="scroll-hint" aria-label="Scroll to portfolio">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- ================= CLIENT LOGO WALL ================= -->
+    <section class="logo-wall" aria-label="Studios we have collaborated with">
+      <div class="container">
+        <p class="logo-wall-title">Trusted by studios worldwide</p>
+        <ul class="logo-list" id="logoWall"><!-- Rendered from CLIENTS in data.js --></ul>
+      </div>
+    </section>
+
+    <!-- ================= MARQUEE ================= -->
+    <section class="marquee" aria-label="Games we contributed to">
+      <div class="marquee-track">
+        <span>Warhammer 40,000: Space Marine 2</span><span>Ready Or Not</span><span>Lost in Random</span><span>Wavetale</span>
+        <span>The Midnight Walk</span><span>Dark Envoy</span><span>The Gunk</span><span>Scavengers</span><span>Tormentor</span><span>Supermoves</span><span>Speed Freeks</span>
+        <!-- duplicate for seamless loop -->
+        <span>Warhammer 40,000: Space Marine 2</span><span>Ready Or Not</span><span>Lost in Random</span><span>Wavetale</span>
+        <span>The Midnight Walk</span><span>Dark Envoy</span><span>The Gunk</span><span>Scavengers</span><span>Tormentor</span><span>Supermoves</span><span>Speed Freeks</span>
+      </div>
+    </section>
+
+    <!-- ================= PORTFOLIO ================= -->
+    <section class="section" id="portfolio">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">// Portfolio</p>
+          <h2 class="section-title">Character &amp; Asset <span class="accent">Showcase</span></h2>
+          <p class="section-sub">Realistic humans, creatures, stylized characters, hair, props and production work for shipped titles.</p>
+        </div>
+
+        <div class="filter-bar reveal" id="filterBar" role="tablist" aria-label="Filter portfolio">
+          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="filter-btn" data-filter="realistic-humans" role="tab">Realistic Humans</button>
+          <button class="filter-btn" data-filter="realistic-creatures" role="tab">Realistic Creatures</button>
+          <button class="filter-btn" data-filter="realistic-hairs" role="tab">Realistic Hairs</button>
+          <button class="filter-btn" data-filter="stylized-human" role="tab">Stylized Human</button>
+          <button class="filter-btn" data-filter="stylized-creature" role="tab">Stylized Creature</button>
+          <button class="filter-btn" data-filter="props" role="tab">Props</button>
+          <button class="filter-btn" data-filter="mid-night-walk" role="tab">Mid Night Walk</button>
+          <button class="filter-btn" data-filter="lost-in-random" role="tab">Lost In Random</button>
+        </div>
+
+        <div class="portfolio-grid" id="portfolioGrid" aria-live="polite">
+          <!-- Rendered by script.js -->
+        </div>
+
+        <div class="portfolio-more reveal">
+          <button class="btn btn--ghost" id="loadMoreBtn">Load more</button>
+          <a class="btn btn--link" href="styles.html">Browse by art style &rarr;</a>
+          <a class="btn btn--link" href="https://www.artstation.com/brothersinteractive" target="_blank" rel="noopener">View full ArtStation &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCULPT TO FINAL ================= -->
+    <section class="section section--alt" id="compare">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">// Sculpt to final</p>
+          <h2 class="section-title">Drag to see the <span class="accent">work underneath</span></h2>
+          <p class="section-sub">High-poly sculpt on the left, textured game-ready asset on the right. Same character, our full pipeline in between.</p>
+        </div>
+        <div class="compare-grid" id="compareGrid"><!-- Rendered from PAIRS in data.js --></div>
+      </div>
+    </section>
+
+    <!-- ================= GAMES ================= -->
+    <section class="section section--alt" id="games">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">// Games</p>
+          <h2 class="section-title">So far, we have contributed <span class="accent">in these games.</span></h2>
+          <p class="section-sub">Character, creature, prop and weapon work delivered for studios worldwide.</p>
+        </div>
+        <div class="games-grid" id="gamesGrid">
+          <!-- Rendered by script.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONIALS ================= -->
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">// Testimonials</p>
+          <h2 class="section-title">What studios say about <span class="accent">working with us</span></h2>
+          <p class="section-sub">Art directors and producers on the assets we delivered, the communication along the way, and whether they came back.</p>
+        </div>
+        <div class="testimonial-grid" id="testimonialGrid"><!-- Rendered from TESTIMONIALS in data.js --></div>
+        <ul class="trust-row reveal">
+          <li><span class="stat-num" data-count="11" data-suffix="+">0</span><span class="stat-label">Titles shipped</span></li>
+          <li><span class="stat-num" data-count="8" data-suffix="+">0</span><span class="stat-label">Years in production</span></li>
+          <li><span class="stat-num" data-count="4" data-suffix="+">0</span><span class="stat-label">Returning studios</span></li>
+          <li><span class="stat-num" data-count="100" data-suffix="%">0</span><span class="stat-label">NDA-covered work</span></li>
+        </ul>
+        <div class="portfolio-more reveal">
+          <a class="btn btn--primary" href="#contact">Become our next reference</a>
+          <a class="btn btn--link" href="credits.html">See all game credits &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">// Services</p>
+          <h2 class="section-title">Eye-catching assets <span class="accent">for your game</span></h2>
+          <p class="section-sub">
+            At Brothers Interactive, we specialize in creating high-quality 3D game art, for the eye-catching assets for
+            your game. Our talented team of artists is comfortable with various quality of game art, ensuring it aligns
+            perfectly with your project requirements.
+          </p>
+        </div>
+
+        <div class="services-grid services-grid--detailed">
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <span class="service-badge">Specialization</span>
+            <h3>3D Character Design</h3>
+            <p>Realistic and stylized characters taken from concept or reference to game-ready. High-poly sculpt, clean retopology, UVs, bakes and final textures, matched to your art direction and performance budget.</p>
+            <ul class="service-list">
+              <li>Heroes, NPCs, enemies and creatures</li>
+              <li>Realistic, stylized and hand-painted styles</li>
+              <li>Outfit variants, skins and customisation sets</li>
+              <li>Facial and body blendshape support</li>
+            </ul>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+            </div>
+            <h3>3D Props &amp; Weapons</h3>
+            <p>Hero props, weapons, vehicles and set dressing that hold up in close-up and stay lean in engine. Built modular where it helps your level team.</p>
+            <ul class="service-list">
+              <li>Firearms, melee and sci-fi weapons</li>
+              <li>Hero props and interactive objects</li>
+              <li>Vehicles and mechanical assets</li>
+              <li>Modular kits and trim sheets</li>
+            </ul>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 100 18c1.5 0 2-1 2-2 0-1-1-1.5-1-2.5s1-1.5 2.5-1.5H17a4 4 0 004-4c0-4.5-4-8-9-8z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg>
+            </div>
+            <h3>Texturing &amp; Material Creation</h3>
+            <p>PBR texturing, hand-painted stylisation and material authoring. We match your existing library so new assets sit seamlessly next to in-house work.</p>
+            <ul class="service-list">
+              <li>Metal/rough and spec/gloss PBR workflows</li>
+              <li>Hand-painted and stylised textures</li>
+              <li>Skin, hair, cloth and hard-surface materials</li>
+              <li>Texture atlases and channel packing</li>
+            </ul>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="4" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="8" cy="20" r="2"/><circle cx="16" cy="20" r="2"/><path d="M12 6l-5.5 4M12 6l5.5 4M6 14l1.5 4M18 14l-1.5 4M7 12h10"/></svg>
+            </div>
+            <h3>Skinning &amp; Rigging</h3>
+            <p>Reliable skin weights and production rigs tested against your animation set, delivered ready for Unreal or Unity.</p>
+            <ul class="service-list">
+              <li>Biped, quadruped and creature rigs</li>
+              <li>Skin weighting and deformation passes</li>
+              <li>Facial rig and blendshape setup</li>
+              <li>Engine-ready skeleton conventions</li>
+            </ul>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20c2-6 4-9 8-9s6 3 8 9"/><path d="M8 11c0-4 1-7 4-7s4 3 4 7"/><path d="M6 14c-1-2-1-4 0-6M18 14c1-2 1-4 0-6"/></svg>
+            </div>
+            <h3>Hair &amp; Grooming</h3>
+            <p>Hair cards and groom variations for realistic characters, with LOD-friendly card layouts and clean alpha and flow maps.</p>
+            <ul class="service-list">
+              <li>Male and female hairstyle sets</li>
+              <li>Beards, brows and lashes</li>
+              <li>Hair card and strand-based workflows</li>
+              <li>Variation packs for customisation</li>
+            </ul>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/><path d="M7 12l3-3 3 3 4-4"/></svg>
+            </div>
+            <h3>Optimisation &amp; Engine Integration</h3>
+            <p>LOD chains, collision, material setup and import into Unreal Engine or Unity, so assets arrive working rather than as loose files.</p>
+            <ul class="service-list">
+              <li>LOD generation and poly budgets</li>
+              <li>Material instances and shader hookup</li>
+              <li>Unreal and Unity import and validation</li>
+              <li>Naming, folder and export conventions</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="why-grid reveal">
+          <h3 class="why-title">Why Choose Us?</h3>
+          <ul class="why-list">
+            <li><span class="why-icon">&#9889;</span><div><strong>Experienced Team</strong><small>Years of production on shipped indie and AAA titles.</small></div></li>
+            <li><span class="why-icon">&#9881;</span><div><strong>Optimized for Performance</strong><small>Assets built to budget, with LODs and clean UVs.</small></div></li>
+            <li><span class="why-icon">&#9998;</span><div><strong>Customized Solutions</strong><small>We adapt to your pipeline, style guide and tools.</small></div></li>
+            <li><span class="why-icon">&#9201;</span><div><strong>Timely Delivery</strong><small>Clear milestones and dependable turnaround.</small></div></li>
+          </ul>
+        </div>
+
+        <div class="cta-band reveal">
+          <div>
+            <h3>Let's Create Your Game Together!</h3>
+            <p>Looking for top-tier 3D game art? Get in touch with us to discuss your project!</p>
+          </div>
+          <a href="#contact" class="btn btn--primary">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROCESS ================= -->
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">// Process</p>
+          <h2 class="section-title">How we <span class="accent">work</span></h2>
+          <p class="section-sub">A predictable pipeline with review points at every stage, so you always know where an asset stands.</p>
+        </div>
+        <ol class="process-grid">
+          <li class="process-step reveal"><span class="process-num">01</span><h3>Brief &amp; Reference</h3><p>We review your concept art, style guide, technical spec and engine targets, then confirm scope, budget and delivery dates.</p></li>
+          <li class="process-step reveal"><span class="process-num">02</span><h3>Blockout</h3><p>Fast proportion and silhouette pass for approval before detail work begins. Catches direction changes early.</p></li>
+          <li class="process-step reveal"><span class="process-num">03</span><h3>High-poly Sculpt</h3><p>Full-detail sculpt with anatomy, cloth and hard-surface detail. Shared as turntables for feedback.</p></li>
+          <li class="process-step reveal"><span class="process-num">04</span><h3>Retopology &amp; UVs</h3><p>Clean, animation-friendly topology to your poly budget, with UV layouts packed for your texel density.</p></li>
+          <li class="process-step reveal"><span class="process-num">05</span><h3>Baking &amp; Texturing</h3><p>Normal, AO and ID bakes, then PBR or hand-painted textures matched to your material library.</p></li>
+          <li class="process-step reveal"><span class="process-num">06</span><h3>Skinning &amp; Rigging</h3><p>Weights and rig built to your skeleton conventions and tested with your animation set.</p></li>
+          <li class="process-step reveal"><span class="process-num">07</span><h3>Engine Check</h3><p>Import into Unreal or Unity, LODs, collision and materials verified in a real scene before handoff.</p></li>
+          <li class="process-step reveal"><span class="process-num">08</span><h3>Delivery &amp; Support</h3><p>Organised source files, exports and a changelog. Revisions and post-delivery fixes are part of the job.</p></li>
+        </ol>
+        <div class="process-notes reveal">
+          <div class="note-card"><strong>Review rounds</strong><span>Feedback checkpoints after blockout, sculpt and texture. Revisions within the agreed scope are included.</span></div>
+          <div class="note-card"><strong>Confidentiality</strong><span>NDAs signed before any brief is shared. Work is only shown publicly with written client approval.</span></div>
+          <div class="note-card"><strong>Deliverables</strong><span>ZBrush/Maya/Blender source, FBX/OBJ exports, texture sets, Marmoset scenes and engine-ready packages on request.</span></div>
+          <div class="note-card"><strong>Communication</strong><span>Dedicated point of contact, weekly status updates and a shared tracker for every asset in production.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="section section--alt" id="about">
+      <div class="container about-grid">
+        <div class="about-copy reveal">
+          <p class="eyebrow">// About</p>
+          <h2 class="section-title">Quality and <span class="accent">timeline</span>, always.</h2>
+          <p>
+            Brothers Interactive is a 3D game art studio specializing in creating high-quality characters, props, and
+            weapons for games. Since 2017, we have collaborated with leading developers like Saber Interactive,
+            Thunderful, Midwinter, Slipgate Ironworks and many more worldwide, delivering detailed and refined assets
+            for various projects.
+          </p>
+          <p>
+            We have contributed to several games, including Warhammer 40,000: Space Marine 2, Ready Or Not, Lost in
+            Random, Wavetale and other projects, with 3D modeling, sculpting, texturing, skinning, rigging, and engine
+            integration support for various indie and AAA titles.
+          </p>
+          <p>
+            At Brothers Interactive, we believe in quality and timeline. Whether you're an indie developer or a large
+            studio, we provide professional and reliable 3D art solutions to bring your vision to life.
+          </p>
+          <div class="hero-actions">
+            <a href="mailto:business@brothersinteractive.com" class="btn btn--primary">Business Inquiry</a>
+            <a href="team.html" class="btn btn--ghost">Meet the team</a>
+          </div>
+        </div>
+
+        <div class="about-panel reveal">
+          <ul class="about-stats">
+            <li><span class="stat-num" data-count="2017">0</span><span class="stat-label">Founded</span></li>
+            <li><span class="stat-num" data-count="11" data-suffix="+">0</span><span class="stat-label">Titles shipped</span></li>
+            <li><span class="stat-num" data-count="59" data-suffix="+">0</span><span class="stat-label">Published pieces</span></li>
+            <li><span class="stat-num" data-count="8" data-suffix="+">0</span><span class="stat-label">Years in production</span></li>
+          </ul>
+          <div class="pipeline">
+            <h3 class="pipeline-title">Tools we work in</h3>
+            <ul class="client-list tools-list">
+              <li>ZBrush</li><li>Maya</li><li>Blender</li><li>Substance 3D Painter</li><li>Substance 3D Designer</li>
+              <li>Marvelous Designer</li><li>Marmoset Toolbag</li><li>Unreal Engine</li><li>Unity</li><li>Photoshop</li>
+            </ul>
+          </div>
+          <div class="clients">
+            <h3 class="pipeline-title">Collaborators</h3>
+            <ul class="client-list">
+              <li>Saber Interactive</li>
+              <li>Thunderful</li>
+              <li>Midwinter</li>
+              <li>Slipgate Ironworks</li>
+              <li>+ many more</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section" id="faq">
+      <div class="container faq-grid">
+        <div class="faq-intro reveal">
+          <p class="eyebrow">// FAQ</p>
+          <h2 class="section-title">Questions producers <span class="accent">ask us</span></h2>
+          <p>Everything a studio usually wants to know before the first call. Anything missing? <a href="#contact">Ask us directly</a>.</p>
+        </div>
+        <div class="faq-list reveal" id="faqList">
+          <details class="faq-item" open>
+            <summary>How do you price work?</summary>
+            <p>Two models. Per-asset pricing for defined scopes such as a set of characters or weapons, and a dedicated artist or team on a monthly basis for longer productions. We quote after seeing your concepts and technical spec.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What is the minimum engagement?</summary>
+            <p>There is no minimum. We take on single hero characters as readily as multi-month productions. Small test assets are a common way for new clients to start.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can you match our existing art style?</summary>
+            <p>Yes. We have shipped work across realistic, stylised and hand-painted styles. Send your style guide and a few in-house reference assets and we match them, usually with a paid test asset first.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do revisions work?</summary>
+            <p>Feedback checkpoints happen after blockout, sculpt and texture. Revisions within the agreed brief are included. Changes to the brief itself are scoped and quoted separately before we continue.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do you sign NDAs and who owns the work?</summary>
+            <p>We sign your NDA before any brief is shared. All delivered work is the client's intellectual property. We only show production assets publicly with written approval, so some project details are shared on request rather than on this site.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Which engines and file formats do you deliver?</summary>
+            <p>Unreal Engine and Unity packages, plus FBX and OBJ exports, texture sets in your preferred packing, and source files from ZBrush, Maya, Blender and Substance.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What are your working hours and time zone?</summary>
+            <p>The studio works Indian Standard Time and keeps a daily overlap window with clients in Europe and North America. We respond to feedback within one working day.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do we start?</summary>
+            <p>Send a short brief with references, asset count, style and deadline through the form below. We reply with questions, a quote and a proposed schedule, usually within two working days.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CAREERS ================= -->
+    <section class="section section--alt" id="careers">
+      <div class="container careers-grid">
+        <div class="careers-copy reveal">
+          <p class="eyebrow">// Careers</p>
+          <h2 class="section-title">Join the <span class="accent">Brothers</span></h2>
+          <p>We are a team of character artists who like working on shipped games, not just portfolio pieces. Studio life includes retreats, award nights and the occasional marathon, as the blog below shows.</p>
+          <ul class="perks-list">
+            <li><strong>Shipped credits</strong><span>Work that appears in released AAA and indie titles.</span></li>
+            <li><strong>Mentorship</strong><span>Senior artists review every piece, with a clear growth path from junior to lead.</span></li>
+            <li><strong>Culture</strong><span>Team retreats, celebrations and awards nights every year.</span></li>
+            <li><strong>Tools</strong><span>Licensed industry software and hardware provided.</span></li>
+          </ul>
+        </div>
+        <div class="careers-panel reveal">
+          <h3 class="pipeline-title">Open roles</h3>
+          <ul class="roles-list" data-roles="summary"><!-- Rendered by script.js --></ul>
+          <div class="roles-cta">
+            <strong>No role that fits? Send your portfolio anyway.</strong>
+            <span>We keep strong character, creature and prop artists on file and reach out when a project opens up.</span>
+            <div class="roles-cta-actions">
+              <a href="careers.html" class="btn btn--primary">Careers page</a>
+              <a href="careers.html#apply" class="btn btn--ghost">Apply now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BLOG ================= -->
+    <section class="section" id="blog">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">// Blog</p>
+          <h2 class="section-title">Life at <span class="accent">Brothers</span></h2>
+          <p class="section-sub">Celebrations, retreats and award nights from the studio.</p>
+        </div>
+        <div class="blog-grid" id="blogGrid">
+          <!-- Rendered by script.js -->
+        </div>
+        <div class="portfolio-more reveal">
+          <a class="btn btn--link" href="https://brothersinteractive.com/blog" target="_blank" rel="noopener">Read all posts &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ESTIMATOR ================= -->
+    <section class="section section--alt" id="estimator-section">
+      <div class="container estimator-grid">
+        <div class="estimator-copy reveal">
+          <p class="eyebrow">// Quote estimator</p>
+          <h2 class="section-title">How big is <span class="accent">your project?</span></h2>
+          <p>Get a rough effort range in seconds. It uses typical artist-days from our past productions and is meant to help you plan, not to replace a quote. Send the result with your brief and we confirm real numbers within two working days.</p>
+          <ul class="why-list">
+            <li><span class="why-icon">&#9203;</span><div><strong>Artist-days</strong><small>Total production effort across sculpt, retopo, texture and rig.</small></div></li>
+            <li><span class="why-icon">&#9881;</span><div><strong>Calendar weeks</strong><small>How long it takes with several artists working in parallel.</small></div></li>
+            <li><span class="why-icon">&#9998;</span><div><strong>No commitment</strong><small>Nothing is sent until you choose to attach it to a brief.</small></div></li>
+          </ul>
+        </div>
+        <form class="estimator reveal" id="estimator" novalidate>
+          <div class="field-row">
+            <div class="field"><label for="estType">Asset type</label><select id="estType"></select></div>
+            <div class="field">
+              <label for="estStyle">Art style</label>
+              <select id="estStyle"><option value="realistic">Realistic</option><option value="stylized">Stylized</option><option value="handpainted">Hand-painted</option></select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="estCount">How many</label><input type="number" id="estCount" min="1" max="200" value="3" /></div>
+            <div class="field"><label for="estVariants">Outfit / skin variants</label><input type="number" id="estVariants" min="0" max="50" value="0" /></div>
+          </div>
+          <label class="check" id="estRigRow"><input type="checkbox" id="estRig" checked /> Include skinning and rigging</label>
+          <ul class="estimate-result" aria-live="polite">
+            <li><span class="stat-num" id="estDays">0</span><span class="stat-label">Artist-days</span></li>
+            <li><span class="stat-num" id="estWeeks">0</span><span class="stat-label">Weeks with <span id="estPar">1</span> artists</span></li>
+          </ul>
+          <p class="estimate-note">Ranges are indicative. Complexity, reference quality and review speed move the real number.</p>
+          <div class="hero-actions">
+            <button type="button" class="btn btn--primary" id="estUse">Use this in my brief</button>
+            <a href="#" class="btn btn--ghost" data-deck download>Download capabilities deck</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="section" id="contact">
+      <div class="container contact-grid">
+        <div class="contact-copy reveal">
+          <p class="eyebrow">// Contact</p>
+          <h2 class="section-title">Let's <span class="accent">talk</span></h2>
+          <p>Please use this contact form or send us an email. We'll be in touch with you shortly!</p>
+
+          <ul class="contact-list">
+            <li>
+              <span class="contact-label">Business inquiry</span>
+              <a href="mailto:business@brothersinteractive.com">business@brothersinteractive.com</a>
+            </li>
+            <li>
+              <span class="contact-label">General</span>
+              <a href="mailto:contact@brothersinteractive.com">contact@brothersinteractive.com</a>
+            </li>
+          </ul>
+
+          <div class="hero-actions" style="margin-bottom:28px">
+            <a href="#" class="btn btn--ghost" data-booking target="_blank" rel="noopener" hidden>Book a 20-minute call</a>
+            <a href="#" class="btn btn--link" data-deck download>Capabilities deck (PDF) &rarr;</a>
+          </div>
+          <h3 class="contact-sub">Other places to find us</h3>
+          <div class="social-row">
+            <a href="https://www.artstation.com/brothersinteractive" target="_blank" rel="noopener" aria-label="ArtStation">ArtStation</a>
+            <a href="https://www.linkedin.com/company/brothers-interactive" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+            <a href="https://www.instagram.com/brothersinteractive" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+            <a href="https://www.facebook.com/Brothersinteractive" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="cfName">Name</label>
+              <input type="text" id="cfName" name="name" placeholder="Your name" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="cfEmail">Your email</label>
+              <input type="email" id="cfEmail" name="email" placeholder="you@studio.com" required autocomplete="email" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="cfStudio">Studio / company <span class="optional">optional</span></label>
+            <input type="text" id="cfStudio" name="studio" placeholder="Studio name" autocomplete="organization" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="cfType">Asset type</label>
+              <select id="cfType" name="type">
+                <option value="">Select...</option>
+                <option>Characters</option>
+                <option>Creatures</option>
+                <option>Props &amp; weapons</option>
+                <option>Hair &amp; grooming</option>
+                <option>Rigging &amp; skinning</option>
+                <option>Full character pipeline</option>
+                <option>Other / not sure yet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cfStyle">Art style</label>
+              <select id="cfStyle" name="style">
+                <option value="">Select...</option>
+                <option>Realistic</option>
+                <option>Stylized</option>
+                <option>Hand-painted</option>
+                <option>Mixed</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="cfCount">Approx. asset count <span class="optional">optional</span></label>
+              <input type="text" id="cfCount" name="count" placeholder="e.g. 6 characters, 20 props" />
+            </div>
+            <div class="field">
+              <label for="cfDeadline">Target deadline <span class="optional">optional</span></label>
+              <input type="text" id="cfDeadline" name="deadline" placeholder="e.g. March 2027" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="cfMessage">Project brief</label>
+            <textarea id="cfMessage" name="message" rows="6" placeholder="Tell us about the game, the engine, references, and anything else that helps us quote accurately..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Send brief</button>
+          <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+
+
+  <!-- ================= LIGHTBOX ================= -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous">&lsaquo;</button>
+    <figure class="lightbox-figure">
+      <img id="lightboxImg" src="" alt="" />
+      <figcaption>
+        <span class="lightbox-cat" id="lightboxCat"></span>
+        <span class="lightbox-title" id="lightboxTitle"></span>
+        <a class="lightbox-link" id="lightboxLink" href="#" target="_blank" rel="noopener">Open on brothersinteractive.com &rarr;</a>
+      </figcaption>
+    </figure>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next">&rsaquo;</button>
+  </div>
+
+  <!-- ================= SHOWREEL MODAL (image reel until a video id is set) ================= -->
+  <div class="reel-modal" id="reelModal" aria-hidden="true" role="dialog" aria-label="Showreel">
+    <button class="lightbox-close" id="reelClose" aria-label="Close">&times;</button>
+    <div class="reel-stage">
+      <img id="reelImg" src="" alt="" />
+      <span class="reel-brand">Brothers Interactive &middot; Showreel</span>
+      <div class="reel-cap" id="reelCap"></div>
+    </div>
+  </div>
+
+  <!-- ================= VIDEO MODAL ================= -->
+  <div class="video-modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Trailer">
+    <button class="lightbox-close" id="videoClose" aria-label="Close">&times;</button>
+    <div class="video-frame">
+      <iframe id="videoIframe" src="" title="Game trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!--FOOTER-->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-name">Brothers <em>Interactive</em></span>
+        <p>Specialized in 3D Characters for Games. Jaipur, India.</p>
+        <div class="social-row" style="margin-top:12px">
+          <a href="https://www.artstation.com/brothersinteractive" target="_blank" rel="noopener">ArtStation</a>
+          <a href="https://www.linkedin.com/company/brothers-interactive" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.instagram.com/brothersinteractive" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/Brothersinteractive" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#games">Games</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="styles.html">Styles</a></li>
+        <li><a href="#about">Studio</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="credits.html">Credits</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+      <p class="footer-copy">&copy; <span class="year"></span> Brothers Interactive. All rights reserved. <a href="#" data-deck download>Capabilities deck (PDF)</a></p>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+
+  <div class="theme-switcher" id="themeSwitcher">
+    <button class="theme-toggle" id="themeToggle" aria-label="Change colour theme" aria-expanded="false" aria-controls="themePanel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 100 18c1.5 0 2-1 2-2 0-1-1-1.5-1-2.5s1-1.5 2.5-1.5H17a4 4 0 004-4c0-4.5-4-8-9-8z"/><circle cx="7.5" cy="10.5" r="1" fill="currentColor"/><circle cx="10.5" cy="7" r="1" fill="currentColor"/><circle cx="15" cy="7.5" r="1" fill="currentColor"/></svg>
+    </button>
+    <div class="theme-panel" id="themePanel" role="menu" aria-label="Colour themes">
+      <p class="theme-panel-title">Choose a theme</p>
+      <button class="theme-opt" data-theme="neon" role="menuitemradio"><span class="sw" style="--a:#07080f;--b:#13aff0;--c:#ff2fa8"></span>Neon Cyan</button>
+      <button class="theme-opt" data-theme="crimson" role="menuitemradio"><span class="sw" style="--a:#0c0608;--b:#ff3b4e;--c:#ffb020"></span>Cyber Crimson</button>
+      <button class="theme-opt" data-theme="matrix" role="menuitemradio"><span class="sw" style="--a:#050a06;--b:#39ff88;--c:#d4ff3b"></span>Toxic Matrix</button>
+      <button class="theme-opt" data-theme="synthwave" role="menuitemradio"><span class="sw" style="--a:#0a0616;--b:#c084fc;--c:#ff7a18"></span>Synthwave</button>
+      <button class="theme-opt" data-theme="ember" role="menuitemradio"><span class="sw" style="--a:#0d0a06;--b:#ffb020;--c:#ff5e3a"></span>Ember Gold</button>
+      <button class="theme-opt" data-theme="arctic" role="menuitemradio"><span class="sw" style="--a:#f4f7fb;--b:#0a84d6;--c:#e0257f"></span>Arctic Light</button>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/script.js"></script>
+  <!--/FOOTER-->
+</body>
+</html>
