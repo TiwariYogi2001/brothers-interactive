@@ -838,7 +838,7 @@
   /* ------------------------------------------------------------------
      Theme switcher — sets data-theme on <html>, remembers the choice
      ------------------------------------------------------------------ */
-  var THEMES = ["neon", "crimson", "matrix", "synthwave", "ember", "arctic"];
+  var THEMES = ["neon", "crimson", "matrix", "synthwave", "ember", "arctic", "ocean", "royal", "rose", "copper", "steel", "forest", "midnight", "cotton"];
   var switcher = $("#themeSwitcher");
   var themeToggle = $("#themeToggle");
   var themeOpts = $$(".theme-opt");
