@@ -219,7 +219,7 @@ collections:
   - name: "blog"
     label: "Blog Posts"
     label_singular: "Post"
-    description: "Titles and dates shown in the Blog section of the homepage (links out to your blog)."
+    description: "Video recaps shown in the Blog section of the homepage, rendered as thumbnail cards like Games."
     files:
       - name: "items"
         label: "Posts"
@@ -233,7 +233,7 @@ collections:
             summary: "{{fields.t}}"
             fields:
               - { label: "Title", name: "t", widget: "string" }
-              - { label: "Date", name: "d", widget: "string", hint: "As text, e.g. \"04 Feb 2025\"." }
+              - { label: "YouTube video", name: "yt", widget: "string", hint: "Paste the full YouTube URL or just the video ID." }
 
   - name: "careers"
     label: "Careers"

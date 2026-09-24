@@ -22,7 +22,6 @@
     "lost-in-random": "Lost In Random"
   };
   var BASE = "https://brothersinteractive.com/projects/";
-  var BLOG_URL = "https://brothersinteractive.com/blog";
 
   /* All editable content lives in data/*.json (not data.js) so the /admin
      CMS can change it without touching any code. Loaded synchronously here
@@ -463,13 +462,26 @@
      ------------------------------------------------------------------ */
   var blogGridEl = $("#blogGrid");
   if (blogGridEl) blogGridEl.innerHTML = POSTS.map(function (p, i) {
+    var id = ytId(p.yt);
     return (
-      '<a class="blog-card reveal" href="' + BLOG_URL + '" target="_blank" rel="noopener" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
-        '<span class="blog-date">' + esc(p.d) + '</span>' +
-        '<h3>' + esc(p.t) + '</h3>' +
-      '</a>'
+      '<article class="game-card reveal" data-yt="' + esc(id) + '" tabindex="0" role="button" aria-label="Play video: ' + esc(p.t) + '" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
+        '<img src="https://img.youtube.com/vi/' + id + '/hqdefault.jpg" alt="' + esc(p.t) + '" loading="lazy" />' +
+        '<span class="game-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
+        '<div class="game-info"><div><span class="game-title">' + esc(p.t) + '</span></div><span class="game-tag">Watch video</span></div>' +
+      '</article>'
     );
   }).join("");
+
+  if (blogGridEl) {
+    blogGridEl.addEventListener("click", function (e) {
+      var card = e.target.closest(".game-card");
+      if (card) openVideo(card.dataset.yt);
+    });
+    blogGridEl.addEventListener("keydown", function (e) {
+      var card = e.target.closest(".game-card");
+      if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openVideo(card.dataset.yt); }
+    });
+  }
 
   } /* ---- end HOME PAGE ONLY block ---- */
 

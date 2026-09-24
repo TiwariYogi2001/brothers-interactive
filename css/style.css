@@ -520,15 +520,6 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 
 /* ---------- Blog ---------- */
 .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.blog-card {
-  display: block; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 34px;
-  transition: transform 0.4s var(--ease), border-color 0.4s, box-shadow 0.4s; position: relative; overflow: hidden;
-}
-.blog-card::after { content: "→"; position: absolute; right: 22px; bottom: 18px; color: var(--accent); font-size: 1.3rem; opacity: 0; transform: translateX(-8px); transition: all 0.3s; }
-.blog-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 16px 36px rgba(0,0,0,0.5); }
-.blog-card:hover::after { opacity: 1; transform: none; }
-.blog-date { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-2); display: block; margin-bottom: 12px; }
-.blog-card h3 { font-size: 1.25rem; line-height: 1.35; padding-right: 30px; }
 
 /* ---------- Contact ---------- */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
