@@ -1016,7 +1016,7 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 /* position:relative + a footprint that matches only the visible toggle button:
    the panel below is position:absolute so its (invisible-when-closed) box
    never blocks clicks to whatever page content sits under/around it. */
-.theme-switcher { position: fixed; left: 22px; bottom: 190px; z-index: 950; width: 52px; height: 52px; }
+.theme-switcher { position: fixed; left: 22px; bottom: 22px; z-index: 950; width: 52px; height: 52px; }
 .theme-toggle {
   width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
   background: var(--surface); border: 1px solid var(--accent); color: var(--accent); box-shadow: var(--glow); transition: transform 0.3s, background 0.3s, color 0.3s;
@@ -1143,7 +1143,7 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
   .lightbox-nav { width: 44px; height: 44px; font-size: 1.6rem; }
   .lightbox-prev { left: 8px; } .lightbox-next { right: 8px; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
-  .theme-switcher { left: 14px; bottom: 90px; width: 46px; height: 46px; }
+  .theme-switcher { left: 14px; bottom: 14px; width: 46px; height: 46px; }
   .theme-toggle { width: 46px; height: 46px; }
 }
 
