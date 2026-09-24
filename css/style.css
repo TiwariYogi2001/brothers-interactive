@@ -238,6 +238,7 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .section-head { margin-bottom: 40px; }
 
 /* ---------- Buttons ---------- */
+.btn[hidden] { display: none; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 18px 36px; border-radius: 999px;
