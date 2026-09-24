@@ -564,9 +564,9 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 
 /* ---------- Footer ---------- */
 .site-footer { border-top: 1px solid var(--border); padding: 40px 0; background: var(--bg-2); }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .footer-brand p { margin: 4px 0 0; color: var(--text-dim); font-size: 1.05rem; }
-.footer-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.footer-links { display: flex; flex-direction: column; gap: 8px; }
 .footer-links a { font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); font-family: var(--font-display); transition: color 0.3s; }
 .footer-links a:hover { color: var(--accent); }
 .footer-copy { margin: 0; font-size: 1rem; color: var(--text-dim); }
