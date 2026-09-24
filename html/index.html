@@ -513,45 +513,6 @@
       </div>
     </section>
 
-    <!-- ================= ESTIMATOR ================= -->
-    <section class="section section--alt" id="estimator-section">
-      <div class="container estimator-grid">
-        <div class="estimator-copy reveal">
-          <p class="eyebrow">// Quote estimator</p>
-          <h2 class="section-title">How big is <span class="accent">your project?</span></h2>
-          <p>Get a rough effort range in seconds. It uses typical artist-days from our past productions and is meant to help you plan, not to replace a quote. Send the result with your brief and we confirm real numbers within two working days.</p>
-          <ul class="why-list">
-            <li><span class="why-icon">&#9203;</span><div><strong>Artist-days</strong><small>Total production effort across sculpt, retopo, texture and rig.</small></div></li>
-            <li><span class="why-icon">&#9881;</span><div><strong>Calendar weeks</strong><small>How long it takes with several artists working in parallel.</small></div></li>
-            <li><span class="why-icon">&#9998;</span><div><strong>No commitment</strong><small>Nothing is sent until you choose to attach it to a brief.</small></div></li>
-          </ul>
-        </div>
-        <form class="estimator reveal" id="estimator" novalidate>
-          <div class="field-row">
-            <div class="field"><label for="estType">Asset type</label><select id="estType"></select></div>
-            <div class="field">
-              <label for="estStyle">Art style</label>
-              <select id="estStyle"><option value="realistic">Realistic</option><option value="stylized">Stylized</option><option value="handpainted">Hand-painted</option></select>
-            </div>
-          </div>
-          <div class="field-row">
-            <div class="field"><label for="estCount">How many</label><input type="number" id="estCount" min="1" max="200" value="3" /></div>
-            <div class="field"><label for="estVariants">Outfit / skin variants</label><input type="number" id="estVariants" min="0" max="50" value="0" /></div>
-          </div>
-          <label class="check" id="estRigRow"><input type="checkbox" id="estRig" checked /> Include skinning and rigging</label>
-          <ul class="estimate-result" aria-live="polite">
-            <li><span class="stat-num" id="estDays">0</span><span class="stat-label">Artist-days</span></li>
-            <li><span class="stat-num" id="estWeeks">0</span><span class="stat-label">Weeks with <span id="estPar">1</span> artists</span></li>
-          </ul>
-          <p class="estimate-note">Ranges are indicative. Complexity, reference quality and review speed move the real number.</p>
-          <div class="hero-actions">
-            <button type="button" class="btn btn--primary" id="estUse">Use this in my brief</button>
-            <a href="#" class="btn btn--ghost" data-deck download>Download capabilities deck</a>
-          </div>
-        </form>
-      </div>
-    </section>
-
     <!-- ================= CONTACT ================= -->
     <section class="section" id="contact">
       <div class="container contact-grid">
