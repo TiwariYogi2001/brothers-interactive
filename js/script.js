@@ -202,7 +202,6 @@
       return (
         '<a class="style-tile reveal" href="category.html?cat=' + encodeURIComponent(key) + '" style="transition-delay:' + (i % 4) * 70 + 'ms" aria-label="Browse ' + esc(CAT[key]) + '">' +
           (thumb ? '<img src="' + thumb.i + '" alt="" loading="lazy" />' : '') +
-          '<span class="style-tile-count">' + pieces.length + '</span>' +
           '<span class="style-tile-label">' + esc(CAT[key]) + '</span>' +
         '</a>'
       );
