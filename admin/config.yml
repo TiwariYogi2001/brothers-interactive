@@ -15,6 +15,41 @@ media_folder: "assets/img/portfolio"
 public_folder: "../assets/img/portfolio"
 
 collections:
+  - name: "hero"
+    label: "Homepage Hero"
+    files:
+      - name: "hero"
+        label: "Hero Section"
+        file: "data/hero.json"
+        format: "json"
+        description: "The very first thing visitors see: headline, subtitle, the three stats, and the three hero images."
+        fields:
+          - { label: "Eyebrow text", name: "eyebrow", widget: "string", hint: "Small line above the headline, e.g. \"3D Game Art Studio · Est. 2017\"." }
+          - { label: "Headline — line 1", name: "titleLine1", widget: "string", hint: "e.g. \"We build the\"" }
+          - { label: "Headline — accent word", name: "titleAccent", widget: "string", hint: "The big gradient-coloured word, e.g. \"CHARACTERS\"" }
+          - { label: "Headline — line 3", name: "titleLine3", widget: "string", hint: "e.g. \"players remember.\"" }
+          - { label: "Subtitle paragraph", name: "subtitle", widget: "text" }
+          - { label: "Primary button label", name: "primaryBtnLabel", widget: "string", hint: "Links to the Portfolio section." }
+          - { label: "Secondary button label", name: "secondaryBtnLabel", widget: "string", hint: "Links to the Contact section. The arrow (→) is added automatically." }
+          - { label: "Stat 1 — number", name: "stat1Num", widget: "number", value_type: "int" }
+          - { label: "Stat 1 — suffix", name: "stat1Suffix", widget: "string", required: false, hint: "e.g. \"+\". Leave empty for none." }
+          - { label: "Stat 1 — label", name: "stat1Label", widget: "string" }
+          - { label: "Stat 2 — number", name: "stat2Num", widget: "number", value_type: "int" }
+          - { label: "Stat 2 — suffix", name: "stat2Suffix", widget: "string", required: false }
+          - { label: "Stat 2 — label", name: "stat2Label", widget: "string" }
+          - { label: "Stat 3 — number", name: "stat3Num", widget: "number", value_type: "int" }
+          - { label: "Stat 3 — suffix", name: "stat3Suffix", widget: "string", required: false }
+          - { label: "Stat 3 — label", name: "stat3Label", widget: "string" }
+          - { label: "Main image (large, top)", name: "imgMain", widget: "image" }
+          - { label: "Main image — alt text", name: "imgMainAlt", widget: "string", hint: "Describes the image for screen readers/SEO." }
+          - { label: "Main image — tag label", name: "imgMainTag", widget: "string", hint: "Small caption shown on the image, e.g. \"Stylized Human\"." }
+          - { label: "Small image A", name: "imgA", widget: "image" }
+          - { label: "Small image A — alt text", name: "imgAAlt", widget: "string" }
+          - { label: "Small image A — tag label", name: "imgATag", widget: "string" }
+          - { label: "Small image B (wide)", name: "imgB", widget: "image" }
+          - { label: "Small image B — alt text", name: "imgBAlt", widget: "string" }
+          - { label: "Small image B — tag label", name: "imgBTag", widget: "string" }
+
   - name: "portfolio"
     label: "Portfolio"
     label_singular: "Portfolio Piece"

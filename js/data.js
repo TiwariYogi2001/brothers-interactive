@@ -19,6 +19,23 @@ window.BI = {
     address: "79/5 Shipra Path, Mansarovar, Jaipur 302017, Rajasthan, India"
   },
 
+  /* ---- Homepage hero (headline, stats, the 3 hero images) ---- */
+  HERO: {
+    eyebrow: "3D Game Art Studio · Est. 2017",
+    titleLine1: "We build the",
+    titleAccent: "CHARACTERS",
+    titleLine3: "players remember.",
+    subtitle: "Brothers Interactive is a 3D game art studio specializing in creating high-quality characters, props, and weapons for games. From indie to AAA, we deliver detailed, optimized, engine-ready assets.",
+    primaryBtnLabel: "View Portfolio",
+    secondaryBtnLabel: "Start a Project",
+    stat1Num: 2017, stat1Suffix: "", stat1Label: "Founded",
+    stat2Num: 59, stat2Suffix: "+", stat2Label: "Portfolio pieces",
+    stat3Num: 11, stat3Suffix: "+", stat3Label: "Shipped games",
+    imgMain: "../assets/img/portfolio/the-adventures-mozqae.webp", imgMainAlt: "The Adventures, stylized human character", imgMainTag: "Stylized Human",
+    imgA: "../assets/img/portfolio/swat-v2-dykqqq.webp", imgAAlt: "SWAT V2 realistic human character", imgATag: "Realistic Human",
+    imgB: "../assets/img/portfolio/monster-lizard-jwalrd.webp", imgBAlt: "Monster Lizard realistic creature", imgBTag: "Realistic Creature"
+  },
+
   /* ---- Quote estimator: typical artist-days per asset (ranges), editable ---- */
   ESTIMATOR: {
     types: {

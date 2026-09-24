@@ -61,6 +61,14 @@
   })();
   var EMAIL = CFG.email || "business@brothersinteractive.com";
 
+  var HERO = BI.HERO || {};
+  (function () {
+    var loadedHero = loadJSON("hero");
+    if (loadedHero && typeof loadedHero === "object") {
+      for (var k in loadedHero) { if (loadedHero[k] !== "" && loadedHero[k] != null) HERO[k] = loadedHero[k]; }
+    }
+  })();
+
   /* Analytics hook: no-op until CONFIG.plausibleDomain is set */
   function track(name, props) {
     try { if (window.plausible) window.plausible(name, props ? { props: props } : undefined); } catch (err) {}
@@ -114,6 +122,34 @@
      games, case study and blog containers that exist on index.html.
      ================================================================== */
   if ($("#portfolioGrid")) {
+
+  /* ------------------------------------------------------------------
+     Hero (index.html only — category.html shares this HOME-only block
+     but has no #home hero section, so this simply no-ops there)
+     ------------------------------------------------------------------ */
+  if ($("#home")) {
+    if (HERO.eyebrow) $("#heroEyebrowText").textContent = HERO.eyebrow;
+    if (HERO.titleLine1) $("#heroLine1").textContent = HERO.titleLine1;
+    if (HERO.titleAccent) { $("#heroAccent").textContent = HERO.titleAccent; $("#heroAccent").setAttribute("data-text", HERO.titleAccent); }
+    if (HERO.titleLine3) $("#heroLine3").textContent = HERO.titleLine3;
+    if (HERO.subtitle) $("#heroSub").textContent = HERO.subtitle;
+    if (HERO.primaryBtnLabel) $("#heroBtnPrimary").textContent = HERO.primaryBtnLabel;
+    if (HERO.secondaryBtnLabel) $("#heroBtnSecondary").textContent = HERO.secondaryBtnLabel + " →";
+    [1, 2, 3].forEach(function (n) {
+      var num = HERO["stat" + n + "Num"], suffix = HERO["stat" + n + "Suffix"], label = HERO["stat" + n + "Label"];
+      var numEl = $("#heroStat" + n + "Num"), labelEl = $("#heroStat" + n + "Label");
+      if (num || num === 0) numEl.setAttribute("data-count", num);
+      if (suffix != null) numEl.setAttribute("data-suffix", suffix);
+      if (label) labelEl.textContent = label;
+    });
+    ["Main", "A", "B"].forEach(function (key) {
+      var src = HERO["img" + key], alt = HERO["img" + key + "Alt"], tag = HERO["img" + key + "Tag"];
+      var imgEl = $("#heroImg" + key), tagEl = $("#heroTag" + key);
+      if (src) imgEl.src = src;
+      if (alt) imgEl.alt = alt;
+      if (tag) tagEl.textContent = tag;
+    });
+  }
 
   /* ------------------------------------------------------------------
      Portfolio grid + filters + load more
