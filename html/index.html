@@ -164,13 +164,15 @@
           <!-- Rendered by script.js: one tile per category, links to category.html?cat=... -->
         </div>
 
-        <div class="portfolio-grid" id="portfolioGrid" aria-live="polite">
+        <!-- The full flat grid still renders here (script.js needs #portfolioGrid to
+             exist to also initialize the games/blog/lightbox code below) but stays
+             hidden on this page now that browsing happens via the style tiles above. -->
+        <div class="portfolio-grid" id="portfolioGrid" aria-live="polite" hidden>
           <!-- Rendered by script.js -->
         </div>
+        <button class="btn btn--ghost" id="loadMoreBtn" hidden>Load more</button>
 
         <div class="portfolio-more reveal">
-          <button class="btn btn--ghost" id="loadMoreBtn">Load more</button>
-          <a class="btn btn--link" href="styles.html">Browse by art style &rarr;</a>
           <a class="btn btn--link" href="https://www.artstation.com/brothersinteractive" target="_blank" rel="noopener">View full ArtStation &rarr;</a>
         </div>
       </div>
