@@ -122,9 +122,19 @@
   var grid = $("#portfolioGrid");
   var loadMoreBtn = $("#loadMoreBtn");
   var PAGE = 12; // still used for the staggered fade-in animation, not for hiding items
-  var activeFilter = "all";
+  // category.html links here as ?cat=<key> to land already filtered to one style
+  var qCat = (location.search.match(/[?&]cat=([^&]+)/) || [])[1];
+  var activeFilter = qCat ? decodeURIComponent(qCat) : "all";
   var shown = Infinity; // show the whole portfolio at once, no "Load More" needed
   var visibleList = [];
+
+  // category.html: fill in the page title/heading from the ?cat= key
+  var catTitleEl = $("#categoryTitle");
+  if (catTitleEl) {
+    var catLabel = CAT[activeFilter] || "Portfolio";
+    catTitleEl.textContent = catLabel;
+    document.title = catLabel + " | Brothers Interactive";
+  }
 
   /* A fresh random order on every page load, so the portfolio never looks the same twice */
   var SHUFFLED = PROJECTS.slice();
@@ -156,7 +166,8 @@
     loadMoreBtn.style.display = shown >= visibleList.length ? "none" : "";
   }
 
-  $("#filterBar").addEventListener("click", function (e) {
+  var filterBarEl = $("#filterBar");
+  if (filterBarEl) filterBarEl.addEventListener("click", function (e) {
     var btn = e.target.closest(".filter-btn");
     if (!btn) return;
     // reset the lightbox list to the grid selection
@@ -177,6 +188,26 @@
   });
 
   renderGrid();
+
+  /* ------------------------------------------------------------------
+     Category grid ("browse by art style" tiles) -- each tile links to
+     category.html?cat=<key>, which reuses this same portfolio-grid +
+     lightbox code path pre-filtered to that one category.
+     ------------------------------------------------------------------ */
+  var categoryGridEl = $("#categoryGrid");
+  if (categoryGridEl) {
+    categoryGridEl.innerHTML = Object.keys(CAT).map(function (key, i) {
+      var pieces = PROJECTS.filter(function (p) { return p.c === key; });
+      var thumb = pieces[0];
+      return (
+        '<a class="style-tile reveal" href="category.html?cat=' + encodeURIComponent(key) + '" style="transition-delay:' + (i % 4) * 70 + 'ms" aria-label="Browse ' + esc(CAT[key]) + '">' +
+          (thumb ? '<img src="' + thumb.i + '" alt="" loading="lazy" />' : '') +
+          '<span class="style-tile-count">' + pieces.length + '</span>' +
+          '<span class="style-tile-label">' + esc(CAT[key]) + '</span>' +
+        '</a>'
+      );
+    }).join("");
+  }
 
   /* ------------------------------------------------------------------
      Lightbox
@@ -324,7 +355,7 @@
      Games grid + trailer modal
      ------------------------------------------------------------------ */
   var gamesGrid = $("#gamesGrid");
-  gamesGrid.innerHTML = GAMES.map(function (g, i) {
+  if (gamesGrid) gamesGrid.innerHTML = GAMES.map(function (g, i) {
     return (
       '<article class="game-card reveal" data-yt="' + esc(ytId(g.yt)) + '" tabindex="0" role="button" aria-label="Play trailer: ' + esc(g.t) + '" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
         '<img src="' + g.i + '" alt="' + esc(g.t) + ' key art" loading="lazy" />' +
@@ -337,6 +368,7 @@
   var vm = $("#videoModal");
   var vmFrame = $("#videoIframe");
   function openVideo(id) {
+    if (!vm) return;
     id = ytId(id);
     track("trailer_played", { video: id });
     vmFrame.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
@@ -345,21 +377,26 @@
     document.body.classList.add("no-scroll");
   }
   function closeVideo() {
+    if (!vm) return;
     vm.classList.remove("open");
     vm.setAttribute("aria-hidden", "true");
     vmFrame.src = "";
     document.body.classList.remove("no-scroll");
   }
-  gamesGrid.addEventListener("click", function (e) {
-    var card = e.target.closest(".game-card");
-    if (card) openVideo(card.dataset.yt);
-  });
-  gamesGrid.addEventListener("keydown", function (e) {
-    var card = e.target.closest(".game-card");
-    if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openVideo(card.dataset.yt); }
-  });
-  $("#videoClose").addEventListener("click", closeVideo);
-  vm.addEventListener("click", function (e) { if (e.target === vm) closeVideo(); });
+  if (gamesGrid) {
+    gamesGrid.addEventListener("click", function (e) {
+      var card = e.target.closest(".game-card");
+      if (card) openVideo(card.dataset.yt);
+    });
+    gamesGrid.addEventListener("keydown", function (e) {
+      var card = e.target.closest(".game-card");
+      if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openVideo(card.dataset.yt); }
+    });
+  }
+  if (vm) {
+    $("#videoClose").addEventListener("click", closeVideo);
+    vm.addEventListener("click", function (e) { if (e.target === vm) closeVideo(); });
+  }
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") { closeLightbox(); closeVideo(); closeNav(); }
@@ -425,7 +462,8 @@
   /* ------------------------------------------------------------------
      Blog
      ------------------------------------------------------------------ */
-  $("#blogGrid").innerHTML = POSTS.map(function (p, i) {
+  var blogGridEl = $("#blogGrid");
+  if (blogGridEl) blogGridEl.innerHTML = POSTS.map(function (p, i) {
     return (
       '<a class="blog-card reveal" href="' + BLOG_URL + '" target="_blank" rel="noopener" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
         '<span class="blog-date">' + esc(p.d) + '</span>' +
