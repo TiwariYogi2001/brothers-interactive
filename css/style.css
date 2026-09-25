@@ -650,6 +650,7 @@ body.no-scroll { overflow: hidden; }
 
 /* ---------- Process ---------- */
 .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; counter-reset: step; margin-bottom: 36px; }
+.quote-steps { grid-template-columns: repeat(5, 1fr); }
 .process-step { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 28px 28px; transition: transform 0.4s var(--ease), border-color 0.4s; }
 .process-step:hover { transform: translateY(-5px); border-color: var(--accent); }
 .process-num { display: inline-block; font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; color: var(--accent); text-shadow: 0 0 16px rgba(var(--accent-rgb), 0.6); margin-bottom: 14px; }
