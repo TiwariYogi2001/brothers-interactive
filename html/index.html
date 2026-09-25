@@ -131,11 +131,13 @@
       </a>
     </section>
 
-    <!-- ================= CLIENT LOGO WALL ================= -->
-    <section class="logo-wall" aria-label="Studios we have collaborated with">
+    <!-- ================= CLIENT LOGO WALL (scrolling ticker) ================= -->
+    <section class="logo-wall logo-wall--scroll" aria-label="Studios we have collaborated with">
       <div class="container">
         <p class="logo-wall-title">Trusted by studios worldwide</p>
-        <ul class="logo-list" id="logoWall"><!-- Rendered from CLIENTS in data.js --></ul>
+      </div>
+      <div class="logo-marquee-mask">
+        <ul class="logo-list" id="logoWall"><!-- Rendered from CLIENTS in data.js, duplicated for a seamless loop --></ul>
       </div>
     </section>
 

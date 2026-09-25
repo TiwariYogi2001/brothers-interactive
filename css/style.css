@@ -802,10 +802,17 @@ body.no-scroll { overflow: hidden; }
 .logo-wall { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--tint); padding: 36px 0; }
 .logo-wall-title { text-align: center; font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 22px; }
 .logo-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 18px; }
-.logo-list li { display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 26px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); transition: border-color 0.3s, transform 0.3s; }
+.logo-list li { display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 26px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); transition: border-color 0.3s, transform 0.3s; white-space: nowrap; }
 .logo-list li:hover { border-color: var(--accent); transform: translateY(-2px); }
 .logo-list img { max-height: 32px; width: auto; filter: grayscale(1) brightness(1.4); opacity: 0.85; }
 .logo-list .wordmark { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+
+/* Scrolling variant: same pills, but as a continuous marquee instead of a wrapping grid. */
+.logo-wall--scroll { overflow: hidden; }
+.logo-marquee-mask { overflow: hidden; width: 100%; }
+.logo-wall--scroll .logo-list { flex-wrap: nowrap; width: max-content; animation: logoMarquee 34s linear infinite; padding: 0 18px; }
+.logo-wall--scroll:hover .logo-list { animation-play-state: paused; }
+@keyframes logoMarquee { to { transform: translateX(-50%); } }
 
 /* ---------- Compare sliders ---------- */
 .compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }

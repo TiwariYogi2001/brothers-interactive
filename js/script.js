@@ -705,9 +705,13 @@
      Client logo wall (text wordmarks until logos are supplied)
      ------------------------------------------------------------------ */
   var wall = $("#logoWall");
-  if (wall) wall.innerHTML = CLIENTS.map(function (c) {
-    return '<li>' + (c.logo ? '<img src="' + c.logo + '" alt="' + esc(c.n) + '" loading="lazy" />' : '<span class="wordmark">' + esc(c.n) + '</span>') + '</li>';
-  }).join("");
+  if (wall && CLIENTS.length) {
+    var logoItems = CLIENTS.map(function (c) {
+      return '<li>' + (c.logo ? '<img src="' + c.logo + '" alt="' + esc(c.n) + '" loading="lazy" />' : '<span class="wordmark">' + esc(c.n) + '</span>') + '</li>';
+    }).join("");
+    // Scrolling ticker: duplicated once so translateX(-50%) loops seamlessly.
+    wall.innerHTML = logoItems + logoItems;
+  }
 
   /* ------------------------------------------------------------------
      Sculpt-to-final comparison sliders
