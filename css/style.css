@@ -810,8 +810,8 @@ body.no-scroll { overflow: hidden; }
 .header-inner .availability { margin-left: auto; margin-right: 8px; }
 
 /* ---------- Logo wall ---------- */
-.logo-wall { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--tint); padding: 36px 0; }
-.logo-wall-title { text-align: center; font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 22px; }
+.logo-wall { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--tint); padding: 18px 0 32px; }
+.logo-wall-title { text-align: center; font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 18px; }
 .logo-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 18px; }
 .logo-list li { display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 26px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); transition: border-color 0.3s, transform 0.3s; }
 .logo-list li:hover { border-color: var(--accent); transform: translateY(-2px); }
