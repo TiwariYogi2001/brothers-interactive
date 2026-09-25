@@ -354,17 +354,6 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .scroll-hint span { width: 4px; height: 8px; margin-top: 6px; border-radius: 2px; background: var(--accent); box-shadow: var(--glow); animation: scrollDot 1.8s infinite; }
 @keyframes scrollDot { 0% { transform: translateY(0); opacity: 1; } 80% { transform: translateY(18px); opacity: 0; } 100% { opacity: 0; } }
 
-/* ---------- Marquee ---------- */
-.marquee { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--tint); padding: 18px 0; }
-.marquee-track { display: flex; gap: 56px; white-space: nowrap; width: max-content; animation: marquee 40s linear infinite; }
-.marquee-track span {
-  font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim);
-  display: inline-flex; align-items: center; gap: 56px;
-}
-.marquee-track span::after { content: "◆"; color: var(--accent-2); font-size: 0.55rem; }
-.marquee:hover .marquee-track { animation-play-state: paused; }
-@keyframes marquee { to { transform: translateX(-50%); } }
-
 /* ---------- Sections ---------- */
 .section { padding: 90px 0; position: relative; }
 .section--alt { background: linear-gradient(180deg, var(--tint), transparent); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
