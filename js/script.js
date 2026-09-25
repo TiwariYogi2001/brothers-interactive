@@ -109,6 +109,47 @@
     var m = String(v).match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{6,})/);
     return m ? m[1] : v;
   }
+  /* Hero showcase images vary a lot in framing (a tall standing character vs a wide
+     low creature, with different amounts of empty transparent margin baked into the
+     PNG), so a fixed-size/fixed-position podium looks wrong for most of them. This
+     scans the actual rendered image for its opaque pixels and repositions/resizes
+     the podium ellipse to sit under whatever is really there. Falls back to the
+     CSS default (centered, fixed width) if anything here fails. */
+  function fitPodiumToImage(imgEl, podiumEl, stageEl) {
+    try {
+      var nw = imgEl.naturalWidth, nh = imgEl.naturalHeight;
+      if (!nw || !nh) return;
+      var cw = 160, ch = Math.max(1, Math.round(cw * nh / nw));
+      var canvas = document.createElement("canvas");
+      canvas.width = cw; canvas.height = ch;
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(imgEl, 0, 0, cw, ch);
+      var data = ctx.getImageData(0, 0, cw, ch).data;
+      var minX = cw, maxX = 0, maxY = 0, found = false;
+      for (var y = 0; y < ch; y++) {
+        for (var x = 0; x < cw; x++) {
+          if (data[(y * cw + x) * 4 + 3] > 24) {
+            found = true;
+            if (x < minX) minX = x;
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
+          }
+        }
+      }
+      if (!found) return;
+      var stageRect = stageEl.getBoundingClientRect();
+      var imgRect = imgEl.getBoundingClientRect();
+      var sx = imgRect.width / cw, sy = imgRect.height / ch;
+      var footCenterX = imgRect.left + ((minX + maxX) / 2) * sx - stageRect.left;
+      var footY = imgRect.top + maxY * sy - stageRect.top;
+      var footWidthPx = (maxX - minX) * sx;
+      var podiumWidth = Math.max(140, Math.min(footWidthPx * 1.25, stageRect.width * 0.96));
+      podiumEl.style.left = footCenterX + "px";
+      podiumEl.style.bottom = Math.max(0, stageRect.height - footY - 6) + "px";
+      podiumEl.style.width = podiumWidth + "px";
+      podiumEl.style.transform = "translateX(-50%)";
+    } catch (e) { /* canvas read failed — keep the CSS default podium */ }
+  }
   /* A link typed without http(s):// (e.g. "www.linkedin.com/...") would
      otherwise resolve as a relative path on the current page and 404.
      Leaves mailto:, tel:, #anchors and already-absolute URLs untouched. */
@@ -147,7 +188,18 @@
     if (HERO_SHOWCASE.length) {
       var pick = HERO_SHOWCASE[Math.floor(Math.random() * HERO_SHOWCASE.length)];
       var showImg = $("#heroShowcaseImg");
-      if (showImg && pick.img) { showImg.src = pick.img; showImg.alt = pick.alt || ""; }
+      var podiumEl = $(".hero-podium");
+      var stageEl = $(".hero-stage");
+      if (showImg && pick.img) {
+        showImg.src = pick.img;
+        showImg.alt = pick.alt || "";
+        if (podiumEl && stageEl) {
+          var fit = function () { fitPodiumToImage(showImg, podiumEl, stageEl); };
+          if (showImg.complete && showImg.naturalWidth) fit();
+          else showImg.addEventListener("load", fit);
+          window.addEventListener("resize", fit);
+        }
+      }
     }
   }
 
