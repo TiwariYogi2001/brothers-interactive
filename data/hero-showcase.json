@@ -1,0 +1,7 @@
+{
+  "items": [
+    { "img": "../assets/img/portfolio/placeholder-silhouette.png", "alt": "Placeholder character — replace via admin panel" },
+    { "img": "../assets/img/portfolio/placeholder-silhouette-2.png", "alt": "Placeholder character — replace via admin panel" },
+    { "img": "../assets/img/portfolio/placeholder-silhouette-3.png", "alt": "Placeholder creature — replace via admin panel" }
+  ]
+}

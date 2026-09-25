@@ -331,6 +331,21 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .hero-card--wide { aspect-ratio: 16 / 9; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 
+/* Homepage hero showcase: one cutout character standing on a rotating themed podium, shuffled on every load. */
+.hero-stage { display: flex; align-items: flex-end; justify-content: center; overflow: visible; }
+.hero-podium { position: absolute; left: 50%; bottom: 10%; transform: translateX(-50%); width: min(420px, 88%); pointer-events: none; }
+.hero-podium-svg { width: 100%; height: auto; display: block; overflow: visible; }
+.hero-podium-ring { animation: podiumFlow 3.5s linear infinite; }
+.hero-podium-ring--in { animation-duration: 5s; animation-direction: reverse; }
+@keyframes podiumFlow { to { stroke-dashoffset: -240; } }
+.hero-showcase-img {
+  position: relative; z-index: 2; display: block;
+  max-height: 640px; max-width: 92%; width: auto; height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 28px rgba(0,0,0,0.55)) drop-shadow(0 0 36px rgba(var(--accent-rgb), 0.25));
+  animation: float 6s ease-in-out infinite;
+}
+
 .scroll-hint {
   position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%);
   width: 26px; height: 42px; border: 2px solid var(--border-strong); border-radius: 14px; display: flex; justify-content: center;
@@ -1041,6 +1056,7 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 @media (max-width: 1400px) {
   .container { width: min(100% - 48px, var(--container)); }
   .hero-visual { min-height: 560px; }
+  .hero-showcase-img { max-height: 480px; }
 }
 @media (max-width: 1600px) {
   .nav-link { padding: 10px 12px; font-size: 0.78rem; letter-spacing: 0.1em; }
@@ -1102,6 +1118,7 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
   .hero { padding-top: calc(var(--header-h) + 32px); min-height: auto; }
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { min-height: 0; aspect-ratio: 1; max-width: 520px; margin-inline: auto; width: 100%; }
+  .hero-showcase-img { max-height: 78%; max-width: 74%; }
   .scroll-hint { display: none; }
 
   .games-grid, .blog-grid { grid-template-columns: repeat(2, 1fr); }

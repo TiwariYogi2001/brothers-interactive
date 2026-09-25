@@ -22,7 +22,7 @@ collections:
         label: "Hero Section"
         file: "data/hero.json"
         format: "json"
-        description: "The very first thing visitors see: headline, subtitle, the three stats, and the three hero images."
+        description: "The very first thing visitors see: headline, subtitle and the three stats. The showcase image is a separate collection below (Hero Showcase Images)."
         fields:
           - { label: "Eyebrow text", name: "eyebrow", widget: "string", hint: "Small line above the headline, e.g. \"3D Game Art Studio · Est. 2017\"." }
           - { label: "Headline — line 1", name: "titleLine1", widget: "string", hint: "e.g. \"We build the\"" }
@@ -40,15 +40,25 @@ collections:
           - { label: "Stat 3 — number", name: "stat3Num", widget: "number", value_type: "int" }
           - { label: "Stat 3 — suffix", name: "stat3Suffix", widget: "string", required: false }
           - { label: "Stat 3 — label", name: "stat3Label", widget: "string" }
-          - { label: "Main image (large, top)", name: "imgMain", widget: "image" }
-          - { label: "Main image — alt text", name: "imgMainAlt", widget: "string", hint: "Describes the image for screen readers/SEO." }
-          - { label: "Main image — tag label", name: "imgMainTag", widget: "string", hint: "Small caption shown on the image, e.g. \"Stylized Human\"." }
-          - { label: "Small image A", name: "imgA", widget: "image" }
-          - { label: "Small image A — alt text", name: "imgAAlt", widget: "string" }
-          - { label: "Small image A — tag label", name: "imgATag", widget: "string" }
-          - { label: "Small image B (wide)", name: "imgB", widget: "image" }
-          - { label: "Small image B — alt text", name: "imgBAlt", widget: "string" }
-          - { label: "Small image B — tag label", name: "imgBTag", widget: "string" }
+
+  - name: "hero-showcase"
+    label: "Hero Showcase Images"
+    label_singular: "Showcase Image"
+    description: "Character renders that stand on the rotating podium in the homepage hero. One is picked at random every time the page loads. IMPORTANT: upload PNGs with the background removed (transparent) — an image with a background will show as a hard rectangle sitting on top of the podium instead of a floating cutout."
+    files:
+      - name: "items"
+        label: "Showcase Images"
+        file: "data/hero-showcase.json"
+        format: "json"
+        fields:
+          - label: "Images"
+            name: "items"
+            widget: "list"
+            label_singular: "Image"
+            summary: "{{fields.alt}}"
+            fields:
+              - { label: "Image (transparent PNG)", name: "img", widget: "image", hint: "Background must be removed/transparent." }
+              - { label: "Alt text", name: "alt", widget: "string", hint: "Describes the character for screen readers/SEO." }
 
   - name: "portfolio"
     label: "Portfolio"

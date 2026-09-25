@@ -53,6 +53,7 @@
   var CLIENTS = loadList("clients", BI.CLIENTS);
   var PRESS = loadList("press", BI.PRESS);
   var TEAM = loadList("team", []);
+  var HERO_SHOWCASE = loadList("hero-showcase", BI.HERO_SHOWCASE);
   (function () {
     var loadedCfg = loadJSON("config");
     if (loadedCfg && typeof loadedCfg === "object") {
@@ -142,13 +143,12 @@
       if (suffix != null) numEl.setAttribute("data-suffix", suffix);
       if (label) labelEl.textContent = label;
     });
-    ["Main", "A", "B"].forEach(function (key) {
-      var src = HERO["img" + key], alt = HERO["img" + key + "Alt"], tag = HERO["img" + key + "Tag"];
-      var imgEl = $("#heroImg" + key), tagEl = $("#heroTag" + key);
-      if (src) imgEl.src = src;
-      if (alt) imgEl.alt = alt;
-      if (tag) tagEl.textContent = tag;
-    });
+    // Showcase image: one cutout render picked at random on every load/refresh.
+    if (HERO_SHOWCASE.length) {
+      var pick = HERO_SHOWCASE[Math.floor(Math.random() * HERO_SHOWCASE.length)];
+      var showImg = $("#heroShowcaseImg");
+      if (showImg && pick.img) { showImg.src = pick.img; showImg.alt = pick.alt || ""; }
+    }
   }
 
   /* ------------------------------------------------------------------

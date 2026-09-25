@@ -19,7 +19,7 @@ window.BI = {
     address: "79/5 Shipra Path, Mansarovar, Jaipur 302017, Rajasthan, India"
   },
 
-  /* ---- Homepage hero (headline, stats, the 3 hero images) ---- */
+  /* ---- Homepage hero (headline + stats only — the showcase image is HERO_SHOWCASE below) ---- */
   HERO: {
     eyebrow: "3D Game Art Studio · Est. 2017",
     titleLine1: "We build the",
@@ -30,11 +30,17 @@ window.BI = {
     secondaryBtnLabel: "Start a Project",
     stat1Num: 2017, stat1Suffix: "", stat1Label: "Founded",
     stat2Num: 59, stat2Suffix: "+", stat2Label: "Portfolio pieces",
-    stat3Num: 11, stat3Suffix: "+", stat3Label: "Shipped games",
-    imgMain: "../assets/img/portfolio/the-adventures-mozqae.webp", imgMainAlt: "The Adventures, stylized human character", imgMainTag: "Stylized Human",
-    imgA: "../assets/img/portfolio/swat-v2-dykqqq.webp", imgAAlt: "SWAT V2 realistic human character", imgATag: "Realistic Human",
-    imgB: "../assets/img/portfolio/monster-lizard-jwalrd.webp", imgBAlt: "Monster Lizard realistic creature", imgBTag: "Realistic Creature"
+    stat3Num: 11, stat3Suffix: "+", stat3Label: "Shipped games"
   },
+
+  /* ---- Hero showcase: cutout (transparent-background) character renders that stand on the
+     rotating podium in the hero. One is picked at random on every page load. Use PNGs with the
+     background removed — anything with a background will show as a hard rectangle over the podium. ---- */
+  HERO_SHOWCASE: [
+    { img: "../assets/img/portfolio/placeholder-silhouette.png", alt: "Placeholder character — replace via admin panel" },
+    { img: "../assets/img/portfolio/placeholder-silhouette-2.png", alt: "Placeholder character — replace via admin panel" },
+    { img: "../assets/img/portfolio/placeholder-silhouette-3.png", alt: "Placeholder creature — replace via admin panel" }
+  ],
 
   /* ---- Quote estimator: typical artist-days per asset (ranges), editable ---- */
   ESTIMATOR: {

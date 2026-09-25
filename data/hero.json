@@ -14,14 +14,5 @@
   "stat2Label": "Portfolio pieces",
   "stat3Num": 11,
   "stat3Suffix": "+",
-  "stat3Label": "Shipped games",
-  "imgMain": "../assets/img/portfolio/the-adventures-mozqae.webp",
-  "imgMainAlt": "The Adventures, stylized human character",
-  "imgMainTag": "Stylized Human",
-  "imgA": "../assets/img/portfolio/swat-v2-dykqqq.webp",
-  "imgAAlt": "SWAT V2 realistic human character",
-  "imgATag": "Realistic Human",
-  "imgB": "../assets/img/portfolio/monster-lizard-jwalrd.webp",
-  "imgBAlt": "Monster Lizard realistic creature",
-  "imgBTag": "Realistic Creature"
+  "stat3Label": "Shipped games"
 }
