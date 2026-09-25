@@ -1163,7 +1163,7 @@
   }
 
   /* ------------------------------------------------------------------
-     Team grid (team.html only) — rendered from data/team.json
+     Team grid (homepage #team section) — rendered from data/team.json
      ------------------------------------------------------------------ */
   var teamGrid = $("#teamGrid");
   if (teamGrid && TEAM.length) {
