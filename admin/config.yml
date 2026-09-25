@@ -31,14 +31,12 @@ collections:
           - { label: "Subtitle paragraph", name: "subtitle", widget: "text" }
           - { label: "Primary button label", name: "primaryBtnLabel", widget: "string", hint: "Links to the Portfolio section." }
           - { label: "Secondary button label", name: "secondaryBtnLabel", widget: "string", hint: "Links to the Contact section. The arrow (→) is added automatically." }
-          - { label: "Stat 1 — number", name: "stat1Num", widget: "number", value_type: "int" }
+          - { label: "Stat 1 — number", name: "stat1Num", widget: "number", value_type: "int", hint: "The founding year. This one is the only stat number set here -- Stats 2 and 3 always show the real Portfolio and Games counts automatically, below." }
           - { label: "Stat 1 — suffix", name: "stat1Suffix", widget: "string", required: false, hint: "e.g. \"+\". Leave empty for none." }
           - { label: "Stat 1 — label", name: "stat1Label", widget: "string" }
-          - { label: "Stat 2 — number", name: "stat2Num", widget: "number", value_type: "int" }
-          - { label: "Stat 2 — suffix", name: "stat2Suffix", widget: "string", required: false }
+          - { label: "Stat 2 — suffix", name: "stat2Suffix", widget: "string", required: false, hint: "Number is automatic (counts the Portfolio collection)." }
           - { label: "Stat 2 — label", name: "stat2Label", widget: "string" }
-          - { label: "Stat 3 — number", name: "stat3Num", widget: "number", value_type: "int" }
-          - { label: "Stat 3 — suffix", name: "stat3Suffix", widget: "string", required: false }
+          - { label: "Stat 3 — suffix", name: "stat3Suffix", widget: "string", required: false, hint: "Number is automatic (counts the Games collection)." }
           - { label: "Stat 3 — label", name: "stat3Label", widget: "string" }
 
   - name: "hero-showcase"

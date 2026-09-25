@@ -54,6 +54,20 @@
   var PRESS = loadList("press", BI.PRESS);
   var TEAM = loadList("team", []);
   var HERO_SHOWCASE = loadList("hero-showcase", BI.HERO_SHOWCASE);
+
+  /* Stat counters that must track real data instead of a hand-typed number
+     (data-stat="projects"/"games"/"clients"/"years" on any .stat-num, any page).
+     Runs before the reveal/counter-animation wiring below picks up data-count. */
+  $$(".stat-num[data-stat]").forEach(function (el) {
+    var kind = el.dataset.stat;
+    var val = kind === "projects" ? PROJECTS.length
+      : kind === "games" ? GAMES.length
+      : kind === "clients" ? CLIENTS.length
+      : kind === "years" ? (new Date().getFullYear() - 2017)
+      : null;
+    if (val != null) el.setAttribute("data-count", val);
+  });
+
   (function () {
     var loadedCfg = loadJSON("config");
     if (loadedCfg && typeof loadedCfg === "object") {
@@ -137,7 +151,11 @@
     if (HERO.primaryBtnLabel) $("#heroBtnPrimary").textContent = HERO.primaryBtnLabel;
     if (HERO.secondaryBtnLabel) $("#heroBtnSecondary").textContent = HERO.secondaryBtnLabel + " →";
     [1, 2, 3].forEach(function (n) {
-      var num = HERO["stat" + n + "Num"], suffix = HERO["stat" + n + "Suffix"], label = HERO["stat" + n + "Label"];
+      // Stat 2 (portfolio pieces) and stat 3 (shipped games) always reflect the
+      // real data length -- never the CMS's typed-in number -- so the count on
+      // screen can't drift out of sync when items are added or removed.
+      var num = n === 2 ? PROJECTS.length : n === 3 ? GAMES.length : HERO["stat" + n + "Num"];
+      var suffix = HERO["stat" + n + "Suffix"], label = HERO["stat" + n + "Label"];
       var numEl = $("#heroStat" + n + "Num"), labelEl = $("#heroStat" + n + "Label");
       if (num || num === 0) numEl.setAttribute("data-count", num);
       if (suffix != null) numEl.setAttribute("data-suffix", suffix);

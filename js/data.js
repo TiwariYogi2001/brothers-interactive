@@ -29,8 +29,8 @@ window.BI = {
     primaryBtnLabel: "View Portfolio",
     secondaryBtnLabel: "Start a Project",
     stat1Num: 2017, stat1Suffix: "", stat1Label: "Founded",
-    stat2Num: 59, stat2Suffix: "+", stat2Label: "Portfolio pieces",
-    stat3Num: 11, stat3Suffix: "+", stat3Label: "Shipped games"
+    stat2Suffix: "+", stat2Label: "Portfolio pieces",
+    stat3Suffix: "+", stat3Label: "Shipped games"
   },
 
   /* ---- Hero showcase: cutout (transparent-background) character renders that stand on the
