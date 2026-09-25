@@ -21,6 +21,25 @@
     "mid-night-walk": "Mid Night Walk",
     "lost-in-random": "Lost In Random"
   };
+  /* "Browse by style" tiles on the homepage/category pages. Each groups one or
+     more of the CAT keys above (a piece's own p.c is untouched, so its label
+     everywhere else — lightbox, asset page, work-card badge — is unaffected).
+     A slug with an empty match list has no tagged work yet and renders as a
+     non-clickable "Coming soon" tile instead of linking to an empty page. */
+  var BROWSE_CATS = [
+    { slug: "concept-art", label: "Concept Art", match: [] },
+    { slug: "characters", label: "Characters", match: ["realistic-humans"] },
+    { slug: "realtime-hair", label: "Realtime Hair", match: ["realistic-hairs"] },
+    { slug: "creature", label: "Creature", match: ["realistic-creatures"] },
+    { slug: "props", label: "Props", match: ["props"] },
+    { slug: "weapons", label: "Weapons", match: [] },
+    { slug: "hard-surface", label: "Hard Surface", match: [] },
+    { slug: "vehicles", label: "Vehicles", match: [] },
+    { slug: "stylized-art", label: "Stylized Art", match: ["stylized-human", "stylized-creature"] },
+    { slug: "technical-art", label: "Technical Art", match: [] },
+    { slug: "animation", label: "Animation", match: [] },
+    { slug: "cinematics", label: "Cinematics", match: [] }
+  ];
   var BASE = "https://brothersinteractive.com/projects/";
 
   /* All editable content lives in data/*.json (not data.js) so the /admin
@@ -181,10 +200,13 @@
   var shown = Infinity; // show the whole portfolio at once, no "Load More" needed
   var visibleList = [];
 
+  // ?cat= can be a BROWSE_CATS slug (grouped tile) or a raw CAT key (legacy link)
+  var activeBrowseCat = BROWSE_CATS.filter(function (b) { return b.slug === activeFilter; })[0];
+
   // category.html: fill in the page title/heading from the ?cat= key
   var catTitleEl = $("#categoryTitle");
   if (catTitleEl) {
-    var catLabel = CAT[activeFilter] || "Portfolio";
+    var catLabel = (activeBrowseCat && activeBrowseCat.label) || CAT[activeFilter] || "Portfolio";
     catTitleEl.textContent = catLabel;
     document.title = catLabel + " | Brothers Interactive";
   }
@@ -196,7 +218,9 @@
     var tmp = SHUFFLED[si]; SHUFFLED[si] = SHUFFLED[sj]; SHUFFLED[sj] = tmp;
   }
   function filtered() {
-    return activeFilter === "all" ? SHUFFLED : SHUFFLED.filter(function (p) { return p.c === activeFilter; });
+    if (activeFilter === "all") return SHUFFLED;
+    if (activeBrowseCat) return SHUFFLED.filter(function (p) { return activeBrowseCat.match.indexOf(p.c) !== -1; });
+    return SHUFFLED.filter(function (p) { return p.c === activeFilter; });
   }
 
   function renderGrid() {
@@ -249,13 +273,19 @@
      ------------------------------------------------------------------ */
   var categoryGridEl = $("#categoryGrid");
   if (categoryGridEl) {
-    categoryGridEl.innerHTML = Object.keys(CAT).map(function (key, i) {
-      var pieces = PROJECTS.filter(function (p) { return p.c === key; });
-      var thumb = pieces[0];
+    categoryGridEl.innerHTML = BROWSE_CATS.map(function (b, i) {
+      var thumb = PROJECTS.filter(function (p) { return b.match.indexOf(p.c) !== -1; })[0];
+      if (!thumb) {
+        return (
+          '<div class="style-tile style-tile--soon reveal" style="transition-delay:' + (i % 4) * 70 + 'ms" aria-hidden="true">' +
+            '<span class="style-tile-label">' + esc(b.label) + '<small>Coming soon</small></span>' +
+          '</div>'
+        );
+      }
       return (
-        '<a class="style-tile reveal" href="category.html?cat=' + encodeURIComponent(key) + '" style="transition-delay:' + (i % 4) * 70 + 'ms" aria-label="Browse ' + esc(CAT[key]) + '">' +
-          (thumb ? '<img src="' + thumb.i + '" alt="" loading="lazy" />' : '') +
-          '<span class="style-tile-label">' + esc(CAT[key]) + '</span>' +
+        '<a class="style-tile reveal" href="category.html?cat=' + encodeURIComponent(b.slug) + '" style="transition-delay:' + (i % 4) * 70 + 'ms" aria-label="Browse ' + esc(b.label) + '">' +
+          '<img src="' + thumb.i + '" alt="" loading="lazy" />' +
+          '<span class="style-tile-label">' + esc(b.label) + '</span>' +
         '</a>'
       );
     }).join("");

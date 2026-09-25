@@ -390,6 +390,20 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 }
 .style-tile:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 24px rgba(var(--accent-rgb),0.3); }
 .style-tile:hover img { transform: scale(1.08); filter: brightness(1.1); }
+
+/* Browse-by-style tile with no tagged work yet */
+.style-tile--soon {
+  cursor: default; display: flex; align-items: center; justify-content: center;
+  background: repeating-linear-gradient(135deg, var(--surface) 0px, var(--surface) 10px, var(--tint) 10px, var(--tint) 20px);
+  border-style: dashed; opacity: 0.65;
+}
+.style-tile--soon .style-tile-label {
+  position: static; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.style-tile--soon .style-tile-label small {
+  font-family: var(--font-display); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); font-weight: 600;
+}
+.style-tile--soon:hover { transform: none; border-color: var(--border); box-shadow: none; }
 .style-tile:hover::after { background: linear-gradient(180deg, rgba(7,8,15,0) 0%, rgba(7,8,15,0.6) 100%); }
 
 /* Masonry: images keep their own proportions and pack into columns automatically */
