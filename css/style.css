@@ -844,6 +844,14 @@ body.no-scroll { overflow: hidden; }
 .compare-range::-moz-range-thumb { width: 60px; height: 100%; opacity: 0; }
 .compare figcaption { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; font-family: var(--font-display); font-size: 0.85rem; text-transform: uppercase; }
 .compare figcaption a { color: var(--accent); font-size: 0.72rem; letter-spacing: 0.12em; }
+/* Single large hero-style slider (breakdown pages) instead of the 3-up grid card size */
+.compare--large { max-width: 980px; margin: 0 auto; }
+.compare--large .compare-stage { aspect-ratio: 16 / 10; }
+.compare--large .compare-label { top: 20px; font-size: 0.75rem; padding: 7px 14px; }
+.compare--large .compare-label--a { left: 20px; } .compare--large .compare-label--b { right: 20px; }
+
+/* Breakdown page turntable gallery: same tile look as .style-samples, 4 across */
+.breakdown-gallery { grid-template-columns: repeat(4, 1fr); }
 
 /* ---------- Estimator ---------- */
 .estimator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: start; }

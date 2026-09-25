@@ -570,6 +570,18 @@
   } /* ---- end HOME PAGE ONLY block ---- */
 
   /* ------------------------------------------------------------------
+     Drag-to-compare slider (sculpt/final) — delegated at document level,
+     not scoped to #compareGrid, so any page with static .compare-stage
+     markup (e.g. breakdown.html) gets a working slider for free.
+     ------------------------------------------------------------------ */
+  document.addEventListener("input", function (e) {
+    var r = e.target.closest(".compare-range"); if (!r) return;
+    var st = r.parentElement, v = +r.value;
+    $(".compare-before", st).style.clipPath = "inset(0 " + (100 - v) + "% 0 0)";
+    $(".compare-handle", st).style.left = v + "%";
+  });
+
+  /* ------------------------------------------------------------------
      Testimonials + open roles (data-driven, used on several pages)
      ------------------------------------------------------------------ */
   var tGrid = $("#testimonialGrid");
@@ -778,12 +790,6 @@
         '<figcaption><span>' + esc(pr.t) + '</span><a href="asset.html?id=' + pr.id + '">Details &rarr;</a></figcaption>' +
       '</figure>';
     }).join("");
-    cmp.addEventListener("input", function (e) {
-      var r = e.target.closest(".compare-range"); if (!r) return;
-      var st = r.parentElement, v = +r.value;
-      $(".compare-before", st).style.clipPath = "inset(0 " + (100 - v) + "% 0 0)";
-      $(".compare-handle", st).style.left = v + "%";
-    });
   }
 
   /* ------------------------------------------------------------------
