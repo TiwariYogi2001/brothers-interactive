@@ -311,7 +311,7 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .stat-num { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; color: var(--text-strong); text-shadow: 0 0 16px rgba(var(--accent-rgb),0.5); }
 .stat-label { font-size: 1rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; }
 
-.hero-visual { position: relative; min-height: 720px; }
+.hero-visual { position: relative; min-height: 760px; }
 .hero-card {
   position: absolute; border-radius: var(--radius); overflow: hidden; background: var(--surface);
   border: 1px solid var(--border-strong); box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(var(--accent-rgb),0.15);
@@ -331,17 +331,18 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .hero-card--wide { aspect-ratio: 16 / 9; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 
-/* Homepage hero showcase: one cutout character standing on a rotating themed podium, shuffled on every load. */
+/* Homepage hero showcase: one cutout character on a soft themed glow, shuffled on every load.
+   No fixed aspect ratio anywhere in this block — a tall/vertical image is capped by max-height,
+   a wide one by max-width, and the container's min-height (not height) lets either grow the
+   box instead of being clipped or overlapping the content above it. */
 .hero-stage { display: flex; align-items: flex-end; justify-content: center; overflow: visible; }
-.hero-podium { position: absolute; left: 50%; bottom: 10%; transform: translateX(-50%); width: min(420px, 88%); pointer-events: none; }
+.hero-podium { position: absolute; left: 50%; bottom: 6%; transform: translateX(-50%); width: min(420px, 88%); pointer-events: none; }
 .hero-podium-svg { width: 100%; height: auto; display: block; overflow: visible; }
-.hero-podium-ring { animation: podiumFlow 3.5s linear infinite; }
-.hero-podium-ring--in { animation-duration: 5s; animation-direction: reverse; }
-@keyframes podiumFlow { to { stroke-dashoffset: -240; } }
 .hero-showcase-img {
   position: relative; z-index: 2; display: block;
-  max-height: 640px; max-width: 92%; width: auto; height: auto;
+  max-height: 720px; max-width: 94%; width: auto; height: auto;
   object-fit: contain;
+  margin-bottom: 48px;
   filter: drop-shadow(0 24px 28px rgba(0,0,0,0.55)) drop-shadow(0 0 36px rgba(var(--accent-rgb), 0.25));
   animation: float 6s ease-in-out infinite;
 }
@@ -1055,8 +1056,8 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 }
 @media (max-width: 1400px) {
   .container { width: min(100% - 48px, var(--container)); }
-  .hero-visual { min-height: 560px; }
-  .hero-showcase-img { max-height: 480px; }
+  .hero-visual { min-height: 600px; }
+  .hero-showcase-img { max-height: 520px; }
 }
 @media (max-width: 1600px) {
   .nav-link { padding: 10px 12px; font-size: 0.78rem; letter-spacing: 0.1em; }
@@ -1117,8 +1118,8 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 
   .hero { padding-top: calc(var(--header-h) + 32px); min-height: auto; }
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-  .hero-visual { min-height: 0; aspect-ratio: 1; max-width: 520px; margin-inline: auto; width: 100%; }
-  .hero-showcase-img { max-height: 78%; max-width: 74%; }
+  .hero-visual { min-height: 460px; max-width: 520px; margin-inline: auto; width: 100%; }
+  .hero-showcase-img { max-height: 420px; max-width: 82%; margin-bottom: 28px; }
   .scroll-hint { display: none; }
 
   .games-grid, .blog-grid { grid-template-columns: repeat(2, 1fr); }
