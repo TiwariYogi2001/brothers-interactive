@@ -270,10 +270,10 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .brand-name em { font-style: normal; color: var(--accent); }
 .brand-tag { font-size: 0.85rem; color: var(--text-dim); letter-spacing: 0.06em; }
 
-.main-nav ul { display: flex; align-items: center; gap: 8px; }
+.main-nav ul { display: flex; align-items: center; gap: 2px; justify-content: flex-end; }
 .nav-link {
-  display: inline-block; padding: 12px 18px; border-radius: 999px;
-  font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  display: inline-block; padding: 10px 13px; border-radius: 999px;
+  font-family: var(--font-display); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--text-muted); position: relative; transition: color 0.25s;
 }
 .nav-link::after {
@@ -1084,8 +1084,10 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
   .main-nav ul { gap: 2px; }
   .brand-tag { display: none; }
 }
-@media (max-width: 1250px) {
-  /* Hamburger kicks in earlier because the nav has ten items */
+@media (max-width: 1600px) {
+  /* Hamburger kicks in well before typical laptop width (1366-1440px) —
+     with 12 nav items, even shrunk, a horizontal row doesn't reliably fit
+     below this. */
   .nav-toggle { display: flex; }
   .main-nav {
     position: fixed; top: var(--header-h); left: 0; right: 0; background: rgba(var(--bg-rgb), 0.96); border-bottom: 1px solid var(--border);
