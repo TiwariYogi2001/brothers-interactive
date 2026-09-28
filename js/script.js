@@ -313,13 +313,20 @@
   function afterMove(clone, ms, fn) {
     var fired = false;
     var go = function () { if (fired) return; fired = true; fn(); };
-    clone.addEventListener("transitionend", function (e) { if (e.propertyName === "width" || e.propertyName === "top") go(); });
+    clone.addEventListener("transitionend", function (e) { if (e.propertyName === "transform") go(); });
     setTimeout(go, ms + 80);
   }
-  function makeClone(srcImg, rect, fit) {
+  /* Sizes/positions the clone at its FINAL (toRect) box immediately — no layout
+     animation — then fakes the starting look with a transform (translate+scale)
+     computed from fromRect. Only that transform is ever animated afterwards. */
+  function makeClone(srcImg, fromRect, toRect, fit) {
     var clone = srcImg.cloneNode(false);
     clone.className = "flip-clone loaded";
-    clone.style.cssText = "top:" + rect.top + "px;left:" + rect.left + "px;width:" + rect.width + "px;height:" + rect.height + "px;object-fit:" + fit + ";";
+    var sx = fromRect.width / toRect.width, sy = fromRect.height / toRect.height;
+    var tx = (fromRect.left + fromRect.width / 2) - (toRect.left + toRect.width / 2);
+    var ty = (fromRect.top + fromRect.height / 2) - (toRect.top + toRect.height / 2);
+    clone.style.cssText = "top:" + toRect.top + "px;left:" + toRect.left + "px;width:" + toRect.width + "px;height:" + toRect.height + "px;object-fit:" + fit + ";" +
+      "transition:none;transform:translate(" + tx + "px," + ty + "px) scale(" + sx + "," + sy + ");";
     document.body.appendChild(clone);
     return clone;
   }
@@ -329,14 +336,15 @@
     if (!srcImg || reduceMotion) { done(); return; }
     var from = srcImg.getBoundingClientRect();
     if (!from.width) { done(); return; }
-    var clone = makeClone(srcImg, from, "cover");
     lbFigure.classList.add("hidden-for-flip");
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         var to = lbImg.getBoundingClientRect();
         if (!to.width) { to = { top: window.innerHeight * 0.06, left: window.innerWidth * 0.2, width: window.innerWidth * 0.6, height: window.innerHeight * 0.78 }; }
-        clone.style.top = to.top + "px"; clone.style.left = to.left + "px"; clone.style.width = to.width + "px"; clone.style.height = to.height + "px";
-        clone.style.objectFit = "contain";
+        var clone = makeClone(srcImg, from, to, "contain");
+        clone.getBoundingClientRect(); // commit the instant starting transform before animating
+        clone.style.transition = "transform 0.45s var(--ease), opacity 0.3s";
+        clone.style.transform = "none";
         afterMove(clone, 450, function () {
           lbFigure.classList.remove("hidden-for-flip"); lbFigure.classList.add("settle");
           clone.style.opacity = "0";
@@ -351,10 +359,12 @@
     if (!dstImg || reduceMotion || !lb.classList.contains("open")) { done(); return; }
     var from = lbImg.getBoundingClientRect(); var to = dstImg.getBoundingClientRect();
     if (!from.width || !to.width || to.bottom < 0 || to.top > window.innerHeight) { done(); return; }
-    var clone = makeClone(lbImg, from, "contain");
+    var clone = makeClone(lbImg, from, to, "cover");
     lbFigure.classList.add("hidden-for-flip");
+    clone.getBoundingClientRect(); // commit the instant starting transform before animating
     requestAnimationFrame(function () {
-      clone.style.top = to.top + "px"; clone.style.left = to.left + "px"; clone.style.width = to.width + "px"; clone.style.height = to.height + "px"; clone.style.objectFit = "cover";
+      clone.style.transition = "transform 0.45s var(--ease), opacity 0.2s";
+      clone.style.transform = "none";
       afterMove(clone, 450, function () {
         clone.style.opacity = "0";
         setTimeout(function () { clone.remove(); lbFigure.classList.remove("hidden-for-flip"); done(); }, 200);

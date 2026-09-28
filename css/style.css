@@ -983,11 +983,13 @@ img.loaded { opacity: 1 !important; transform: none; }
 .tilt { transform-style: preserve-3d; }
 .tilt .work-info, .tilt .game-info { transform: translateZ(30px); }
 
-/* lightbox zoom-from-thumbnail clone */
+/* lightbox zoom-from-thumbnail clone — sized at its final box from the start and
+   animated with transform only (translate+scale), so the browser composites the
+   motion on the GPU instead of re-laying-out and re-rasterizing every frame.
+   transition is managed inline in flipTo/flipBack (see script.js), not here. */
 .flip-clone {
   position: fixed; z-index: 2100; object-fit: cover; border-radius: var(--radius); pointer-events: none;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 40px rgba(var(--accent-rgb), 0.35); will-change: transform, width, height, top, left;
-  transition: top 0.45s var(--ease), left 0.45s var(--ease), width 0.45s var(--ease), height 0.45s var(--ease), border-radius 0.45s, opacity 0.3s;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 40px rgba(var(--accent-rgb), 0.35); will-change: transform, opacity;
 }
 .lightbox-figure.hidden-for-flip { opacity: 0; }
 .lightbox-figure.settle { animation: settle 0.35s var(--ease); }
