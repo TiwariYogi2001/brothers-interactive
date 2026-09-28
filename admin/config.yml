@@ -9,6 +9,9 @@ backend:
 # is running, the CMS uses that instead of the backend above — no login needed,
 # and it writes straight to the real files in this project. Safe to leave in for
 # production too: it only ever activates on localhost.
+# On Windows, start it with BIND_HOST=:: (see .claude/launch.json / README) so it
+# accepts the IPv6 loopback too — Chrome tries "localhost" as ::1 first, and a
+# plain IPv4-only bind makes that first probe fail outright on every page load.
 local_backend: true
 
 media_folder: "assets/img/portfolio"
