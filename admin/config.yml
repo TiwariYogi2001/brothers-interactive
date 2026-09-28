@@ -88,6 +88,7 @@ collections:
                   - { label: "Realistic Hairs", value: "realistic-hairs" }
                   - { label: "Stylized Human", value: "stylized-human" }
                   - { label: "Stylized Creature", value: "stylized-creature" }
+                  - { label: "Hand Paint", value: "hand-paint" }
                   - { label: "Props", value: "props" }
                   - { label: "Mid Night Walk", value: "mid-night-walk" }
                   - { label: "Lost In Random", value: "lost-in-random" }

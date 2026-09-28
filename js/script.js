@@ -17,6 +17,7 @@
     "realistic-hairs": "Realistic Hairs",
     "stylized-human": "Stylized Human",
     "stylized-creature": "Stylized Creature",
+    "hand-paint": "Hand Paint",
     "props": "Props",
     "mid-night-walk": "Mid Night Walk",
     "lost-in-random": "Lost In Random"
@@ -27,12 +28,16 @@
      A slug with an empty match list has no tagged work yet and renders as a
      non-clickable "Coming soon" tile instead of linking to an empty page. */
   var BROWSE_CATS = [
-    { slug: "characters", label: "Characters", match: ["realistic-humans"] },
-    { slug: "realtime-hair", label: "Realtime Hair", match: ["realistic-hairs"] },
-    { slug: "creature", label: "Creature", match: ["realistic-creatures"] },
+    { slug: "realistic-character", label: "Realistic Character", match: ["realistic-humans"] },
+    { slug: "realistic-hair", label: "Realistic Hair", match: ["realistic-hairs"] },
+    { slug: "realistic-creature", label: "Realistic Creature", match: ["realistic-creatures"] },
+    { slug: "stylized-character", label: "Stylized Character", match: ["stylized-human"] },
+    { slug: "stylized-creature", label: "Stylized Creature", match: ["stylized-creature"] },
+    { slug: "hand-paint", label: "Hand Paint", match: ["hand-paint"] },
+    { slug: "midnight-walk", label: "Midnight Walk", match: ["mid-night-walk"] },
+    { slug: "lost-in-random", label: "Lost in Random", match: ["lost-in-random"] },
     { slug: "props", label: "Props", match: ["props"] },
-    { slug: "weapons", label: "Weapons", match: [] },
-    { slug: "stylized-art", label: "Stylized Art", match: ["stylized-human", "stylized-creature"] }
+    { slug: "weapons", label: "Weapons", match: [] }
   ];
   var BASE = "https://brothersinteractive.com/projects/";
 
