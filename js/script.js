@@ -27,18 +27,12 @@
      A slug with an empty match list has no tagged work yet and renders as a
      non-clickable "Coming soon" tile instead of linking to an empty page. */
   var BROWSE_CATS = [
-    { slug: "concept-art", label: "Concept Art", match: [] },
     { slug: "characters", label: "Characters", match: ["realistic-humans"] },
     { slug: "realtime-hair", label: "Realtime Hair", match: ["realistic-hairs"] },
     { slug: "creature", label: "Creature", match: ["realistic-creatures"] },
     { slug: "props", label: "Props", match: ["props"] },
     { slug: "weapons", label: "Weapons", match: [] },
-    { slug: "hard-surface", label: "Hard Surface", match: [] },
-    { slug: "vehicles", label: "Vehicles", match: [] },
-    { slug: "stylized-art", label: "Stylized Art", match: ["stylized-human", "stylized-creature"] },
-    { slug: "technical-art", label: "Technical Art", match: [] },
-    { slug: "animation", label: "Animation", match: [] },
-    { slug: "cinematics", label: "Cinematics", match: [] }
+    { slug: "stylized-art", label: "Stylized Art", match: ["stylized-human", "stylized-creature"] }
   ];
   var BASE = "https://brothersinteractive.com/projects/";
 

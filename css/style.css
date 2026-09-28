@@ -577,6 +577,7 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: var(--radius-sm);
   background: var(--bg-2); border: 1px solid var(--accent); position: relative;
 }
+.ref-banner[hidden] { display: none; }
 .ref-banner img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
 .ref-banner-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .ref-banner-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
