@@ -903,7 +903,7 @@ body.no-scroll { overflow: hidden; }
 /* ---------- Asset detail page ---------- */
 .asset-hero { padding: calc(var(--header-h) + 50px) 0 40px; }
 .asset-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 56px; align-items: start; }
-.asset-main { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
+.asset-main { border-radius: var(--radius); overflow: hidden; }
 .asset-main img { width: 100%; height: auto; display: block; }
 .asset-thumbs { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
 .asset-thumb { width: 96px; height: 96px; padding: 0; border-radius: 10px; overflow: hidden; border: 2px solid var(--border-strong); transition: border-color 0.3s, transform 0.3s; }
