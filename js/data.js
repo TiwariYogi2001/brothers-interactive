@@ -10,7 +10,6 @@ window.BI = {
   CONFIG: {
     availability: "Taking new projects",            // header pill text; "" hides it
     availabilityNote: "Next start: on request",     // small line under the pill
-    formspreeId: "",                                // e.g. "xyzabcde" from formspree.io — empty = email client fallback
     bookingUrl: "",                                 // e.g. "https://calendly.com/brothersinteractive/intro" — empty hides the button
     plausibleDomain: "",                            // e.g. "brothersinteractive.com" — empty = analytics off
     showreelYouTubeId: "",                          // e.g. "dQw4w9WgXcQ" — empty = image reel from the portfolio

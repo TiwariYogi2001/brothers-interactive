@@ -9,7 +9,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Brothers Interactive | 3D Characters for Games" />
   <meta property="og:description" content="3D game art studio specializing in characters, props and weapons for indie and AAA games. Credits include Warhammer 40,000: Space Marine 2, Ready Or Not, Lost in Random and The Midnight Walk." />
-  <meta property="og:image" content="../assets/img/brand/og-image.jpg" />
+  <meta property="og:image" content="https://brothersinteractive.com/assets/img/brand/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:url" content="https://brothersinteractive.com/" />
   <link rel="canonical" href="https://brothersinteractive.com/" />
@@ -668,6 +668,15 @@
         </div>
 
         <form class="contact-form reveal" id="contactForm" novalidate>
+          <div class="ref-banner" id="cfRefBanner" hidden>
+            <img id="cfRefImg" src="" alt="" />
+            <div class="ref-banner-text">
+              <span class="ref-banner-label">Asking about this piece</span>
+              <strong id="cfRefTitle"></strong>
+              <span id="cfRefCat"></span>
+            </div>
+            <button type="button" class="ref-banner-close" id="cfRefClose" aria-label="Remove reference">&times;</button>
+          </div>
           <div class="field-row">
             <div class="field">
               <label for="cfName">Name</label>

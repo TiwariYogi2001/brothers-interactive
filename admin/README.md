@@ -13,7 +13,7 @@ on the site — no code editing:
 - **Careers** — open job roles
 - **Press** — press and recognition mentions
 - **Settings** — availability pill, contact email/address, booking link,
-  Formspree ID, analytics domain, capabilities deck PDF
+  analytics domain, capabilities deck PDF
 
 Everything on the code side is already done. These steps need your Netlify
 account (I can't click through a dashboard on your behalf):

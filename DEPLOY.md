@@ -40,7 +40,7 @@ Easiest: use `/admin` (see `admin/README.md`) — a form for every section below
 no file editing. Everything it edits lives in `data/*.json`, which you can
 also open and edit directly if you prefer:
 
-- **Settings** (`data/config.json`): availability text, Formspree form id, booking link, analytics domain, showreel video id, contact email/address, capabilities deck PDF.
+- **Settings** (`data/config.json`): availability text, booking link, analytics domain, showreel video id, contact email/address, capabilities deck PDF.
 - **Open roles** (`data/roles.json`): appear on the home page and careers page.
 - **Reviews** (`data/testimonials.json`): appear on the home page. Each has a `sample: true/false` flag — turn it off once it's a real, approved quote.
 - **Press** (`data/press.json`): appears on credits.html.
@@ -52,12 +52,12 @@ also open and edit directly if you prefer:
 
 ## Forms without a backend
 
-By default the forms open the visitor's email client. To receive submissions in your inbox:
-
-1. Create a free form at https://formspree.io and copy its id (the part after `/f/`).
-2. Put it in `CONFIG.formspreeId` in `data.js`.
-
-Both the project brief form and the job application form then post directly to Formspree.
+Both the project brief form and the job application form post directly to
+`https://formsubmit.co/ajax/<CONFIG.email>` — no signup or account needed on
+your end. The first submission after deploy sends a one-time "Activate Form"
+email to that address; click it once and every submission after that lands
+straight in the inbox. If the request ever fails (offline, blocked), the form
+falls back to opening the visitor's email client instead.
 
 ## Analytics
 

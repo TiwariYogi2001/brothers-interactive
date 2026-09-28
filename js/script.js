@@ -94,6 +94,7 @@
     }
   })();
   var EMAIL = CFG.email || "business@brothersinteractive.com";
+  var JOBS_EMAIL = "contact@brothersinteractive.com";
 
   var HERO = BI.HERO || {};
   (function () {
@@ -108,25 +109,27 @@
     try { if (window.plausible) window.plausible(name, props ? { props: props } : undefined); } catch (err) {}
   }
 
-  /* Shared form sender: Formspree when configured, email client otherwise */
-  function sendForm(formEl, noteEl, payload, eventName, mailtoHref) {
-    if (CFG.formspreeId) {
-      noteEl.className = "form-note"; noteEl.textContent = "Sending...";
-      fetch("https://formspree.io/f/" + CFG.formspreeId, {
-        method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" }, body: JSON.stringify(payload)
-      }).then(function (r) {
-        if (!r.ok) throw new Error(String(r.status));
+  /* Shared form sender: posts straight to the inbox via FormSubmit.co (no signup,
+     just a one-time "Activate Form" email the first time EMAIL receives one),
+     falls back to the visitor's email client if the request is blocked/offline. */
+  function sendForm(formEl, noteEl, payload, eventName, mailtoHref, targetEmail) {
+    noteEl.className = "form-note"; noteEl.textContent = "Sending...";
+    var body = {};
+    for (var k in payload) body[k] = payload[k];
+    body._captcha = "false";
+    body._template = "table";
+    if (payload.email) body._replyto = payload.email;
+    fetch("https://formsubmit.co/ajax/" + (targetEmail || EMAIL), {
+      method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" }, body: JSON.stringify(body)
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (out) { return { ok: r.ok, out: out }; }); })
+      .then(function (res) {
+        if (!res.ok || String(res.out.success) !== "true") throw new Error((res.out && res.out.message) || "send failed");
         noteEl.className = "form-note ok"; noteEl.textContent = "Sent! Thank you, we'll be in touch shortly.";
         formEl.reset(); track(eventName);
       }).catch(function () {
         noteEl.className = "form-note err"; noteEl.textContent = "Could not send online. Opening your email client instead...";
         window.location.href = mailtoHref;
       });
-    } else {
-      window.location.href = mailtoHref;
-      noteEl.className = "form-note ok"; noteEl.textContent = "Opening your email client... Thank you! We'll be in touch shortly.";
-      formEl.reset(); track(eventName);
-    }
   }
 
   /* ------------------------------------------------------------------
@@ -712,7 +715,7 @@
   window.addEventListener("load", revealVisible);
 
   /* ------------------------------------------------------------------
-     Contact form (mailto fallback, no backend required)
+     Contact form — posts to EMAIL via FormSubmit.co (see sendForm)
      ------------------------------------------------------------------ */
   var form = $("#contactForm");
   var note = $("#formNote");
@@ -888,7 +891,14 @@
       $("#assetMain").src = b.dataset.src; $$(".asset-thumb").forEach(function (x) { x.classList.toggle("active", x === b); });
     });
     $("#assetTags").innerHTML = (P.tags || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("");
-    $("#assetSrc").href = normalizeUrl(P.src) || BASE + P.id;
+    var commissionBtn = $("#assetCommission");
+    if (commissionBtn) commissionBtn.href = "index.html?ref=" + encodeURIComponent(P.id) + "#contact";
+    var srcUrl = normalizeUrl(P.src);
+    /* Seed data filled every piece's "src" with a https://brothersinteractive.com/projects/<id>
+       placeholder (no such route exists on this site) — treat that as "not set yet" and send
+       visitors to the real ArtStation profile instead of a dead link, until the CMS's optional
+       "Original page link" field is filled in with that piece's actual page. */
+    $("#assetSrc").href = (srcUrl && srcUrl.indexOf(BASE) !== 0) ? srcUrl : "https://www.artstation.com/brothersinteractive";
     var view3d = $("#asset3d");
     if (view3d) {
       if (P.sketchfab) { view3d.hidden = false; $("iframe", view3d).src = "https://sketchfab.com/models/" + P.sketchfab + "/embed?autostart=0&ui_theme=dark"; }
@@ -905,6 +915,38 @@
       var ar = x.w && x.h ? ' style="aspect-ratio:' + x.w + '/' + x.h + '"' : '';
       return '<a class="work-card ripple-host" href="asset.html?id=' + x.id + '"' + ar + '><img src="' + x.i + '" alt="' + esc(x.t) + '" loading="lazy" /><div class="work-info"><span class="work-cat">' + esc(CAT[x.c]) + '</span><span class="work-title">' + esc(x.t) + '</span></div></a>';
     }).join("");
+  }
+
+  /* ------------------------------------------------------------------
+     Contact form pre-fill when arriving from an asset page's
+     "Commission similar work" link (index.html?ref=<project id>#contact)
+     ------------------------------------------------------------------ */
+  var refBanner = $("#cfRefBanner");
+  if (refBanner && PROJECTS.length) {
+    var refId = (location.search.match(/[?&]ref=([^&]+)/) || [])[1];
+    var refP = null;
+    if (refId) { refId = decodeURIComponent(refId); PROJECTS.forEach(function (x) { if (x.id === refId) refP = x; }); }
+    if (refP) {
+      var CAT_TYPE = {
+        "realistic-humans": "Characters", "stylized-human": "Characters", "mid-night-walk": "Characters", "lost-in-random": "Characters",
+        "realistic-creatures": "Creatures", "stylized-creature": "Creatures",
+        "realistic-hairs": "Hair & grooming", "props": "Props & weapons"
+      };
+      var CAT_STYLE = {
+        "realistic-humans": "Realistic", "realistic-creatures": "Realistic", "realistic-hairs": "Realistic",
+        "stylized-human": "Stylized", "stylized-creature": "Stylized",
+        "mid-night-walk": "Hand-painted", "lost-in-random": "Hand-painted"
+      };
+      $("#cfRefImg").src = refP.i; $("#cfRefImg").alt = refP.t;
+      $("#cfRefTitle").textContent = refP.t;
+      $("#cfRefCat").textContent = CAT[refP.c] || "";
+      refBanner.hidden = false;
+      var cfType = $("#cfType"), cfStyle = $("#cfStyle"), cfMessage = $("#cfMessage");
+      if (cfType && CAT_TYPE[refP.c]) cfType.value = CAT_TYPE[refP.c];
+      if (cfStyle && CAT_STYLE[refP.c]) cfStyle.value = CAT_STYLE[refP.c];
+      if (cfMessage) cfMessage.value = 'Referencing your piece "' + refP.t + '" (' + (CAT[refP.c] || "") + ') — we\'re looking for something in a similar style.\n\n';
+      $("#cfRefClose").addEventListener("click", function () { refBanner.hidden = true; });
+    }
   }
 
   /* ------------------------------------------------------------------
@@ -1079,7 +1121,7 @@
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeThemePanel(); });
 
   /* ------------------------------------------------------------------
-     Job application form (careers.html) — mailto, no backend needed
+     Job application form (careers.html) — posts to JOBS_EMAIL via FormSubmit.co
      ------------------------------------------------------------------ */
   var jobForm = $("#applyForm");
   if (jobForm) jobForm.addEventListener("submit", function (e) {
@@ -1096,7 +1138,7 @@
     var subjectText = "Application: " + jr.value.trim() + " - " + jn.value.trim();
     var bodyText = "Role: " + jr.value.trim() + "\nPortfolio: " + jp.value.trim() + "\nExperience: " + ($("#apExp").value || "-") + "\nSoftware: " + ($("#apTools").value.trim() || "-") + "\n\n" + jm.value.trim() + "\n\n— " + jn.value.trim() + " (" + je.value.trim() + ")";
     var payload = { _subject: subjectText, name: jn.value.trim(), email: je.value.trim(), role: jr.value.trim(), portfolio: jp.value.trim(), experience: $("#apExp").value, software: $("#apTools").value.trim(), message: jm.value.trim() };
-    sendForm(jobForm, jnote, payload, "application_sent", "mailto:" + EMAIL + "?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText));
+    sendForm(jobForm, jnote, payload, "application_sent", "mailto:" + JOBS_EMAIL + "?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText), JOBS_EMAIL);
   });
 
   /* ------------------------------------------------------------------

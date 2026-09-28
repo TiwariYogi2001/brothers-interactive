@@ -330,10 +330,9 @@ collections:
         fields:
           - { label: "Availability text", name: "availability", widget: "string", required: false, hint: "Shown as the header pill, e.g. \"Taking new projects\". Leave empty to hide it." }
           - { label: "Availability note", name: "availabilityNote", widget: "string", required: false, hint: "Small line under the pill, e.g. \"Next start: on request\"." }
-          - { label: "Formspree ID", name: "formspreeId", widget: "string", required: false, hint: "From formspree.io, just the ID after /f/. Leave empty to fall back to opening the visitor's email client." }
           - { label: "Booking URL", name: "bookingUrl", widget: "string", required: false, hint: "e.g. a Calendly link. Leave empty to hide the booking button." }
           - { label: "Plausible analytics domain", name: "plausibleDomain", widget: "string", required: false, hint: "Leave empty to keep analytics off." }
           - { label: "Showreel YouTube ID", name: "showreelYouTubeId", widget: "string", required: false, hint: "Leave empty to show an image reel instead." }
           - { label: "Capabilities deck (PDF)", name: "deckPdf", widget: "file", required: false, media_folder: "/assets", public_folder: "../assets" }
-          - { label: "Contact email", name: "email", widget: "string" }
+          - { label: "Contact email", name: "email", widget: "string", hint: "Where the contact and job-application forms actually deliver to (via formsubmit.co, no signup needed) and the mailto fallback." }
           - { label: "Address", name: "address", widget: "string" }
