@@ -66,7 +66,6 @@
       "id": "vzA1JO",
       "i": "../assets/img/portfolio/mion-vza1jo.webp",
       "imgs": [
-        "../assets/img/portfolio/mion-vza1jo-3.webp",
         "../assets/img/portfolio/mion-vza1jo-4.webp"
       ],
       "desc": "Mion,\n\nDeveloped internally at Brothers Interactive, \"Mion\" represents our team's expertise in high-quality stylized creature and character art. This production-ready asset was built from the ground up to showcase bold Cell Shading silhouette readability, expressive anatomical proportions, and vibrant material definition required for modern stylized fantasy and strategy titles.\n\nTechnical Breakdown:\n- Budget: 20,000 Tris\n- Texturing: PBR workflow, single 2K texture set\n- Target Platforms: Mobile, Nintendo Switch, and PC\n- Pipeline: Fully optimized with clean, deformation-ready topology, ready for seamless integration into modern low-spec and cross-platform gameplay engines.",
@@ -81,8 +80,7 @@
       "id": "vbNvDE",
       "i": "../assets/img/portfolio/orc-fanart-vbnvde.webp",
       "imgs": [
-        "../assets/img/portfolio/orc-fanart-vbnvde-3.webp",
-        "../assets/img/portfolio/orc-fanart-vbnvde-4.webp"
+        "../assets/img/portfolio/orc-fanart-vbnvde-3.webp"
       ],
       "desc": "Stylized creature sculpt created by our team Brothers Interactive.\nexploring, testing and pushing shape language, facial storytelling, and game-ready appeal. \nInspired by Wenmo Zhang's artwork.",
       "tags": [],
@@ -751,7 +749,6 @@
       "id": "KaQZrr",
       "i": "../assets/img/portfolio/proposal-book-kaqzrr.webp",
       "imgs": [
-        "../assets/img/portfolio/proposal-book-kaqzrr-3.webp",
         "../assets/img/portfolio/proposal-book-kaqzrr-4.webp"
       ],
       "desc": "Ornate Prop Study: \"Proposal Book\"\nDeveloped internally at Brothers Interactive, we finished 12 week long masterclass in 2019 about gaming pipeline for props. \n\nProduction Concept:\nAn ancient, masterfully crafted heavy tome featuring prominent, hand-forged metallic scrollwork and defensive metal plates layered across a weathered leather binding, anchored by a central embedded magical gemstone.\n\nTechnical Breakdown:\n- Budget: Fully optimized current-gen prop triangle budget\n- Texturing: High-fidelity PBR workflow, utilizing high-resolution texture sets to maximize micro-surface metallic scratch details, leather aging, and crystal refractivity\n- Target Platforms: PC, PlayStation 5, and Xbox Series X|S\n- Pipeline: Fully optimized with clean hard-surface topology and precise material IDs, ready for seamless integration into close-up first-person viewports, narrative puzzle interactions, and current-gen gameplay engines.",
