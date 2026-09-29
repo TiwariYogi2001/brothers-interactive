@@ -194,6 +194,41 @@
       var showImg = $("#heroShowcaseImg");
       if (showImg && pick.img) { showImg.src = pick.img; showImg.alt = pick.alt || ""; }
     }
+    // Optional real 3D model (Homepage Hero > "3D model" in /admin): a drag-to-rotate
+    // turntable replaces the image. On localhost only, ?heroModel=<url> previews a model
+    // without touching the data. No model = the image above, exactly as before.
+    var modelUrl = HERO.model;
+    var previewModel = (location.search.match(/[?&]heroModel=([^&]+)/) || [])[1];
+    if (previewModel && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) modelUrl = decodeURIComponent(previewModel);
+    if (modelUrl) mountHeroModel(modelUrl, $("#heroShowcaseImg"));
+  }
+
+  function mountHeroModel(src, img) {
+    if (!img) return;
+    if (!document.querySelector("script[data-model-viewer]")) {
+      var mvs = document.createElement("script");
+      mvs.type = "module"; mvs.setAttribute("data-model-viewer", "");
+      mvs.src = "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
+      document.head.appendChild(mvs);
+    }
+    var mv = document.createElement("model-viewer");
+    var attrs = {
+      src: src, alt: HERO.modelAlt || img.alt || "3D character model",
+      poster: img.getAttribute("src") || "", loading: "eager", reveal: "auto",
+      "camera-controls": "", "disable-zoom": "", "disable-pan": "", "touch-action": "pan-y",
+      "auto-rotate": "", "auto-rotate-delay": "0", "rotation-per-second": "18deg", "interaction-prompt": "none",
+      "shadow-intensity": "1.2", "shadow-softness": "0.9", exposure: "1.05", "environment-image": "neutral",
+      "camera-orbit": "0deg 78deg auto"
+    };
+    Object.keys(attrs).forEach(function (k) { mv.setAttribute(k, attrs[k]); });
+    mv.className = "hero-model";
+    img.hidden = true;
+    img.parentNode.insertBefore(mv, img);
+    var hint = document.createElement("span");
+    hint.className = "hero-model-hint"; hint.setAttribute("aria-hidden", "true");
+    hint.innerHTML = "&#8634; Drag to rotate";
+    img.parentNode.appendChild(hint);
+    mv.addEventListener("pointerdown", function () { hint.classList.add("gone"); }, { once: true });
   }
 
   /* ------------------------------------------------------------------
