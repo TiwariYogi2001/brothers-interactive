@@ -101,7 +101,10 @@
       "t": "Lee Body",
       "w": 1000,
       "tags": [],
-      "id": "yDeg2x"
+      "id": "yDeg2x",
+      "cats": [
+        "realistic-hairs"
+      ]
     },
     {
       "c": "mid-night-walk",
@@ -170,7 +173,10 @@
       "t": "SWAT V3",
       "w": 1000,
       "tags": [],
-      "id": "RKX2Ly"
+      "id": "RKX2Ly",
+      "cats": [
+        "realistic-hairs"
+      ]
     },
     {
       "c": "realistic-creatures",
@@ -293,7 +299,10 @@
       "t": "MTG Krishna",
       "w": 1000,
       "tags": [],
-      "id": "yD5Ll3"
+      "id": "yD5Ll3",
+      "cats": [
+        "realistic-hairs"
+      ]
     },
     {
       "c": "realistic-creatures",
@@ -477,7 +486,10 @@
       "t": "CHR Skins",
       "w": 1000,
       "tags": [],
-      "id": "GeVBoB"
+      "id": "GeVBoB",
+      "cats": [
+        "modular-chr-skins"
+      ]
     },
     {
       "c": "realistic-hairs",

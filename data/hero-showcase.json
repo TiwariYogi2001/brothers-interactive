@@ -1,16 +1,17 @@
 {
   "items": [
     {
-      "img": "../assets/img/portfolio/placeholder-silhouette.png",
-      "alt": "Placeholder character — replace via admin panel"
+      "model": "../assets/models/mint_-_neverness_to_everness.glb",
+      "alt": "3D character model"
     },
     {
-      "img": "../assets/img/portfolio/placeholder-silhouette-2.png",
-      "alt": "Placeholder character — replace via admin panel"
+      "alt": "3D creature model",
+      "model": "../assets/models/bee.glb"
     },
     {
-      "img": "../assets/img/portfolio/monster-lizar-without-bg.png",
-      "alt": "Placeholder creature — replace via admin panel"
+      "model": "../assets/models/indo_costume_with_wings.glb",
+      "alt": "Impressiev",
+      "modelSize": 130
     }
   ]
 }
