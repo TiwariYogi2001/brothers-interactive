@@ -249,7 +249,7 @@
       "camera-controls": "", "disable-zoom": "", "disable-pan": "", "touch-action": "pan-y",
       "auto-rotate": "", "auto-rotate-delay": "0", "rotation-per-second": "18deg", "interaction-prompt": "none",
       "shadow-intensity": "1.2", "shadow-softness": "0.9", exposure: "1.05", "environment-image": "neutral",
-      "camera-orbit": "0deg 80deg 88%" // closer than the default framing, so the character fills more of the stage
+      "camera-orbit": "0deg 80deg auto" // auto radius always fits the whole model (head to feet) at every angle and screen size
     };
     Object.keys(attrs).forEach(function (k) { mv.setAttribute(k, attrs[k]); });
     mv.className = "hero-model";

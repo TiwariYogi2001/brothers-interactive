@@ -256,7 +256,7 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .hero-podium-svg { width: 100%; height: auto; display: block; overflow: visible; }
 .hero-showcase-img {
   position: relative; z-index: 2; display: block;
-  max-height: 580px; max-width: 94%; width: auto; height: auto;
+  max-height: min(540px, 62vh); max-width: 94%; width: auto; height: auto; /* scales with window height so it never reaches the menu */
   object-fit: contain;
   margin-bottom: 48px;
   filter: drop-shadow(0 24px 28px rgba(0,0,0,0.55)) drop-shadow(0 0 36px rgba(var(--accent-rgb), 0.25));
@@ -264,7 +264,7 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 }
 /* Real 3D model in the hero (set in /admin > Homepage Hero > 3D model): drag-to-rotate turntable */
 .hero-model {
-  position: relative; z-index: 2; display: block; flex: 0 0 100%; width: 100%; min-width: 0; height: min(760px, 82vh);
+  position: relative; z-index: 2; display: block; flex: 0 0 100%; width: 100%; min-width: 0; height: min(700px, 74vh);
   background: transparent; --poster-color: transparent; cursor: grab;
   --progress-bar-height: 0px; /* the poster (showcase image) already covers loading */
 }
