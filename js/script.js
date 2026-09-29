@@ -194,10 +194,12 @@
       var showImg = $("#heroShowcaseImg");
       if (showImg && pick.img) { showImg.src = pick.img; showImg.alt = pick.alt || ""; }
     }
-    // Optional real 3D model (Homepage Hero > "3D model" in /admin): a drag-to-rotate
+    // Optional real 3D model (Hero Showcase Images > "3D model" in /admin): a drag-to-rotate
     // turntable replaces the image. On localhost only, ?heroModel=<url> previews a model
     // without touching the data. No model = the image above, exactly as before.
-    var modelUrl = HERO.model;
+    var showcaseCfg = loadJSON("hero-showcase") || {};
+    var modelUrl = showcaseCfg.model || HERO.model;
+    if (showcaseCfg.modelAlt) HERO.modelAlt = showcaseCfg.modelAlt;
     var previewModel = (location.search.match(/[?&]heroModel=([^&]+)/) || [])[1];
     if (previewModel && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) modelUrl = decodeURIComponent(previewModel);
     if (modelUrl) mountHeroModel(modelUrl, $("#heroShowcaseImg"));

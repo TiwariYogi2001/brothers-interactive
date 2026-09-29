@@ -41,19 +41,19 @@ collections:
           - { label: "Stat 2 — label", name: "stat2Label", widget: "string" }
           - { label: "Stat 3 — suffix", name: "stat3Suffix", widget: "string", required: false, hint: "Number is automatic (counts the Games collection)." }
           - { label: "Stat 3 — label", name: "stat3Label", widget: "string" }
-          - { label: "3D model (optional)", name: "model", widget: "file", required: false, media_folder: "/assets/models", public_folder: "../assets/models", hint: "Upload a .glb file to show a real drag-to-rotate 3D model in the hero instead of the image. Keep it under ~15 MB (compressed textures, 2K max) so it loads fast. Leave empty to use the Hero Showcase Images." }
-          - { label: "3D model — description", name: "modelAlt", widget: "string", required: false, hint: "Short description of the model for screen readers, e.g. \"Stylized orc warrior, game-ready\"." }
 
   - name: "hero-showcase"
     label: "Hero Showcase Images"
     label_singular: "Showcase Image"
-    description: "Character renders that stand on the rotating podium in the homepage hero. One is picked at random every time the page loads. IMPORTANT: upload PNGs with the background removed (transparent) — an image with a background will show as a hard rectangle sitting on top of the podium instead of a floating cutout."
+    description: "What stands on the podium in the homepage hero: either a real 3D model (drag to rotate) or one of the images below, picked at random on every load. IMPORTANT: upload PNGs with the background removed (transparent) — an image with a background will show as a hard rectangle sitting on top of the podium instead of a floating cutout."
     files:
       - name: "items"
         label: "Showcase Images"
         file: "data/hero-showcase.json"
         format: "json"
         fields:
+          - { label: "3D model (.glb)", name: "model", widget: "file", required: false, media_folder: "/assets/models", public_folder: "../assets/models", hint: "Upload a .glb file to show a real drag-to-rotate 3D model instead of the images below (they're still used as the loading picture). Keep it under ~15 MB, textures 2K max, so it loads fast. Leave empty to use the images." }
+          - { label: "3D model — description", name: "modelAlt", widget: "string", required: false, hint: "Short description of the model for screen readers, e.g. \"Stylized orc warrior, game-ready\"." }
           - label: "Images"
             name: "items"
             widget: "list"
