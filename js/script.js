@@ -193,20 +193,45 @@
       if (suffix != null) numEl.setAttribute("data-suffix", suffix);
       if (label) labelEl.textContent = label;
     });
-    // Showcase: one entry picked at random on every load/refresh. An entry with a 3D model
-    // (Hero Showcase Images > "3D model (.glb)" in /admin) becomes a drag-to-rotate turntable,
-    // with its own image (if any) as the loading picture; otherwise its image is shown.
-    // On localhost only, ?heroModel=<url> previews a model without touching the data.
+    // Showcase: one entry picked at random on every load/refresh (Hero Showcase Images in /admin).
+    // Priority per entry: 3D model (drag-to-rotate turntable) > video/GIF (silent loop) > image.
+    // The entry's image, if any, is the loading picture for a model or video.
+    // On localhost only, ?heroModel=<url> / ?heroVideo=<url> preview without touching the data.
     var showImg = $("#heroShowcaseImg");
-    var entries = HERO_SHOWCASE.filter(function (x) { return x && (x.img || x.model); });
+    var entries = HERO_SHOWCASE.filter(function (x) { return x && (x.img || x.model || x.video); });
+    var isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
     var previewModel = (location.search.match(/[?&]heroModel=([^&]+)/) || [])[1];
-    if (previewModel && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) entries = [{ model: decodeURIComponent(previewModel), alt: "Preview model" }];
+    var previewVideo = (location.search.match(/[?&]heroVideo=([^&]+)/) || [])[1];
+    if (isLocal && previewModel) entries = [{ model: decodeURIComponent(previewModel), alt: "Preview model" }];
+    else if (isLocal && previewVideo) entries = [{ video: decodeURIComponent(previewVideo), alt: "Preview video" }];
     if (showImg && entries.length) {
       var pick = entries[Math.floor(Math.random() * entries.length)];
       if (pick.img) showImg.src = pick.img;
       showImg.alt = pick.alt || "";
       if (pick.model) mountHeroModel(pick.model, showImg, pick.alt);
+      else if (pick.video) mountHeroVideo(pick.video, showImg, pick.alt);
     }
+  }
+
+  function mountHeroVideo(src, img, alt) {
+    if (!img) return;
+    // A GIF is just an animated image: show it in place of the still.
+    if (/\.gif(\?|$)/i.test(src)) { img.src = src; return; }
+    // Safari can't play WebM transparency (it would show a black box), so keep the image there.
+    var isSafari = /^((?!chrome|android|crios|fxios|edg).)*safari/i.test(navigator.userAgent);
+    if (/\.webm(\?|$)/i.test(src) && isSafari) return;
+    var v = document.createElement("video");
+    v.className = "hero-video";
+    v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
+    v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("preload", "auto");
+    v.setAttribute("aria-label", alt || "Character video");
+    if (img.getAttribute("src")) v.poster = img.getAttribute("src");
+    v.src = src;
+    // If the video can't play at all, fall back to the image.
+    v.addEventListener("error", function () { v.remove(); img.hidden = false; });
+    img.hidden = true;
+    img.parentNode.insertBefore(v, img);
+    var p = v.play(); if (p && p.catch) p.catch(function () {});
   }
 
   function mountHeroModel(src, img, alt) {

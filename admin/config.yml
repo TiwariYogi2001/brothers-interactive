@@ -58,8 +58,9 @@ collections:
             label_singular: "Entry"
             summary: "{{fields.alt}}"
             fields:
-              - { label: "Image (transparent PNG)", name: "img", widget: "image", required: false, hint: "Shown on its own if there's no 3D model; with a 3D model it's the picture shown while the model loads. Background must be removed/transparent." }
+              - { label: "Image (transparent PNG)", name: "img", widget: "image", required: false, hint: "Shown on its own if the entry has no 3D model or video; otherwise it's the picture shown while those load. Background must be removed/transparent." }
               - { label: "3D model (.glb)", name: "model", widget: "file", required: false, media_folder: "/assets/models", public_folder: "../assets/models", hint: "Optional. Upload a .glb to show this entry as a drag-to-rotate 3D model instead of the image. Keep it under ~15 MB, textures 2K max. Leave empty for image only." }
+              - { label: "Video or GIF", name: "video", widget: "file", required: false, media_folder: "/assets/videos", public_folder: "../assets/videos", hint: "Optional. Plays silently on a loop in place of the image (a 3D model on the same entry takes priority). For a floating character use a WebM with a transparent background (Safari shows the image instead) or a GIF — a normal MP4 always shows as a rectangle. Keep it short and under ~8 MB." }
               - { label: "Description", name: "alt", widget: "string", hint: "Describes the character for screen readers/SEO, e.g. \"Stylized orc warrior, game-ready\"." }
 
   - name: "category-tiles"

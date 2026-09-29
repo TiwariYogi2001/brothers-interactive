@@ -265,6 +265,13 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   --progress-bar-height: 0px; /* the poster (showcase image) already covers loading */
 }
 .hero-showcase-img[hidden] { display: none; }
+/* Looping video in the hero (set per entry in /admin > Hero Showcase Images > Video or GIF) */
+.hero-video {
+  position: relative; z-index: 2; display: block; max-width: 100%; max-height: min(700px, 76vh); width: auto; height: auto;
+  object-fit: contain; margin-bottom: 40px; pointer-events: none; border-radius: var(--radius); /* tidy edges if the video isn't transparent */
+  filter: drop-shadow(0 24px 28px rgba(0,0,0,0.55)) drop-shadow(0 0 36px rgba(var(--accent-rgb), 0.25));
+}
+@media (max-width: 1100px) { .hero-video { max-height: 480px; } }
 .hero-model:active { cursor: grabbing; }
 .hero-model-hint {
   position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 3; pointer-events: none;
