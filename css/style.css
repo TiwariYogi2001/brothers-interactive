@@ -380,8 +380,8 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   transition: transform 0.6s var(--ease);
 }
 .style-tile::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none; transition: background 0.4s;
-  background: linear-gradient(180deg, rgba(7,8,15,0.04) 0%, rgba(7,8,15,0.72) 100%);
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(7,8,15,0) 60%, rgba(7,8,15,0.7) 100%);
 }
 .style-tile-label {
   position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 2;
@@ -404,8 +404,6 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   font-family: var(--font-display); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); font-weight: 600;
 }
 .style-tile--soon:hover { transform: none; border-color: var(--border); box-shadow: none; }
-.style-tile:hover::after { background: linear-gradient(180deg, rgba(7,8,15,0) 0%, rgba(7,8,15,0.6) 100%); }
-
 /* Masonry: images keep their own proportions and pack into columns automatically */
 .portfolio-grid { columns: 3; column-gap: 24px; transition: opacity 0.25s, transform 0.25s; }
 .portfolio-grid.leaving { opacity: 0; transform: translateY(10px); }
