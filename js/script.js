@@ -202,13 +202,14 @@
     var isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
     var previewModel = (location.search.match(/[?&]heroModel=([^&]+)/) || [])[1];
     var previewVideo = (location.search.match(/[?&]heroVideo=([^&]+)/) || [])[1];
-    if (isLocal && previewModel) entries = [{ model: decodeURIComponent(previewModel), alt: "Preview model" }];
+    var previewSize = (location.search.match(/[?&]heroSize=(\d+)/) || [])[1];
+    if (isLocal && previewModel) entries = [{ model: decodeURIComponent(previewModel), alt: "Preview model", modelSize: previewSize && +previewSize }];
     else if (isLocal && previewVideo) entries = [{ video: decodeURIComponent(previewVideo), alt: "Preview video" }];
     if (showImg && entries.length) {
       var pick = entries[Math.floor(Math.random() * entries.length)];
       if (pick.img) showImg.src = pick.img;
       showImg.alt = pick.alt || "";
-      if (pick.model) mountHeroModel(pick.model, showImg, pick.alt);
+      if (pick.model) mountHeroModel(pick.model, showImg, pick.alt, pick.modelSize);
       else if (pick.video) mountHeroVideo(pick.video, showImg, pick.alt);
     }
   }
@@ -234,7 +235,10 @@
     var p = v.play(); if (p && p.catch) p.catch(function () {});
   }
 
-  function mountHeroModel(src, img, alt) {
+  function mountHeroModel(src, img, alt, size) {
+    // "3D model size (%)" from /admin: 100 = auto framing (whole model fits); 125 = camera 1.25x closer, etc.
+    size = Math.max(50, Math.min(150, +size || 100));
+    var radius = size === 100 ? "auto" : Math.round(10000 / size) + "%";
     if (!img) return;
     if (!document.querySelector("script[data-model-viewer]")) {
       var mvs = document.createElement("script");
@@ -249,9 +253,9 @@
       "camera-controls": "", "disable-zoom": "", "disable-pan": "", "touch-action": "pan-y",
       "auto-rotate": "", "auto-rotate-delay": "0", "rotation-per-second": "18deg", "interaction-prompt": "none",
       "shadow-intensity": "1.2", "shadow-softness": "0.9", exposure: "1.05", "environment-image": "neutral",
-      "camera-orbit": "0deg 80deg auto", // auto radius always fits the whole model (head to feet) at every angle and screen size
+      "camera-orbit": "0deg 80deg " + radius, // auto radius always fits the whole model; the size setting moves the camera closer/further
       // Spin freely left/right; only a small up/down tilt is allowed (phi 64°-96°), and it glides back to eye level on release.
-      "min-camera-orbit": "-Infinity 64deg auto", "max-camera-orbit": "Infinity 96deg auto"
+      "min-camera-orbit": "-Infinity 64deg 50%", "max-camera-orbit": "Infinity 96deg 250%" // distance range wide enough for sizes 50-150
     };
     Object.keys(attrs).forEach(function (k) { mv.setAttribute(k, attrs[k]); });
     mv.className = "hero-model";
@@ -270,7 +274,7 @@
       var o = mv.getCameraOrbit();
       if (Math.abs(o.phi * 180 / Math.PI - 80) < 0.5) return;
       mv.setAttribute("interpolation-decay", "600");            // slow glide (default is 50)
-      mv.cameraOrbit = (o.theta * 180 / Math.PI).toFixed(2) + "deg 80deg auto";
+      mv.cameraOrbit = (o.theta * 180 / Math.PI).toFixed(2) + "deg 80deg " + radius;
       clearTimeout(settleTimer);
       settleTimer = setTimeout(function () { mv.setAttribute("interpolation-decay", "50"); }, 2500); // snappy again for the next drag
     }
