@@ -76,7 +76,7 @@
           <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
           <li><a href="#about" class="nav-link">Studio</a></li>
           <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-          <li><a href="breakdown.html" class="nav-link">Breakdown</a></li>
+          <li><a href="#breakdown" class="nav-link">Breakdown</a></li>
           <li><a href="#services" class="nav-link">Services</a></li>
           <li><a href="#process" class="nav-link">Process</a></li>
           <li><a href="#styles" class="nav-link">Styles</a></li>
@@ -255,14 +255,37 @@
         <button class="btn btn--ghost" id="loadMoreBtn" hidden>Load more</button>
 
         <div class="portfolio-more reveal">
-          <a class="btn btn--link" href="breakdown.html">See a full production breakdown &rarr;</a>
           <a class="btn btn--link" href="https://www.artstation.com/brothersinteractive" target="_blank" rel="noopener">View full ArtStation &rarr;</a>
         </div>
       </div>
     </section>
 
+    <!-- ================= BREAKDOWN ================= -->
+    <section class="section section--alt" id="breakdown">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">// Breakdown</p>
+          <h2 class="section-title">Orc Fanart <span class="accent">Production Breakdown</span></h2>
+          <p class="section-sub">Stylized creature sculpt, from first blockout to final game-ready asset. Drag to compare the high-poly sculpt with the textured final.</p>
+        </div>
+        <figure class="compare compare--large reveal">
+          <div class="compare-stage">
+            <img class="compare-after" src="../assets/img/portfolio/orc-fanart-vbnvde-after.webp" alt="Orc Fanart final textured asset" loading="lazy" />
+            <img class="compare-before" src="../assets/img/portfolio/orc-fanart-vbnvde-before.webp" alt="Orc Fanart high-poly sculpt" loading="lazy" style="clip-path: inset(0 50% 0 0)" />
+            <span class="compare-handle" style="left:50%" aria-hidden="true"></span>
+            <span class="compare-label compare-label--a">Sculpt</span><span class="compare-label compare-label--b">Final</span>
+            <input type="range" class="compare-range" min="0" max="100" value="50" aria-label="Compare sculpt and final for Orc Fanart" />
+          </div>
+        </figure>
+        <div class="portfolio-more reveal">
+          <a class="btn btn--link" href="breakdown.html">See the full production breakdown &rarr;</a>
+          <a class="btn btn--link" href="asset.html?id=vbNvDE">View full asset page &rarr;</a>
+        </div>
+      </div>
+    </section>
+
     <!-- ================= SCULPT TO FINAL ================= -->
-    <section class="section section--alt" id="compare">
+    <section class="section" id="compare">
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow">// Sculpt to final</p>
