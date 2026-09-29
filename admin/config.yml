@@ -45,23 +45,22 @@ collections:
   - name: "hero-showcase"
     label: "Hero Showcase Images"
     label_singular: "Showcase Image"
-    description: "What stands on the podium in the homepage hero: either a real 3D model (drag to rotate) or one of the images below, picked at random on every load. IMPORTANT: upload PNGs with the background removed (transparent) — an image with a background will show as a hard rectangle sitting on top of the podium instead of a floating cutout."
+    description: "What stands on the podium in the homepage hero. One entry is picked at random on every load: if it has a 3D model, visitors get a drag-to-rotate model; if not, its image. IMPORTANT: images must be PNGs with the background removed (transparent), or they show as a hard rectangle on the podium."
     files:
       - name: "items"
         label: "Showcase Images"
         file: "data/hero-showcase.json"
         format: "json"
         fields:
-          - { label: "3D model (.glb)", name: "model", widget: "file", required: false, media_folder: "/assets/models", public_folder: "../assets/models", hint: "Upload a .glb file to show a real drag-to-rotate 3D model instead of the images below (they're still used as the loading picture). Keep it under ~15 MB, textures 2K max, so it loads fast. Leave empty to use the images." }
-          - { label: "3D model — description", name: "modelAlt", widget: "string", required: false, hint: "Short description of the model for screen readers, e.g. \"Stylized orc warrior, game-ready\"." }
-          - label: "Images"
+          - label: "Showcase"
             name: "items"
             widget: "list"
-            label_singular: "Image"
+            label_singular: "Entry"
             summary: "{{fields.alt}}"
             fields:
-              - { label: "Image (transparent PNG)", name: "img", widget: "image", hint: "Background must be removed/transparent." }
-              - { label: "Alt text", name: "alt", widget: "string", hint: "Describes the character for screen readers/SEO." }
+              - { label: "Image (transparent PNG)", name: "img", widget: "image", required: false, hint: "Shown on its own if there's no 3D model; with a 3D model it's the picture shown while the model loads. Background must be removed/transparent." }
+              - { label: "3D model (.glb)", name: "model", widget: "file", required: false, media_folder: "/assets/models", public_folder: "../assets/models", hint: "Optional. Upload a .glb to show this entry as a drag-to-rotate 3D model instead of the image. Keep it under ~15 MB, textures 2K max. Leave empty for image only." }
+              - { label: "Description", name: "alt", widget: "string", hint: "Describes the character for screen readers/SEO, e.g. \"Stylized orc warrior, game-ready\"." }
 
   - name: "category-tiles"
     label: "Category Tile Images"

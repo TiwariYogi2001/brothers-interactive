@@ -193,24 +193,23 @@
       if (suffix != null) numEl.setAttribute("data-suffix", suffix);
       if (label) labelEl.textContent = label;
     });
-    // Showcase image: one cutout render picked at random on every load/refresh.
-    if (HERO_SHOWCASE.length) {
-      var pick = HERO_SHOWCASE[Math.floor(Math.random() * HERO_SHOWCASE.length)];
-      var showImg = $("#heroShowcaseImg");
-      if (showImg && pick.img) { showImg.src = pick.img; showImg.alt = pick.alt || ""; }
-    }
-    // Optional real 3D model (Hero Showcase Images > "3D model" in /admin): a drag-to-rotate
-    // turntable replaces the image. On localhost only, ?heroModel=<url> previews a model
-    // without touching the data. No model = the image above, exactly as before.
-    var showcaseCfg = loadJSON("hero-showcase") || {};
-    var modelUrl = showcaseCfg.model || HERO.model;
-    if (showcaseCfg.modelAlt) HERO.modelAlt = showcaseCfg.modelAlt;
+    // Showcase: one entry picked at random on every load/refresh. An entry with a 3D model
+    // (Hero Showcase Images > "3D model (.glb)" in /admin) becomes a drag-to-rotate turntable,
+    // with its own image (if any) as the loading picture; otherwise its image is shown.
+    // On localhost only, ?heroModel=<url> previews a model without touching the data.
+    var showImg = $("#heroShowcaseImg");
+    var entries = HERO_SHOWCASE.filter(function (x) { return x && (x.img || x.model); });
     var previewModel = (location.search.match(/[?&]heroModel=([^&]+)/) || [])[1];
-    if (previewModel && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) modelUrl = decodeURIComponent(previewModel);
-    if (modelUrl) mountHeroModel(modelUrl, $("#heroShowcaseImg"));
+    if (previewModel && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) entries = [{ model: decodeURIComponent(previewModel), alt: "Preview model" }];
+    if (showImg && entries.length) {
+      var pick = entries[Math.floor(Math.random() * entries.length)];
+      if (pick.img) showImg.src = pick.img;
+      showImg.alt = pick.alt || "";
+      if (pick.model) mountHeroModel(pick.model, showImg, pick.alt);
+    }
   }
 
-  function mountHeroModel(src, img) {
+  function mountHeroModel(src, img, alt) {
     if (!img) return;
     if (!document.querySelector("script[data-model-viewer]")) {
       var mvs = document.createElement("script");
@@ -220,12 +219,12 @@
     }
     var mv = document.createElement("model-viewer");
     var attrs = {
-      src: src, alt: HERO.modelAlt || img.alt || "3D character model",
+      src: src, alt: alt || "3D character model",
       poster: img.getAttribute("src") || "", loading: "eager", reveal: "auto",
       "camera-controls": "", "disable-zoom": "", "disable-pan": "", "touch-action": "pan-y",
       "auto-rotate": "", "auto-rotate-delay": "0", "rotation-per-second": "18deg", "interaction-prompt": "none",
       "shadow-intensity": "1.2", "shadow-softness": "0.9", exposure: "1.05", "environment-image": "neutral",
-      "camera-orbit": "0deg 78deg auto"
+      "camera-orbit": "0deg 80deg 88%" // closer than the default framing, so the character fills more of the stage
     };
     Object.keys(attrs).forEach(function (k) { mv.setAttribute(k, attrs[k]); });
     mv.className = "hero-model";
