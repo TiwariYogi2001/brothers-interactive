@@ -249,7 +249,9 @@
       "camera-controls": "", "disable-zoom": "", "disable-pan": "", "touch-action": "pan-y",
       "auto-rotate": "", "auto-rotate-delay": "0", "rotation-per-second": "18deg", "interaction-prompt": "none",
       "shadow-intensity": "1.2", "shadow-softness": "0.9", exposure: "1.05", "environment-image": "neutral",
-      "camera-orbit": "0deg 80deg auto" // auto radius always fits the whole model (head to feet) at every angle and screen size
+      "camera-orbit": "0deg 80deg auto", // auto radius always fits the whole model (head to feet) at every angle and screen size
+      // Spin freely left/right; only a small up/down tilt is allowed (phi 64°-96°), and it glides back to eye level on release.
+      "min-camera-orbit": "-Infinity 64deg auto", "max-camera-orbit": "Infinity 96deg auto"
     };
     Object.keys(attrs).forEach(function (k) { mv.setAttribute(k, attrs[k]); });
     mv.className = "hero-model";
@@ -260,6 +262,21 @@
     hint.innerHTML = "&#8634; Drag to rotate";
     img.parentNode.appendChild(hint);
     mv.addEventListener("pointerdown", function () { hint.classList.add("gone"); }, { once: true });
+
+    // After a drag, ease the vertical angle back to eye level slowly, keeping the horizontal angle.
+    var settleTimer = 0;
+    function settle() {
+      if (!mv.getCameraOrbit) return;
+      var o = mv.getCameraOrbit();
+      if (Math.abs(o.phi * 180 / Math.PI - 80) < 0.5) return;
+      mv.setAttribute("interpolation-decay", "600");            // slow glide (default is 50)
+      mv.cameraOrbit = (o.theta * 180 / Math.PI).toFixed(2) + "deg 80deg auto";
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(function () { mv.setAttribute("interpolation-decay", "50"); }, 2500); // snappy again for the next drag
+    }
+    mv.addEventListener("pointerdown", function () { clearTimeout(settleTimer); mv.setAttribute("interpolation-decay", "50"); });
+    window.addEventListener("pointerup", function () { setTimeout(settle, 60); });
+    window.addEventListener("touchend", function () { setTimeout(settle, 60); });
   }
 
   /* ------------------------------------------------------------------
