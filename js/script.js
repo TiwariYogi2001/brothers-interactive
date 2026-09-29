@@ -291,13 +291,13 @@
                   PROJECTS.filter(function (p) { return inAnyCat(p, b.match); })[0];
       if (!thumb) {
         return (
-          '<div class="style-tile style-tile--soon reveal" style="transition-delay:' + (i % 4) * 70 + 'ms" aria-hidden="true">' +
+          '<div class="style-tile style-tile--soon reveal" style="transition-delay:' + (i % 3) * 70 + 'ms" aria-hidden="true">' +
             '<span class="style-tile-label">' + esc(b.label) + '<small>Coming soon</small></span>' +
           '</div>'
         );
       }
       return (
-        '<a class="style-tile reveal" href="category.html?cat=' + encodeURIComponent(b.slug) + '" style="transition-delay:' + (i % 4) * 70 + 'ms" aria-label="Browse ' + esc(b.label) + '">' +
+        '<a class="style-tile reveal" href="category.html?cat=' + encodeURIComponent(b.slug) + '" style="transition-delay:' + (i % 3) * 70 + 'ms" aria-label="Browse ' + esc(b.label) + '">' +
           '<img src="' + (TILE_IMG[b.slug.replace(/-/g, "_")] || thumb.i) + '" alt="" loading="lazy" />' +
           '<span class="style-tile-label">' + esc(b.label) + '</span>' +
         '</a>'
