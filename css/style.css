@@ -284,6 +284,9 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   backdrop-filter: blur(6px); transition: opacity 0.5s;
 }
 .hero-model-hint.gone { opacity: 0; }
+/* Model with no loading picture: fade + rise in once loaded instead of popping in */
+.hero-model--fade { opacity: 0; transform: translateY(14px) scale(0.98); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+.hero-model--fade.ready { opacity: 1; transform: none; }
 @media (max-width: 1100px) { .hero-model { height: 520px; } }
 
 .scroll-hint {

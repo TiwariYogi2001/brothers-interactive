@@ -3,7 +3,7 @@
    Portfolio data, filtering, lightbox, games trailers, blog, nav, forms
    ===================================================================== */
 
-(function () {
+function siteMain() {
   "use strict";
 
   /* ------------------------------------------------------------------
@@ -52,9 +52,10 @@
      so the rest of this file can keep assuming the data is ready. A file
      with no CMS-made changes yet just 404s and the data.js fallback (if any)
      is used instead — nothing breaks either way. */
-  // Each data file is fetched fresh once per page load (the ?t= stamp stops the browser
-  // serving a stale cached copy after an /admin edit) and remembered for the rest of the load.
-  var JSON_STAMP = Date.now(), jsonCache = {};
+  // Data files are normally already fetched, all in parallel, by the loader at the bottom of
+  // this file (window.__BI_JSON). Anything not preloaded falls back to a one-off synchronous
+  // request (the ?t= stamp stops a stale cached copy after an /admin edit).
+  var JSON_STAMP = Date.now(), jsonCache = window.__BI_JSON || {};
   function loadJSON(name) {
     if (name in jsonCache) return jsonCache[name];
     var out = null;
@@ -258,13 +259,18 @@
       "min-camera-orbit": "-Infinity 64deg 50%", "max-camera-orbit": "Infinity 96deg 250%" // distance range wide enough for sizes 50-150
     };
     Object.keys(attrs).forEach(function (k) { mv.setAttribute(k, attrs[k]); });
-    mv.className = "hero-model";
+    // Without a loading picture the model fades in smoothly once it's ready instead of popping in.
+    mv.className = "hero-model" + (attrs.poster ? "" : " hero-model--fade");
     img.hidden = true;
     img.parentNode.insertBefore(mv, img);
     var hint = document.createElement("span");
     hint.className = "hero-model-hint"; hint.setAttribute("aria-hidden", "true");
-    hint.innerHTML = "&#8634; Drag to rotate";
+    hint.innerHTML = "Loading 3D model&hellip;";
     img.parentNode.appendChild(hint);
+    mv.addEventListener("load", function () {
+      mv.classList.add("ready");
+      if (!hint.classList.contains("gone")) hint.innerHTML = "&#8634; Drag to rotate";
+    });
     mv.addEventListener("pointerdown", function () { hint.classList.add("gone"); }, { once: true });
 
     // After a drag, ease the vertical angle back to eye level slowly, keeping the horizontal angle.
@@ -1355,4 +1361,22 @@
      ------------------------------------------------------------------ */
   $$("#year, .year").forEach(function (el) { el.textContent = new Date().getFullYear(); });
   watchReveals();
+}
+
+/* ------------------------------------------------------------------
+   Loader: fetch every data file in parallel (instead of one blocking
+   request after another), then run the site. "no-cache" makes the browser
+   re-check each file with the server (a tiny 304 when unchanged), so /admin
+   edits still show on the next refresh without re-downloading everything.
+   ------------------------------------------------------------------ */
+(function () {
+  var names = ["portfolio", "games", "cases", "posts", "testimonials", "roles", "pairs", "clients", "press", "team", "hero-showcase", "config", "hero"];
+  if (document.getElementById("categoryGrid")) names.push("category-tiles");
+  var store = window.__BI_JSON = {};
+  if (!window.fetch || !window.Promise) { siteMain(); return; }
+  Promise.all(names.map(function (n) {
+    return fetch("../data/" + n + ".json", { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { store[n] = j; }, function () { store[n] = null; });
+  })).then(function () { siteMain(); });
 })();
