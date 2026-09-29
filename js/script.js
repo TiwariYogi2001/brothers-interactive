@@ -52,14 +52,19 @@
      so the rest of this file can keep assuming the data is ready. A file
      with no CMS-made changes yet just 404s and the data.js fallback (if any)
      is used instead — nothing breaks either way. */
+  // Each data file is fetched fresh once per page load (the ?t= stamp stops the browser
+  // serving a stale cached copy after an /admin edit) and remembered for the rest of the load.
+  var JSON_STAMP = Date.now(), jsonCache = {};
   function loadJSON(name) {
+    if (name in jsonCache) return jsonCache[name];
+    var out = null;
     try {
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", "../data/" + name + ".json", false);
+      xhr.open("GET", "../data/" + name + ".json?t=" + JSON_STAMP, false);
       xhr.send(null);
-      if (xhr.status === 200) return JSON.parse(xhr.responseText);
+      if (xhr.status === 200) out = JSON.parse(xhr.responseText);
     } catch (e) {}
-    return null;
+    return (jsonCache[name] = out);
   }
   function loadList(name, fallback) {
     var loaded = loadJSON(name);
