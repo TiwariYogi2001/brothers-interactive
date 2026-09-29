@@ -3,7 +3,7 @@
 ## Folder layout
 
 ```
-html/    all pages (index.html, team.html, careers.html, styles.html, credits.html, asset.html, privacy.html, 404.html)
+html/    all pages (index.html, team.html, careers.html, styles.html, asset.html, privacy.html, 404.html)
 css/     style.css
 js/      data.js, script.js
 data/    portfolio.json + games/testimonials/team/pairs/clients/posts/roles/press/config.json — all editable via /admin, see below
@@ -19,7 +19,9 @@ admin/   the /admin content editor (Decap CMS) — see admin/README.md
 | `html/team.html` | Leadership and studio structure |
 | `html/careers.html` | Jobs page with application form |
 | `html/styles.html` | Art style guide |
-| `html/credits.html` | Game credits and press |
+| `html/contact.html` | Contact page with the project brief form (`contact.html?ref=<id>` pre-fills it from a portfolio piece) |
+| `html/faq.html` | FAQ page |
+| `html/structure.html` | How the team is built |
 | `html/asset.html` | Detail page for any portfolio piece (`asset.html?id=mOZqAe`) |
 | `html/privacy.html`, `html/404.html` | Legal and not-found pages |
 | `css/style.css` | All styling, including the colour themes |
@@ -41,9 +43,8 @@ no file editing. Everything it edits lives in `data/*.json`, which you can
 also open and edit directly if you prefer:
 
 - **Settings** (`data/config.json`): availability text, booking link, analytics domain, showreel video id, contact email/address, capabilities deck PDF.
-- **Open roles** (`data/roles.json`): appear on the home page and careers page.
+- **Open roles** (`data/roles.json`): appear on the careers page.
 - **Reviews** (`data/testimonials.json`): appear on the home page. Each has a `sample: true/false` flag — turn it off once it's a real, approved quote.
-- **Press** (`data/press.json`): appears on credits.html.
 - **Portfolio** (`data/portfolio.json`): each entry has a title, category, main image, extra images, description and tags. Add `sketchfab: "MODEL_ID"` to any entry to show an interactive 3D viewer on its detail page and in the lightbox.
 - **Games** (`data/games.json`), **Team** (`data/team.json`), **Sculpt to Final** (`data/pairs.json`), **Clients** (`data/clients.json`), **Blog posts** (`data/posts.json`) — same pattern, all in `/admin`.
 - **Client logos**: add a `logo` image to a client entry once you have permission to use the logo; leave it empty to show the name as plain text instead.

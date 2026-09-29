@@ -27,7 +27,7 @@ collections:
         format: "json"
         description: "The very first thing visitors see: headline, subtitle and the three stats. The showcase image is a separate collection below (Hero Showcase Images)."
         fields:
-          - { label: "Eyebrow text", name: "eyebrow", widget: "string", hint: "Small line above the headline, e.g. \"3D Game Art Studio · Est. 2017\"." }
+          - { label: "Eyebrow text", name: "eyebrow", widget: "string", hint: "Small line above the headline, e.g. \"3D Game Art Studio · Est. 2019\"." }
           - { label: "Headline — line 1", name: "titleLine1", widget: "string", hint: "e.g. \"We build the\"" }
           - { label: "Headline — accent word", name: "titleAccent", widget: "string", hint: "The big gradient-coloured word, e.g. \"CHARACTERS\"" }
           - { label: "Headline — line 3", name: "titleLine3", widget: "string", hint: "e.g. \"players remember.\"" }
@@ -285,7 +285,7 @@ collections:
   - name: "careers"
     label: "Careers"
     label_singular: "Open Role"
-    description: "Open job roles shown on the homepage and Careers page. Leave empty when you're not hiring."
+    description: "Open job roles shown on the Careers page. Leave empty when you're not hiring."
     files:
       - name: "items"
         label: "Open Roles"
@@ -301,27 +301,6 @@ collections:
               - { label: "Title", name: "t", widget: "string", hint: "e.g. \"Senior Character Artist\"" }
               - { label: "Type / Location", name: "type", widget: "string", hint: "e.g. \"Full-time · Jaipur\"" }
               - { label: "Summary", name: "d", widget: "string", hint: "One line describing the role." }
-
-  - name: "press"
-    label: "Press"
-    label_singular: "Press Mention"
-    description: "Press and recognition shown on the Credits page."
-    files:
-      - name: "items"
-        label: "Press Mentions"
-        file: "data/press.json"
-        format: "json"
-        fields:
-          - label: "Mentions"
-            name: "items"
-            widget: "list"
-            label_singular: "Mention"
-            summary: "{{fields.t}}"
-            fields:
-              - { label: "Title", name: "t", widget: "string" }
-              - { label: "Publication", name: "src", widget: "string" }
-              - { label: "URL", name: "url", widget: "string", hint: "Include https://" }
-              - { label: "Date", name: "d", widget: "string", hint: "As text, e.g. \"Mar 2025\"." }
 
   - name: "settings"
     label: "Settings"

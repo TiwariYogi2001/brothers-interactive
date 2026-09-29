@@ -81,7 +81,7 @@
     var val = kind === "projects" ? PROJECTS.length
       : kind === "games" ? GAMES.length
       : kind === "clients" ? CLIENTS.length
-      : kind === "years" ? (new Date().getFullYear() - 2017)
+      : kind === "years" ? (new Date().getFullYear() - 2019)
       : null;
     if (val != null) el.setAttribute("data-count", val);
   });
@@ -901,7 +901,7 @@
     });
     $("#assetTags").innerHTML = (P.tags || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("");
     var commissionBtn = $("#assetCommission");
-    if (commissionBtn) commissionBtn.href = "index.html?ref=" + encodeURIComponent(P.id) + "#contact";
+    if (commissionBtn) commissionBtn.href = "contact.html?ref=" + encodeURIComponent(P.id);
     var srcUrl = normalizeUrl(P.src);
     /* Seed data filled every piece's "src" with a https://brothersinteractive.com/projects/<id>
        placeholder (no such route exists on this site) — treat that as "not set yet" and send
@@ -928,7 +928,7 @@
 
   /* ------------------------------------------------------------------
      Contact form pre-fill when arriving from an asset page's
-     "Commission similar work" link (index.html?ref=<project id>#contact)
+     "Commission similar work" link (contact.html?ref=<project id>)
      ------------------------------------------------------------------ */
   var refBanner = $("#cfRefBanner");
   if (refBanner && PROJECTS.length) {
@@ -1091,14 +1091,14 @@
   /* ------------------------------------------------------------------
      Theme switcher — sets data-theme on <html>, remembers the choice
      ------------------------------------------------------------------ */
-  var THEMES = ["neon", "crimson", "matrix", "synthwave", "ember", "arctic", "ocean", "royal", "rose", "copper", "steel", "forest", "midnight", "cotton", "vampire", "sakura", "citrus", "aurora", "desert", "blueprint"];
+  var THEMES = ["midnight", "arctic", "ocean", "steel", "aurora", "desert"];
   var switcher = $("#themeSwitcher");
   var themeToggle = $("#themeToggle");
   var themeOpts = $$(".theme-opt");
 
   function applyTheme(name, persist) {
-    if (THEMES.indexOf(name) === -1) name = "neon";
-    if (name === "neon") document.documentElement.removeAttribute("data-theme");
+    if (THEMES.indexOf(name) === -1) name = "midnight";
+    if (name === "midnight") document.documentElement.removeAttribute("data-theme");
     else document.documentElement.setAttribute("data-theme", name);
     themeOpts.forEach(function (b) {
       var on = b.dataset.theme === name;
@@ -1114,17 +1114,19 @@
 
   var saved = null;
   try { saved = localStorage.getItem("bi-theme"); } catch (err) {}
-  // ?theme=crimson in the URL overrides the saved choice (handy for sharing a specific look)
+  // ?theme=ocean in the URL overrides the saved choice (handy for sharing a specific look)
   var fromUrl = (window.location.search.match(/[?&]theme=([a-z]+)/) || [])[1];
   if (fromUrl && THEMES.indexOf(fromUrl) !== -1) applyTheme(fromUrl, true);
-  else applyTheme(saved || "neon", false);
+  else applyTheme(saved || "midnight", false);
 
   themeToggle.addEventListener("click", function () {
     var open = switcher.classList.toggle("open");
     themeToggle.setAttribute("aria-expanded", String(open));
   });
   themeOpts.forEach(function (b) {
-    b.addEventListener("click", function () { applyTheme(b.dataset.theme, true); closeThemePanel(); });
+    // Midnight Gold is the default and has no menu entry, so clicking the
+    // already-active theme switches back to it.
+    b.addEventListener("click", function () { applyTheme(b.classList.contains("active") ? "midnight" : b.dataset.theme, true); closeThemePanel(); });
   });
   document.addEventListener("click", function (e) { if (!switcher.contains(e.target)) closeThemePanel(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeThemePanel(); });

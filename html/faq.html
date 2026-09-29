@@ -11,8 +11,12 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Page not found | Brothers Interactive</title>
-  <meta name="robots" content="noindex" />
+  <title>FAQ | Brothers Interactive</title>
+  <meta name="description" content="Answers to the questions studios usually ask Brothers Interactive before the first call: pricing, minimum engagement, style matching, revisions, NDAs, deliverables and working hours." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="FAQ | Brothers Interactive" />
+  <meta property="og:description" content="Answers to the questions studios usually ask Brothers Interactive before the first call: pricing, minimum engagement, style matching, revisions, NDAs, deliverables and working hours." />
+  <meta property="og:image" content="https://brothersinteractive.com/assets/img/brand/og-image.jpg" />
   <link rel="icon" href="../assets/img/brand/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,6 +29,7 @@
   <div class="bg-grid" aria-hidden="true"></div>
   <div class="bg-glow bg-glow--cyan" aria-hidden="true"></div>
   <div class="bg-glow bg-glow--magenta" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <!--NAV-->
   <header class="site-header" id="siteHeader">
@@ -59,17 +64,52 @@
   <!--/NAV-->
 
   <main id="main">
-    <section class="notfound">
-      <div class="container">
-        <div class="code">404</div>
-        <h1 class="section-title">This asset was never <span class="accent">modelled</span></h1>
-        <p class="section-sub" style="margin-inline:auto">The page you asked for does not exist or has moved. Try the portfolio, or head back home.</p>
-        <div class="hero-actions" style="justify-content:center;margin-top:28px">
-          <a href="index.html" class="btn btn--primary">Home</a>
-          <a href="index.html#portfolio" class="btn btn--ghost">Portfolio</a>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--page-top" id="faq">
+      <div class="container faq-grid">
+        <div class="faq-intro reveal">
+          <p class="eyebrow">// FAQ</p>
+          <h1 class="section-title">Questions producers <span class="accent">ask us</span></h1>
+          <p>Everything a studio usually wants to know before the first call. Anything missing? <a href="contact.html">Ask us directly</a>.</p>
+        </div>
+        <div class="faq-list reveal" id="faqList">
+          <details class="faq-item" open>
+            <summary>How do you price work?</summary>
+            <p>Two models. Per-asset pricing for defined scopes such as a set of characters or weapons, and a dedicated artist or team on a monthly basis for longer productions. We quote after seeing your concepts and technical spec.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What is the minimum engagement?</summary>
+            <p>There is no minimum. We take on single hero characters as readily as multi-month productions. Small test assets are a common way for new clients to start.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can you match our existing art style?</summary>
+            <p>Yes. We have shipped work across realistic, stylised and hand-painted styles. Send your style guide and a few in-house reference assets and we match them, usually with a paid test asset first.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do revisions work?</summary>
+            <p>Feedback checkpoints happen after blockout, sculpt and texture. Revisions within the agreed brief are included. Changes to the brief itself are scoped and quoted separately before we continue.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do you sign NDAs and who owns the work?</summary>
+            <p>We sign your NDA before any brief is shared. All delivered work is the client's intellectual property. We only show production assets publicly with written approval, so some project details are shared on request rather than on this site.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Which engines and file formats do you deliver?</summary>
+            <p>Unreal Engine and Unity packages, plus FBX and OBJ exports, texture sets in your preferred packing, and source files from ZBrush, Maya, Blender and Substance.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What are your working hours and time zone?</summary>
+            <p>The studio works Indian Standard Time and keeps a daily overlap window with clients in Europe and North America. We respond to feedback within one working day.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do we start?</summary>
+            <p>Send a short brief with references, asset count, style and deadline through our <a href="contact.html">contact form</a>. We reply with questions, a quote and a proposed schedule, usually within two working days.</p>
+          </details>
         </div>
       </div>
     </section>
+
   </main>
 
   <!--FOOTER-->
