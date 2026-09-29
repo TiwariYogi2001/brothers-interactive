@@ -266,7 +266,7 @@ collections:
   - name: "sculpt-to-final"
     label: "Sculpt to Final"
     label_singular: "Comparison"
-    description: "Before/after sculpt comparison pairs shown on the homepage."
+    description: "Before/after sculpt comparison pairs shown on the homepage. Only the first 3 in this list are shown — drag entries up or down to choose which."
     files:
       - name: "items"
         label: "Comparisons"

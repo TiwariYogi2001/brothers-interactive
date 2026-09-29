@@ -811,7 +811,8 @@
      ------------------------------------------------------------------ */
   var cmp = $("#compareGrid");
   if (cmp) {
-    cmp.innerHTML = PAIRS.map(function (pr, i) {
+    // Homepage shows the first 3 pairs only; reorder them in /admin to choose which.
+    cmp.innerHTML = PAIRS.slice(0, 3).map(function (pr, i) {
       return '<figure class="compare reveal" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
         '<div class="compare-stage">' +
           '<img class="compare-after" src="' + pr.after + '" alt="' + esc(pr.t) + ' final" loading="lazy" />' +
