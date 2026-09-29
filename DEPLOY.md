@@ -45,7 +45,8 @@ also open and edit directly if you prefer:
 - **Settings** (`data/config.json`): availability text, booking link, analytics domain, showreel video id, contact email/address, capabilities deck PDF.
 - **Open roles** (`data/roles.json`): appear on the careers page.
 - **Reviews** (`data/testimonials.json`): appear on the home page. Each has a `sample: true/false` flag — turn it off once it's a real, approved quote.
-- **Portfolio** (`data/portfolio.json`): each entry has a title, category, main image, extra images, description and tags. Add `sketchfab: "MODEL_ID"` to any entry to show an interactive 3D viewer on its detail page and in the lightbox.
+- **Category Tile Images** (`data/category-tiles.json`): optional hand-picked picture for each Portfolio category tile on the homepage; empty = first piece in that category. Uploads go to `assets/img/categories/`.
+- **Portfolio** (`data/portfolio.json`): each entry has a title, category, main image, extra images, description and tags. Use **Also show in** (`cats`) to list extra categories the same piece should appear in, so it doesn't need uploading twice. Add `sketchfab: "MODEL_ID"` to any entry to show an interactive 3D viewer on its detail page and in the lightbox.
 - **Games** (`data/games.json`), **Team** (`data/team.json`), **Sculpt to Final** (`data/pairs.json`), **Clients** (`data/clients.json`), **Blog posts** (`data/posts.json`) — same pattern, all in `/admin`.
 - **Client logos**: add a `logo` image to a client entry once you have permission to use the logo; leave it empty to show the name as plain text instead.
 

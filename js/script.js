@@ -12,15 +12,16 @@
   var BI = window.BI || {};
   var CFG = BI.CONFIG || {};
   var CAT = {
-    "realistic-humans": "Realistic Humans",
-    "realistic-creatures": "Realistic Creatures",
-    "realistic-hairs": "Realistic Hairs",
-    "stylized-human": "Stylized Human",
+    "modular-chr-skins": "Modular CHR Skins",
+    "realistic-humans": "Realistic CHR",
+    "realistic-creatures": "Realistic Creature",
+    "realistic-hairs": "Realistic Hair Card",
+    "stylized-human": "Stylized CHR",
     "stylized-creature": "Stylized Creature",
-    "hand-paint": "Hand Paint",
-    "props": "Props",
-    "mid-night-walk": "Mid Night Walk",
-    "lost-in-random": "Lost In Random"
+    "props": "Realistic Props",
+    "weapons": "Realistic Weapons",
+    "mid-night-walk": "Game - Midnight Walk",
+    "lost-in-random": "Game - Lost in Random"
   };
   /* "Browse by style" tiles on the homepage/category pages. Each groups one or
      more of the CAT keys above (a piece's own p.c is untouched, so its label
@@ -28,17 +29,22 @@
      A slug with an empty match list has no tagged work yet and renders as a
      non-clickable "Coming soon" tile instead of linking to an empty page. */
   var BROWSE_CATS = [
-    { slug: "realistic-character", label: "Realistic Character", match: ["realistic-humans"] },
-    { slug: "realistic-hair", label: "Realistic Hair", match: ["realistic-hairs"] },
+    { slug: "modular-chr-skins", label: "Modular CHR Skins", match: ["modular-chr-skins"] },
+    { slug: "realistic-character", label: "Realistic CHR", match: ["realistic-humans"] },
     { slug: "realistic-creature", label: "Realistic Creature", match: ["realistic-creatures"] },
-    { slug: "stylized-character", label: "Stylized Character", match: ["stylized-human"] },
+    { slug: "realistic-hair", label: "Realistic Hair Card", match: ["realistic-hairs"] },
+    { slug: "stylized-character", label: "Stylized CHR", match: ["stylized-human"] },
     { slug: "stylized-creature", label: "Stylized Creature", match: ["stylized-creature"] },
-    { slug: "hand-paint", label: "Hand Paint", match: ["hand-paint"] },
-    { slug: "midnight-walk", label: "Midnight Walk", match: ["mid-night-walk"] },
-    { slug: "lost-in-random", label: "Lost in Random", match: ["lost-in-random"] },
-    { slug: "props", label: "Props", match: ["props"] },
-    { slug: "weapons", label: "Weapons", match: [] }
+    { slug: "props", label: "Realistic Props", match: ["props"] },
+    { slug: "weapons", label: "Realistic Weapons", match: ["weapons"] },
+    { slug: "midnight-walk", label: "Game - Midnight Walk", match: ["mid-night-walk"] },
+    { slug: "lost-in-random", label: "Game - Lost in Random", match: ["lost-in-random"] }
   ];
+  /* A piece belongs to its main category (p.c) plus any extra ones listed in
+     p.cats ("Also show in" in /admin), so one upload can appear in several
+     category pages. p.c alone still drives the piece's label elsewhere. */
+  function inCat(p, key) { return p.c === key || (Array.isArray(p.cats) && p.cats.indexOf(key) !== -1); }
+  function inAnyCat(p, keys) { for (var k = 0; k < keys.length; k++) { if (inCat(p, keys[k])) return true; } return false; }
   var BASE = "https://brothersinteractive.com/projects/";
 
   /* All editable content lives in data/*.json (not data.js) so the /admin
@@ -221,8 +227,8 @@
   }
   function filtered() {
     if (activeFilter === "all") return SHUFFLED;
-    if (activeBrowseCat) return SHUFFLED.filter(function (p) { return activeBrowseCat.match.indexOf(p.c) !== -1; });
-    return SHUFFLED.filter(function (p) { return p.c === activeFilter; });
+    if (activeBrowseCat) return SHUFFLED.filter(function (p) { return inAnyCat(p, activeBrowseCat.match); });
+    return SHUFFLED.filter(function (p) { return inCat(p, activeFilter); });
   }
 
   function renderGrid() {
@@ -237,7 +243,8 @@
           '<article class="work-card ripple-host" data-index="' + PROJECTS.indexOf(p) + '" style="' + ar + '--i:' + idx + ';animation-delay:' + (idx % PAGE) * 40 + 'ms" tabindex="0" role="button" aria-label="Open ' + esc(p.t) + '">' +
             '<img src="' + p.i + '" alt="' + esc(p.t) + '" loading="lazy"' + (p.w ? ' width="' + p.w + '" height="' + p.h + '"' : '') + ' />' +
             '<span class="work-zoom" aria-hidden="true">&#x2922;</span>' +
-            '<div class="work-info"><span class="work-cat">' + esc(CAT[p.c]) + '</span><span class="work-title">' + esc(p.t) + '</span></div>' +
+            // On a category page, a piece shown via "Also show in" is labelled with that page's category
+            '<div class="work-info"><span class="work-cat">' + esc(activeBrowseCat && activeBrowseCat.match.indexOf(p.c) === -1 ? activeBrowseCat.label : CAT[p.c]) + '</span><span class="work-title">' + esc(p.t) + '</span></div>' +
           '</article>'
         );
       }).join("");
@@ -275,8 +282,13 @@
      ------------------------------------------------------------------ */
   var categoryGridEl = $("#categoryGrid");
   if (categoryGridEl) {
+    // Optional hand-picked tile images from /admin ("Category Tile Images"),
+    // keyed by slug with "-" as "_". Empty = pick the first piece automatically.
+    var TILE_IMG = loadJSON("category-tiles") || {};
     categoryGridEl.innerHTML = BROWSE_CATS.map(function (b, i) {
-      var thumb = PROJECTS.filter(function (p) { return b.match.indexOf(p.c) !== -1; })[0];
+      // Prefer a piece whose main category is this one for the tile image; fall back to an "Also show in" piece
+      var thumb = PROJECTS.filter(function (p) { return b.match.indexOf(p.c) !== -1; })[0] ||
+                  PROJECTS.filter(function (p) { return inAnyCat(p, b.match); })[0];
       if (!thumb) {
         return (
           '<div class="style-tile style-tile--soon reveal" style="transition-delay:' + (i % 4) * 70 + 'ms" aria-hidden="true">' +
@@ -286,7 +298,7 @@
       }
       return (
         '<a class="style-tile reveal" href="category.html?cat=' + encodeURIComponent(b.slug) + '" style="transition-delay:' + (i % 4) * 70 + 'ms" aria-label="Browse ' + esc(b.label) + '">' +
-          '<img src="' + thumb.i + '" alt="" loading="lazy" />' +
+          '<img src="' + (TILE_IMG[b.slug.replace(/-/g, "_")] || thumb.i) + '" alt="" loading="lazy" />' +
           '<span class="style-tile-label">' + esc(b.label) + '</span>' +
         '</a>'
       );
@@ -599,9 +611,8 @@
   var tGrid = $("#testimonialGrid");
   if (tGrid) {
     var initials = function (n) { return String(n || "").split(/\s+/).map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase() || "BI"; };
-    tGrid.innerHTML = TESTIMONIALS.length
-      ? TESTIMONIALS.map(function (t, i) {
-          return '<blockquote class="testimonial reveal" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
+    var tCards = TESTIMONIALS.map(function (t) {
+          return '<blockquote class="testimonial">' +
             (t.sample ? '<span class="sample-badge" title="Replace in data.js">Sample</span>' : '') +
             '<span class="quote-mark" aria-hidden="true">&ldquo;</span>' +
             '<p>' + esc(t.q) + '</p>' +
@@ -610,7 +621,17 @@
               '<div><strong>' + esc(t.n) + '</strong><span>' + esc(t.r) + (t.project ? ' &middot; ' + esc(t.project) : '') + '</span></div>' +
             '</footer>' +
           '</blockquote>';
-        }).join("")
+        }).join("");
+    // Horizontal auto-scrolling strip, like the logo wall. One "set" repeats the
+    // quotes until it's wider than any screen (so a short list never leaves a gap),
+    // then the set is duplicated once so translateX(-50%) loops seamlessly.
+    // Everything after the first copy of each quote is hidden from screen readers.
+    var tHidden = tCards.replace(/<blockquote class="testimonial">/g, '<blockquote class="testimonial" aria-hidden="true">');
+    var tRepeats = Math.max(1, Math.ceil(6 / Math.max(1, TESTIMONIALS.length)));
+    var tSet = tCards; for (var ti = 1; ti < tRepeats; ti++) tSet += tHidden;
+    var tSetHidden = ""; for (var tj = 0; tj < tRepeats; tj++) tSetHidden += tHidden;
+    tGrid.innerHTML = TESTIMONIALS.length
+      ? '<div class="testimonial-track" style="animation-duration:' + (TESTIMONIALS.length * tRepeats * 9) + 's">' + tSet + tSetHidden + '</div>'
       : '<p class="portfolio-empty">Client quotes are being collected. Ask us for references directly.</p>';
   }
   $$("[data-roles]").forEach(function (list) {
@@ -937,9 +958,9 @@
     if (refId) { refId = decodeURIComponent(refId); PROJECTS.forEach(function (x) { if (x.id === refId) refP = x; }); }
     if (refP) {
       var CAT_TYPE = {
-        "realistic-humans": "Characters", "stylized-human": "Characters", "mid-night-walk": "Characters", "lost-in-random": "Characters",
+        "realistic-humans": "Characters", "stylized-human": "Characters", "mid-night-walk": "Characters", "lost-in-random": "Characters", "modular-chr-skins": "Characters",
         "realistic-creatures": "Creatures", "stylized-creature": "Creatures",
-        "realistic-hairs": "Hair & grooming", "props": "Props & weapons"
+        "realistic-hairs": "Hair & grooming", "props": "Props & weapons", "weapons": "Props & weapons"
       };
       var CAT_STYLE = {
         "realistic-humans": "Realistic", "realistic-creatures": "Realistic", "realistic-hairs": "Realistic",
@@ -1124,9 +1145,7 @@
     themeToggle.setAttribute("aria-expanded", String(open));
   });
   themeOpts.forEach(function (b) {
-    // Midnight Gold is the default and has no menu entry, so clicking the
-    // already-active theme switches back to it.
-    b.addEventListener("click", function () { applyTheme(b.classList.contains("active") ? "midnight" : b.dataset.theme, true); closeThemePanel(); });
+    b.addEventListener("click", function () { applyTheme(b.dataset.theme, true); closeThemePanel(); });
   });
   document.addEventListener("click", function (e) { if (!switcher.contains(e.target)) closeThemePanel(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeThemePanel(); });

@@ -61,6 +61,26 @@ collections:
               - { label: "Image (transparent PNG)", name: "img", widget: "image", hint: "Background must be removed/transparent." }
               - { label: "Alt text", name: "alt", widget: "string", hint: "Describes the character for screen readers/SEO." }
 
+  - name: "category-tiles"
+    label: "Category Tile Images"
+    description: "The picture on each category tile in the homepage Portfolio section. Leave a tile empty to use the first piece in that category automatically. A landscape image (about 4:3) fills the tile best."
+    files:
+      - name: "tiles"
+        label: "Category Tile Images"
+        file: "data/category-tiles.json"
+        format: "json"
+        fields:
+          - { label: "Modular CHR Skins", name: "modular_chr_skins", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories" }
+          - { label: "Realistic CHR", name: "realistic_character", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories" }
+          - { label: "Realistic Creature", name: "realistic_creature", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories" }
+          - { label: "Realistic Hair Card", name: "realistic_hair", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories" }
+          - { label: "Stylized CHR", name: "stylized_character", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories" }
+          - { label: "Stylized Creature", name: "stylized_creature", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories" }
+          - { label: "Realistic Props", name: "props", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories" }
+          - { label: "Realistic Weapons", name: "weapons", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories", hint: "Only shows once at least one piece is in this category — until then the tile says Coming soon." }
+          - { label: "Game - Midnight Walk", name: "midnight_walk", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories" }
+          - { label: "Game - Lost in Random", name: "lost_in_random", widget: "image", required: false, media_folder: "/assets/img/categories", public_folder: "../assets/img/categories" }
+
   - name: "portfolio"
     label: "Portfolio"
     label_singular: "Portfolio Piece"
@@ -85,16 +105,36 @@ collections:
               - label: "Category"
                 name: "c"
                 widget: "select"
+                hint: "The piece's main category. It decides the label shown on the piece."
                 options:
-                  - { label: "Realistic Humans", value: "realistic-humans" }
-                  - { label: "Realistic Creatures", value: "realistic-creatures" }
-                  - { label: "Realistic Hairs", value: "realistic-hairs" }
-                  - { label: "Stylized Human", value: "stylized-human" }
+                  - { label: "Modular CHR Skins", value: "modular-chr-skins" }
+                  - { label: "Realistic CHR", value: "realistic-humans" }
+                  - { label: "Realistic Creature", value: "realistic-creatures" }
+                  - { label: "Realistic Hair Card", value: "realistic-hairs" }
+                  - { label: "Stylized CHR", value: "stylized-human" }
                   - { label: "Stylized Creature", value: "stylized-creature" }
-                  - { label: "Hand Paint", value: "hand-paint" }
-                  - { label: "Props", value: "props" }
-                  - { label: "Mid Night Walk", value: "mid-night-walk" }
-                  - { label: "Lost In Random", value: "lost-in-random" }
+                  - { label: "Realistic Props", value: "props" }
+                  - { label: "Realistic Weapons", value: "weapons" }
+                  - { label: "Game - Midnight Walk", value: "mid-night-walk" }
+                  - { label: "Game - Lost in Random", value: "lost-in-random" }
+
+              - label: "Also show in (optional)"
+                name: "cats"
+                widget: "select"
+                multiple: true
+                required: false
+                hint: "Pick any other categories this same piece should also appear in. No need to upload it again."
+                options:
+                  - { label: "Modular CHR Skins", value: "modular-chr-skins" }
+                  - { label: "Realistic CHR", value: "realistic-humans" }
+                  - { label: "Realistic Creature", value: "realistic-creatures" }
+                  - { label: "Realistic Hair Card", value: "realistic-hairs" }
+                  - { label: "Stylized CHR", value: "stylized-human" }
+                  - { label: "Stylized Creature", value: "stylized-creature" }
+                  - { label: "Realistic Props", value: "props" }
+                  - { label: "Realistic Weapons", value: "weapons" }
+                  - { label: "Game - Midnight Walk", value: "mid-night-walk" }
+                  - { label: "Game - Lost in Random", value: "lost-in-random" }
 
               - label: "ID"
                 name: "id"
