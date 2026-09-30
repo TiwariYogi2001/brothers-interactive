@@ -1263,3 +1263,9 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 #breakdownPage .page-hero + .section { padding-top: 48px; }
 #breakdownPage .section-head { margin-bottom: 20px; }
 #breakdownPage .process-grid { margin-bottom: 0; }
+
+/* Careers page: tighter hero (no forced 560px art box) and less gap before Open Roles */
+.page-hero--careers { padding-top: calc(var(--header-h) + 28px); padding-bottom: 8px; }
+.page-hero--careers .careers-slides { min-height: 0; }
+.page-hero--careers .careers-slide img { max-height: 470px; }
+.page-hero--careers + #roles { padding-top: 32px; }
