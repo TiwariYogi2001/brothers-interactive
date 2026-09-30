@@ -1256,3 +1256,10 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 .careers-slide.is-active { opacity: 1; }
 /* the fade targets the wrapper: sitewide img rules force opacity:1 !important on images */
 .careers-slide img { width: 100%; max-height: 560px; object-fit: contain; filter: drop-shadow(0 24px 28px rgba(0,0,0,0.45)); }
+
+/* Breakdown pages: tighter vertical rhythm (no big blank gaps between hero and sections) */
+#breakdownPage .hero-actions { margin-bottom: 0; }
+#breakdownPage .section { padding: 36px 0; }
+#breakdownPage .page-hero + .section { padding-top: 48px; }
+#breakdownPage .section-head { margin-bottom: 20px; }
+#breakdownPage .process-grid { margin-bottom: 0; }
