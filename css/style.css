@@ -1278,3 +1278,9 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 /* Sitewide: no leftover margin under the last block of a section (keeps gaps between sections even) */
 .section .container > :last-child { margin-bottom: 0; }
 @media (max-width: 1600px) { .careers-join .careers-slides { margin-inline: auto; } }
+
+/* Smooth image zoom: the viewer's backdrop is already ~94% opaque, so the full-screen blur of the
+   (animating) page behind it only cost frames. Also pause the cards' breathe/shine loops while it's open. */
+.lightbox { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(3, 4, 9, 0.95); }
+body.no-scroll .work-card img, body.no-scroll .work-card::before { animation-play-state: paused; }
+.flip-clone { box-shadow: 0 30px 60px rgba(0,0,0,0.55); backface-visibility: hidden; }

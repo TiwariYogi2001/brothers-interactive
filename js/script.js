@@ -444,6 +444,10 @@ function siteMain() {
      computed from fromRect. Only that transform is ever animated afterwards. */
   function makeClone(srcImg, fromRect, toRect, fit) {
     var clone = srcImg.cloneNode(false);
+    // Reuse the exact picture already on screen: without this the bigger box makes the browser
+    // pick the 1280px file from srcset and download/decode it mid-animation (the visible hitch).
+    clone.removeAttribute("srcset"); clone.removeAttribute("sizes"); clone.removeAttribute("loading");
+    clone.src = srcImg.currentSrc || srcImg.src;
     clone.className = "flip-clone loaded";
     var sx = fromRect.width / toRect.width, sy = fromRect.height / toRect.height;
     var tx = (fromRect.left + fromRect.width / 2) - (toRect.left + toRect.width / 2);
@@ -462,16 +466,25 @@ function siteMain() {
     lbFigure.classList.add("hidden-for-flip");
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        var to = lbImg.getBoundingClientRect();
-        if (!to.width) { to = { top: window.innerHeight * 0.06, left: window.innerWidth * 0.2, width: window.innerWidth * 0.6, height: window.innerHeight * 0.78 }; }
-        var clone = makeClone(srcImg, from, to, "contain");
+        var box = lbImg.getBoundingClientRect();
+        if (!box.width) { box = { top: window.innerHeight * 0.06, left: window.innerWidth * 0.2, width: window.innerWidth * 0.6, height: window.innerHeight * 0.78 }; }
+        // Land on the picture's real (contained) rectangle inside the viewer box, with the card's
+        // proportions — so the flight is one uniform scale, never a stretch/squash.
+        var ratio = from.width / from.height, w = box.width, h = w / ratio;
+        if (h > box.height) { h = box.height; w = h * ratio; }
+        var to = { top: box.top + (box.height - h) / 2, left: box.left + (box.width - w) / 2, width: w, height: h };
+        var clone = makeClone(srcImg, from, to, "cover");
         clone.getBoundingClientRect(); // commit the instant starting transform before animating
-        clone.style.transition = "transform 0.45s var(--ease), opacity 0.3s";
+        clone.style.transition = "transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s";
         clone.style.transform = "none";
-        afterMove(clone, 450, function () {
-          lbFigure.classList.remove("hidden-for-flip"); lbFigure.classList.add("settle");
-          clone.style.opacity = "0";
-          setTimeout(function () { clone.remove(); lbFigure.classList.remove("settle"); done(); }, 300);
+        afterMove(clone, 420, function () {
+          // Hand over only once the full-size picture is decoded, so there's no blank/pop frame.
+          var ready = lbImg.decode ? lbImg.decode().catch(function () {}) : Promise.resolve();
+          Promise.race([ready, new Promise(function (r) { setTimeout(r, 1200); })]).then(function () {
+            lbFigure.classList.remove("hidden-for-flip");
+            clone.style.opacity = "0";
+            setTimeout(function () { clone.remove(); done(); }, 250);
+          });
         });
       });
     });
@@ -480,15 +493,19 @@ function siteMain() {
     clearClones();
     var dstImg = toEl && toEl.querySelector("img");
     if (!dstImg || reduceMotion || !lb.classList.contains("open")) { done(); return; }
-    var from = lbImg.getBoundingClientRect(); var to = dstImg.getBoundingClientRect();
-    if (!from.width || !to.width || to.bottom < 0 || to.top > window.innerHeight) { done(); return; }
+    var box = lbImg.getBoundingClientRect(); var to = dstImg.getBoundingClientRect();
+    if (!box.width || !to.width || to.bottom < 0 || to.top > window.innerHeight) { done(); return; }
+    // start from the picture's visible (contained) rectangle, in the card's proportions: uniform shrink, no squash
+    var ratio = to.width / to.height, w = box.width, h = w / ratio;
+    if (h > box.height) { h = box.height; w = h * ratio; }
+    var from = { top: box.top + (box.height - h) / 2, left: box.left + (box.width - w) / 2, width: w, height: h };
     var clone = makeClone(lbImg, from, to, "cover");
     lbFigure.classList.add("hidden-for-flip");
     clone.getBoundingClientRect(); // commit the instant starting transform before animating
     requestAnimationFrame(function () {
-      clone.style.transition = "transform 0.45s var(--ease), opacity 0.2s";
+      clone.style.transition = "transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s";
       clone.style.transform = "none";
-      afterMove(clone, 450, function () {
+      afterMove(clone, 380, function () {
         clone.style.opacity = "0";
         setTimeout(function () { clone.remove(); lbFigure.classList.remove("hidden-for-flip"); done(); }, 200);
       });
