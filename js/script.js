@@ -1467,25 +1467,21 @@ function siteMain() {
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeThemePanel(); });
 
   /* ------------------------------------------------------------------
-     Job application form (careers.html) — posts to JOBS_EMAIL via FormSubmit.co
+     Job applications (careers.html) — handled by a Google Form.
+     The form link is set in /admin > Settings > "Careers application form (Google Form link)".
+     Until it's set, the button is hidden and an "opening soon" note shows instead.
      ------------------------------------------------------------------ */
-  var jobForm = $("#applyForm");
-  if (jobForm) jobForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var jn = $("#apName"), je = $("#apEmail"), jr = $("#apRole"), jp = $("#apPortfolio"), jm = $("#apMessage"), jnote = $("#applyNote");
-    var ok = true;
-    [jn, je, jr, jp].forEach(function (f) {
-      var v = f.value.trim();
-      var valid = v !== "" && (f.type !== "email" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) && (f.type !== "url" || /^https?:\/\//i.test(v));
-      f.parentElement.classList.toggle("invalid", !valid);
-      if (!valid) ok = false;
-    });
-    if (!ok) { jnote.className = "form-note err"; jnote.textContent = "Please fill in name, email, role and a portfolio link starting with http."; return; }
-    var subjectText = "Application: " + jr.value.trim() + " - " + jn.value.trim();
-    var bodyText = "Role: " + jr.value.trim() + "\nPortfolio: " + jp.value.trim() + "\nExperience: " + ($("#apExp").value || "-") + "\nSoftware: " + ($("#apTools").value.trim() || "-") + "\n\n" + jm.value.trim() + "\n\n— " + jn.value.trim() + " (" + je.value.trim() + ")";
-    var payload = { _subject: subjectText, name: jn.value.trim(), email: je.value.trim(), role: jr.value.trim(), portfolio: jp.value.trim(), experience: $("#apExp").value, software: $("#apTools").value.trim(), message: jm.value.trim() };
-    sendForm(jobForm, jnote, payload, "application_sent", "mailto:" + JOBS_EMAIL + "?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText), JOBS_EMAIL);
-  });
+  var applyBtn = $("#applyFormBtn");
+  if (applyBtn) {
+    var formUrl = String(CFG.careersFormUrl || "").trim();
+    if (/^https?:\/\//i.test(formUrl)) {
+      applyBtn.href = formUrl;
+      applyBtn.addEventListener("click", function () { track("application_form_opened"); });
+    } else {
+      applyBtn.hidden = true;
+      $("#applyFormSoon").hidden = false;
+    }
+  }
 
   /* ------------------------------------------------------------------
      Hero visual — random portfolio pieces on every load, each card

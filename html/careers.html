@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/style.css?v=20260930cr1" />
+  <link rel="stylesheet" href="../css/style.css?v=20260930ap1" />
   <script>try { var q = (location.search.match(/[?&]theme=([a-z]+)/) || [])[1]; var t = q || localStorage.getItem("bi-theme"); if (t && t !== "midnight" && "arctic ocean steel aurora desert".split(" ").indexOf(t) !== -1) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
 </head>
 <body class="subpage">
@@ -135,61 +135,31 @@
       </div>
     </section>
 
-    <!-- ================= APPLY ================= -->
+    <!-- ================= APPLY (Google Form — link set in /admin > Settings > Careers application form) ================= -->
     <section class="section" id="apply">
-      <div class="container contact-grid">
-        <div class="contact-copy reveal">
-          <p class="eyebrow">// Apply</p>
-          <h2 class="section-title">Send your <span class="accent">application</span></h2>
-          <p>Fill in the form and it opens an email to us with everything attached as text. Or email us directly with your portfolio link and the role in the subject line.</p>
-          <ul class="contact-list">
-            <li><span class="contact-label">Applications</span><a href="mailto:contact@brothersinteractive.com?subject=Application">contact@brothersinteractive.com</a></li>
-            <li><span class="contact-label">Studio</span><span>Jaipur, Rajasthan, India</span></li>
-          </ul>
-          <h3 class="contact-sub">Follow the studio</h3>
-          <div class="social-row">
-            <a href="https://www.artstation.com/brothersinteractive" target="_blank" rel="noopener">ArtStation</a>
-            <a href="https://www.linkedin.com/company/brothers-interactive" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://www.instagram.com/brothersinteractive" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://www.facebook.com/Brothersinteractive" target="_blank" rel="noopener">Facebook</a>
+      <div class="container">
+        <div class="apply-card reveal">
+          <div class="apply-main">
+            <p class="eyebrow">// Apply</p>
+            <h2 class="section-title">Ready to <span class="accent">join us?</span></h2>
+            <p class="apply-lead">Applications go through a short Google Form. It takes about 5 minutes, and a lead reviews every one personally.</p>
+            <div class="apply-actions">
+              <a href="#" class="btn btn--primary apply-form-btn" id="applyFormBtn" target="_blank" rel="noopener">Open application form &rarr;</a>
+              <span class="apply-soon" id="applyFormSoon" hidden>Application form opening soon</span>
+            </div>
+            <p class="apply-alt">Trouble with the form? Email your portfolio to <a href="mailto:contact@brothersinteractive.com?subject=Application" id="applyEmail">contact@brothersinteractive.com</a> with the role in the subject line.</p>
+          </div>
+          <div class="apply-side">
+            <h3 class="apply-side-title">Have these ready</h3>
+            <ul class="apply-checklist">
+              <li><span>01</span><div><strong>Portfolio link</strong><small>ArtStation, a website or a PDF on Google Drive.</small></div></li>
+              <li><span>02</span><div><strong>Role and experience</strong><small>Which role you want and how many years you have.</small></div></li>
+              <li><span>03</span><div><strong>Your tools</strong><small>ZBrush, Maya, Blender, Substance, Marmoset, engines.</small></div></li>
+              <li><span>04</span><div><strong>Notice period</strong><small>When you could start, and whether you can work from Jaipur.</small></div></li>
+            </ul>
+            <p class="apply-reply">We reply to every application, usually within a week.</p>
           </div>
         </div>
-        <form class="contact-form reveal" id="applyForm" novalidate>
-          <div class="field-row">
-            <div class="field"><label for="apName">Name</label><input type="text" id="apName" placeholder="Your name" required autocomplete="name" /></div>
-            <div class="field"><label for="apEmail">Email</label><input type="email" id="apEmail" placeholder="you@email.com" required autocomplete="email" /></div>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="apRole">Role</label>
-              <select id="apRole" required>
-                <option value="">Select...</option>
-                <option>Character Artist</option>
-                <option>Creature Artist</option>
-                <option>Prop &amp; Weapon Artist</option>
-                <option>Texture / Material Artist</option>
-                <option>Rigger / Technical Artist</option>
-                <option>Internship</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="apExp">Experience</label>
-              <select id="apExp">
-                <option value="">Select...</option>
-                <option>Student / fresher</option>
-                <option>1 to 2 years</option>
-                <option>3 to 5 years</option>
-                <option>6+ years</option>
-              </select>
-            </div>
-          </div>
-          <div class="field"><label for="apPortfolio">Portfolio link</label><input type="url" id="apPortfolio" placeholder="https://www.artstation.com/yourname" required /></div>
-          <div class="field"><label for="apTools">Software you use <span class="optional">optional</span></label><input type="text" id="apTools" placeholder="ZBrush, Maya, Substance Painter, Marmoset..." /></div>
-          <div class="field"><label for="apMessage">About you <span class="optional">optional</span></label><textarea id="apMessage" rows="5" placeholder="What you like working on, notice period, anything else..."></textarea></div>
-          <button type="submit" class="btn btn--primary btn--block">Send application</button>
-          <p class="form-note" id="applyNote" role="status" aria-live="polite"></p>
-        </form>
       </div>
     </section>
 
@@ -231,8 +201,8 @@
     </div>
   </div>
 
-  <script src="../js/data.js?v=20260930cr1"></script>
-  <script src="../js/script.js?v=20260930cr1"></script>
+  <script src="../js/data.js?v=20260930ap1"></script>
+  <script src="../js/script.js?v=20260930ap1"></script>
   <!--/FOOTER-->
 </body>
 </html>
