@@ -1241,3 +1241,11 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 @media (max-width: 1600px) { .faq-art { max-width: 560px; } }
 @media (max-width: 900px) { .faq-art { max-width: 420px; margin: 24px auto 0; } }
 @media (prefers-reduced-motion: reduce) { .faq-art * { animation: none !important; } }
+
+/* Wide/zoomed 3D models: the viewer canvas bleeds past its column on both sides (invisible, transparent)
+   so wings/tails aren't cut off at the box edge. The text column sits above it, so buttons stay clickable. */
+@media (min-width: 1101px) {
+  .hero-copy { position: relative; z-index: 4; }
+  .hero-model { width: calc(100% + 360px); flex-basis: calc(100% + 360px); margin-inline: -180px; }
+  .hero { overflow-x: clip; }
+}
