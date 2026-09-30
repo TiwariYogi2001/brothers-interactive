@@ -1517,6 +1517,28 @@ function siteMain() {
   }
 
   /* ------------------------------------------------------------------
+     Careers hero images — rendered from data/careers-hero.json (/admin > Careers Page Images).
+     One image at a time, 10s each, soft cross-fade.
+     ------------------------------------------------------------------ */
+  var careersSlides = $("#careersSlides");
+  var CAREERS_HERO = loadList("careers-hero", []).filter(function (x) { return x && x.img; });
+  if (careersSlides && CAREERS_HERO.length) {
+    careersSlides.innerHTML = CAREERS_HERO.map(function (x, i) {
+      return '<div class="careers-slide' + (i ? "" : " is-active") + '"><img src="' + esc(x.img) + '" alt="' + esc(x.alt || "") + '" /></div>';
+    }).join("");
+  }
+  if (careersSlides) {
+    var cSlides = careersSlides.querySelectorAll(".careers-slide"), cIdx = 0;
+    if (cSlides.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInterval(function () {
+        cSlides[cIdx].classList.remove("is-active");
+        cIdx = (cIdx + 1) % cSlides.length;
+        cSlides[cIdx].classList.add("is-active");
+      }, 10000);
+    }
+  }
+
+  /* ------------------------------------------------------------------
      Team grid (homepage #team section) — rendered from data/team.json
      ------------------------------------------------------------------ */
   var teamGrid = $("#teamGrid");
@@ -1558,7 +1580,7 @@ function siteMain() {
    edits still show on the next refresh without re-downloading everything.
    ------------------------------------------------------------------ */
 (function () {
-  var names = ["portfolio", "games", "cases", "posts", "testimonials", "roles", "pairs", "clients", "press", "team", "hero-showcase", "config", "hero", "breakdowns"];
+  var names = ["portfolio", "games", "cases", "posts", "testimonials", "roles", "pairs", "clients", "press", "team", "hero-showcase", "config", "hero", "breakdowns", "careers-hero"];
   if (document.getElementById("categoryGrid")) names.push("category-tiles");
   var store = window.__BI_JSON = {};
   if (!window.fetch || !window.Promise) { siteMain(); return; }

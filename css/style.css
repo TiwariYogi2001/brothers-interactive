@@ -1250,16 +1250,9 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
   .hero { overflow-x: clip; }
 }
 
-/* Careers hero: one image at a time, no frame or tag; each shows for 10s and blinks in (3 images = 30s loop) */
+/* Careers hero: transparent cut-out images from /admin > Careers Page Images, one at a time (10s each, soft fade via script.js) */
 .careers-slides { display: grid; place-items: center; }
-.careers-slide {
-  grid-area: 1 / 1; width: 100%;
-  opacity: 0; animation: careersBlink 30s linear infinite; animation-delay: calc(var(--i) * 10s);
-}
+.careers-slide { grid-area: 1 / 1; width: 100%; opacity: 0; transition: opacity 1.2s var(--ease); }
+.careers-slide.is-active { opacity: 1; }
 /* the fade targets the wrapper: sitewide img rules force opacity:1 !important on images */
-.careers-slide img { width: 100%; max-height: 560px; object-fit: contain; border-radius: var(--radius); }
-@keyframes careersBlink {
-  0% { opacity: 0; } 0.8% { opacity: 1; } 1.4% { opacity: 0.15; } 2% { opacity: 1; } 2.6% { opacity: 0.3; } 3.2% { opacity: 1; }
-  32% { opacity: 1; } 33.33% { opacity: 0; } 100% { opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) { .careers-slide { animation: none; } .careers-slide:first-child { opacity: 1; } }
+.careers-slide img { width: 100%; max-height: 560px; object-fit: contain; filter: drop-shadow(0 24px 28px rgba(0,0,0,0.45)); }

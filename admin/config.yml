@@ -387,6 +387,25 @@ collections:
               - { label: "Type / Location", name: "type", widget: "string", hint: "e.g. \"Full-time · Jaipur\"" }
               - { label: "Summary", name: "d", widget: "string", hint: "One line describing the role." }
 
+  - name: "careers-hero"
+    label: "Careers Page Images"
+    label_singular: "Careers Image"
+    description: "The images at the top of the Careers page. They show one at a time, each for 10 seconds, with a soft fade. Use PNG or WebP with the background removed (transparent) so they float on the page."
+    files:
+      - name: "items"
+        label: "Careers Page Images"
+        file: "data/careers-hero.json"
+        format: "json"
+        fields:
+          - label: "Images"
+            name: "items"
+            widget: "list"
+            label_singular: "Image"
+            summary: "{{fields.alt}}"
+            fields:
+              - { label: "Image (transparent PNG/WebP)", name: "img", widget: "image", media_folder: "/assets/img/careers", public_folder: "../assets/img/careers", hint: "Background removed/transparent. Around 1000px wide is plenty." }
+              - { label: "Description", name: "alt", widget: "string", hint: "Describes the image for screen readers/SEO, e.g. \"Tiger realistic creature\"." }
+
   - name: "settings"
     label: "Settings"
     files:
