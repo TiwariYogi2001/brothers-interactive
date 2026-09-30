@@ -1561,6 +1561,7 @@ function siteMain() {
     var cSlides = careersSlides.querySelectorAll(".careers-slide"), cIdx = 0;
     if (cSlides.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setInterval(function () {
+        if (document.hidden) return; // background tab: don't queue fades that all replay at once on return
         cSlides[cIdx].classList.remove("is-active");
         cIdx = (cIdx + 1) % cSlides.length;
         cSlides[cIdx].classList.add("is-active");
@@ -1601,6 +1602,51 @@ function siteMain() {
      ------------------------------------------------------------------ */
   $$("#year, .year").forEach(function (el) { el.textContent = new Date().getFullYear(); });
   watchReveals();
+
+  /* ------------------------------------------------------------------
+     Section links (nav "Careers", "Team", index.html#careers from other pages...):
+     the page is built from data after load and images above keep loading, so a plain
+     #hash jump lands in the wrong place. Scroll under the fixed header ourselves, then
+     re-check a few times as the layout settles.
+     ------------------------------------------------------------------ */
+  function goToSection(id, smooth) {
+    var target = id && document.getElementById(id);
+    if (!target) return false;
+    var headerH = header ? header.offsetHeight : 0;
+    var place = function (behavior) {
+      var y = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - headerH + 1;
+      window.scrollTo({ top: Math.max(0, y), behavior: behavior });
+    };
+    place(smooth ? "smooth" : "instant");
+    // images/3D above may still be loading: nudge back onto the section if it moved,
+    // unless the visitor has started scrolling by hand in the meantime.
+    var userMoved = false;
+    var stop = function () { userMoved = true; };
+    ["wheel", "touchstart", "keydown"].forEach(function (t) { window.addEventListener(t, stop, { once: true, passive: true }); });
+    [900, 1800, 3000].forEach(function (ms) {
+      setTimeout(function () {
+        if (userMoved) return;
+        if (Math.abs(target.getBoundingClientRect().top - headerH) > 4) place("instant");
+      }, ms);
+    });
+    return true;
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="#"]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    var url = new URL(a.getAttribute("href"), location.href);
+    if (url.pathname !== location.pathname || !url.hash || url.hash === "#") return;
+    if (!document.getElementById(url.hash.slice(1))) return;
+    e.preventDefault();
+    history.pushState(null, "", url.hash);
+    goToSection(url.hash.slice(1), true);
+  });
+  if (location.hash.length > 1) {
+    var hashId = decodeURIComponent(location.hash.slice(1));
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    goToSection(hashId, false);
+    window.addEventListener("load", function () { goToSection(hashId, false); });
+  }
 }
 
 /* ------------------------------------------------------------------

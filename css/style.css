@@ -1252,7 +1252,7 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 
 /* Careers hero: transparent cut-out images from /admin > Careers Page Images, one at a time (10s each, soft fade via script.js) */
 .careers-slides { display: grid; place-items: center; }
-.careers-slide { grid-area: 1 / 1; width: 100%; opacity: 0; transition: opacity 1.2s var(--ease); }
+.careers-slide { grid-area: 1 / 1; width: 100%; opacity: 0; transition: opacity 1.2s var(--ease); will-change: opacity; transform: translateZ(0); backface-visibility: hidden; } /* own GPU layer: stops Chrome drawing a fading slide at the wrong scale */
 .careers-slide.is-active { opacity: 1; }
 /* the fade targets the wrapper: sitewide img rules force opacity:1 !important on images */
 .careers-slide img { width: 100%; max-height: 560px; object-fit: contain; filter: drop-shadow(0 24px 28px rgba(0,0,0,0.45)); }
