@@ -1065,7 +1065,7 @@ function siteMain() {
       if (B.gallery && B.gallery.length) {
         secs.push(sec("Gallery", 'Final <span class="accent">renders</span>', "Click any image to see it full size.",
           '<div class="bd-gallery">' + B.gallery.map(function (u, i) {
-            return '<a class="reveal" href="' + esc(u) + '" target="_blank" rel="noopener" style="transition-delay:' + (i % 3) * 70 + 'ms"><img ' + imgAttrs(u, "(max-width: 600px) 50vw, 33vw") + ' alt="' + esc(B.t) + ' render ' + (i + 1) + '" loading="lazy" /></a>';
+            return '<a class="reveal" href="' + esc(u) + '" data-i="' + i + '" style="transition-delay:' + (i % 3) * 70 + 'ms"><img ' + imgAttrs(u, "(max-width: 600px) 50vw, 33vw") + ' alt="' + esc(B.t) + ' render ' + (i + 1) + '" loading="lazy" /></a>';
           }).join("") + '</div>'));
       }
       var steps = (B.steps && B.steps.length) ? B.steps : DEFAULT_STEPS;
@@ -1085,6 +1085,40 @@ function siteMain() {
             '<a href="contact.html" class="btn btn--ghost">Get a breakdown like this</a>' +
           '</div>' +
         '</div></div></section>' + secs.join("");
+
+      // Gallery: open renders in a full-screen viewer (same look as the portfolio lightbox) instead of a new tab/download.
+      if (B.gallery && B.gallery.length) {
+        var gl = document.createElement("div");
+        gl.className = "lightbox"; gl.setAttribute("aria-hidden", "true"); gl.setAttribute("role", "dialog"); gl.setAttribute("aria-label", "Image viewer");
+        gl.innerHTML = '<button class="lightbox-close" aria-label="Close">&times;</button>' +
+          (B.gallery.length > 1 ? '<button class="lightbox-nav lightbox-prev" aria-label="Previous">&lsaquo;</button><button class="lightbox-nav lightbox-next" aria-label="Next">&rsaquo;</button>' : '') +
+          '<figure class="lightbox-figure"><img class="loaded" src="" alt="" /><figcaption><span class="lightbox-title"></span></figcaption></figure>';
+        document.body.appendChild(gl);
+        var glImg = $("img", gl), glCap = $(".lightbox-title", gl), glPos = 0;
+        var glShow = function (i) {
+          glPos = (i + B.gallery.length) % B.gallery.length;
+          glImg.src = B.gallery[glPos]; glImg.alt = B.t + " render " + (glPos + 1);
+          glCap.textContent = B.t + (B.gallery.length > 1 ? "  ·  " + (glPos + 1) + " / " + B.gallery.length : "");
+        };
+        var glClose = function () { gl.classList.remove("open"); gl.setAttribute("aria-hidden", "true"); document.body.classList.remove("no-scroll"); };
+        $(".bd-gallery", bdPage).addEventListener("click", function (e) {
+          var a = e.target.closest("a"); if (!a) return;
+          e.preventDefault();
+          glShow(+a.dataset.i);
+          gl.classList.add("open"); gl.setAttribute("aria-hidden", "false"); document.body.classList.add("no-scroll");
+        });
+        gl.addEventListener("click", function (e) {
+          if (e.target === gl || e.target.closest(".lightbox-close")) glClose();
+          else if (e.target.closest(".lightbox-prev")) glShow(glPos - 1);
+          else if (e.target.closest(".lightbox-next")) glShow(glPos + 1);
+        });
+        document.addEventListener("keydown", function (e) {
+          if (!gl.classList.contains("open")) return;
+          if (e.key === "Escape") glClose();
+          else if (e.key === "ArrowLeft") glShow(glPos - 1);
+          else if (e.key === "ArrowRight") glShow(glPos + 1);
+        });
+      }
 
       // Marmoset Viewer: .mview file uploaded in /admin, rendered with Marmoset's official player.
       if (B.marmoset) {
