@@ -1227,3 +1227,16 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
   img { opacity: 1 !important; transform: none !important; }
   .cursor-glow, .ripple, .art-cursor, .art-cursor-ring { display: none; }
 }
+
+/* FAQ intro illustration */
+.faq-art { margin-top: 36px; max-width: 380px; filter: drop-shadow(0 18px 40px rgba(0,0,0,0.45)); }
+.faq-art svg { width: 100%; height: auto; display: block; overflow: visible; }
+.faq-art__q { animation: faqFloat 6s ease-in-out infinite; }
+.faq-art__a { animation: faqFloat 6s ease-in-out -3s infinite; }
+.faq-art__cube { transform-origin: 300px 70px; animation: faqSpin 14s linear infinite; }
+.faq-art__dot { animation: faqPulse 2.8s ease-in-out infinite; }
+@keyframes faqFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes faqSpin { to { transform: rotate(360deg); } }
+@keyframes faqPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+@media (max-width: 900px) { .faq-art { max-width: 280px; margin: 24px auto 0; } }
+@media (prefers-reduced-motion: reduce) { .faq-art * { animation: none !important; } }
