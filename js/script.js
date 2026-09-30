@@ -1092,7 +1092,7 @@ function siteMain() {
         gl.className = "lightbox"; gl.setAttribute("aria-hidden", "true"); gl.setAttribute("role", "dialog"); gl.setAttribute("aria-label", "Image viewer");
         gl.innerHTML = '<button class="lightbox-close" aria-label="Close">&times;</button>' +
           (B.gallery.length > 1 ? '<button class="lightbox-nav lightbox-prev" aria-label="Previous">&lsaquo;</button><button class="lightbox-nav lightbox-next" aria-label="Next">&rsaquo;</button>' : '') +
-          '<figure class="lightbox-figure"><img class="loaded" src="" alt="" /><figcaption><span class="lightbox-title"></span></figcaption></figure>';
+          '<figure class="lightbox-figure"><img class="loaded" alt="" /><figcaption><span class="lightbox-title"></span></figcaption></figure>';
         document.body.appendChild(gl);
         var glImg = $("img", gl), glCap = $(".lightbox-title", gl), glPos = 0;
         var glShow = function (i) {

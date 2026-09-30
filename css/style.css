@@ -1276,3 +1276,4 @@ body.art-cursor-on input:not([type="range"]):not([type="checkbox"]), body.art-cu
 
 /* Sitewide: no leftover margin under the last block of a section (keeps gaps between sections even) */
 .section .container > :last-child { margin-bottom: 0; }
+@media (max-width: 1600px) { .careers-join .careers-slides { margin-inline: auto; } }
