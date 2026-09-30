@@ -1609,26 +1609,35 @@ function siteMain() {
      #hash jump lands in the wrong place. Scroll under the fixed header ourselves, then
      re-check a few times as the layout settles.
      ------------------------------------------------------------------ */
+  // Only the LATEST jump may correct itself: every new nav click, or any manual scroll
+  // (wheel, touch, keys, scrollbar drag), cancels the follow-up checks of earlier jumps.
+  var sectionJob = 0;
+  ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (t) {
+    window.addEventListener(t, function (e) {
+      if (t === "mousedown" && e.target.closest && e.target.closest('a[href*="#"]')) return; // the nav click itself
+      sectionJob++;
+    }, { passive: true });
+  });
   function goToSection(id, smooth) {
     var target = id && document.getElementById(id);
     if (!target) return false;
+    var job = ++sectionJob;
     var headerH = header ? header.offsetHeight : 0;
+    var offBy = function () { return target.getBoundingClientRect().top - headerH; };
     var place = function (behavior) {
-      var y = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - headerH + 1;
-      window.scrollTo({ top: Math.max(0, y), behavior: behavior });
+      window.scrollTo({ top: Math.max(0, offBy() + (window.scrollY || window.pageYOffset) + 1), behavior: behavior });
     };
     place(smooth ? "smooth" : "instant");
-    // images/3D above may still be loading: nudge back onto the section if it moved,
-    // unless the visitor has started scrolling by hand in the meantime.
-    var userMoved = false;
-    var stop = function () { userMoved = true; };
-    ["wheel", "touchstart", "keydown"].forEach(function (t) { window.addEventListener(t, stop, { once: true, passive: true }); });
-    [900, 1800, 3000].forEach(function (ms) {
-      setTimeout(function () {
-        if (userMoved) return;
-        if (Math.abs(target.getBoundingClientRect().top - headerH) > 4) place("instant");
-      }, ms);
-    });
+    // Images/3D above may still be loading and push the section down. Once the scroll has
+    // come to rest, nudge it back into place — never mid-animation, never after a newer jump.
+    var lastY = -1, checks = 0;
+    (function settle() {
+      if (job !== sectionJob || checks++ > 12) return;   // superseded, or ~4s passed
+      var y = window.scrollY || window.pageYOffset;
+      if (y === lastY && Math.abs(offBy()) > 4) place("instant");
+      lastY = y;
+      setTimeout(settle, 300);
+    })();
     return true;
   }
   document.addEventListener("click", function (e) {
@@ -1645,7 +1654,9 @@ function siteMain() {
     var hashId = decodeURIComponent(location.hash.slice(1));
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     goToSection(hashId, false);
-    window.addEventListener("load", function () { goToSection(hashId, false); });
+    var jobAtStart = sectionJob;
+    // re-align once everything has loaded — but only if the visitor hasn't clicked/scrolled elsewhere since
+    window.addEventListener("load", function () { if (sectionJob === jobAtStart) goToSection(hashId, false); });
   }
 }
 
