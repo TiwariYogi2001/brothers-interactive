@@ -746,7 +746,7 @@ function siteMain() {
       : '<p class="portfolio-empty">Client quotes are being collected. Ask us for references directly.</p>';
   }
   $$("[data-roles]").forEach(function (list) {
-    var applyHref = list.dataset.roles === "full" ? "careers.html#apply" : null;
+    var applyHref = list.dataset.roles === "full" ? "index.html#careers" : null;
     list.innerHTML = ROLES.length
       ? ROLES.map(function (r) {
           var href = applyHref || ("mailto:" + EMAIL + "?subject=" + encodeURIComponent("Application: " + r.t));
@@ -1467,7 +1467,7 @@ function siteMain() {
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeThemePanel(); });
 
   /* ------------------------------------------------------------------
-     Job applications (careers.html) — handled by a Google Form.
+     Job applications (homepage #careers section) — handled by a Google Form.
      The form link is set in /admin > Settings > "Careers application form (Google Form link)".
      Until it's set, the button is hidden and an "opening soon" note shows instead.
      ------------------------------------------------------------------ */

@@ -48,7 +48,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/style.css?v=20260930ap1" />
+  <link rel="stylesheet" href="../css/style.css?v=20260930cj1" />
   <script>try { var q = (location.search.match(/[?&]theme=([a-z]+)/) || [])[1]; var t = q || localStorage.getItem("bi-theme"); if (t && t !== "midnight" && "arctic ocean steel aurora desert".split(" ").indexOf(t) !== -1) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
 </head>
 <body>
@@ -82,7 +82,7 @@
           <li><a href="#breakdown" class="nav-link">Breakdown</a></li>
           <li><a href="#services" class="nav-link">Services</a></li>
           <li><a href="#team" class="nav-link">Team</a></li>
-          <li><a href="careers.html" class="nav-link">Careers</a></li>
+          <li><a href="#careers" class="nav-link">Careers</a></li>
           <li><a href="contact.html" class="nav-link nav-link--cta">Contact</a></li>
         </ul>
       </nav>
@@ -491,17 +491,28 @@
       </div>
     </section>
 
-    <!-- ================= TEAM: CTA ================= -->
-    <section class="section section--cta">
-      <div class="container">
-        <div class="cta-band reveal">
-          <div>
-            <h3>Want to work with this team?</h3>
-            <p>Send us a brief, or send us your portfolio. Both land with the leadership directly.</p>
+    <!-- ================= CAREERS / JOIN THE TEAM ================= -->
+    <!-- Apply now opens the Google Form set in /admin > Settings > "Careers application form (Google Form link)".
+         Images come from data/careers-hero.json (/admin > Careers Page Images). -->
+    <section class="section careers-join" id="careers">
+      <div class="container page-hero-inner">
+        <div class="reveal">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> Careers &middot; <span id="rolesCount">Open roles</span></p>
+          <h2 class="page-title">Make characters that <span class="accent">ship</span></h2>
+          <p class="page-sub">
+            We are a character studio in Jaipur with credits on Warhammer 40,000: Space Marine 2, Ready Or Not,
+            Lost in Random and The Midnight Walk. If you want your work in released games, with seniors who review
+            every piece, this is the place.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn btn--primary apply-form-btn" id="applyFormBtn" target="_blank" rel="noopener">Apply now</a>
+            <span class="apply-soon" id="applyFormSoon" hidden>Applications opening soon</span>
           </div>
-          <div class="hero-actions" style="margin:0">
-            <a href="careers.html#apply" class="btn btn--ghost">Apply to join</a>
-          </div>
+        </div>
+        <div class="page-hero-art careers-slides reveal" id="careersSlides" aria-label="Studio work">
+          <div class="careers-slide is-active"><img src="../assets/img/careers/nitro-cr7-ndwq0o.webp" alt="Nitro CR7 stylized character" loading="lazy" /></div>
+          <div class="careers-slide"><img src="../assets/img/careers/tiger-tlr-1-lrg1lk.webp" alt="Tiger realistic creature" loading="lazy" /></div>
+          <div class="careers-slide"><img src="../assets/img/careers/kart-lgylmv.webp" alt="Kart prop" loading="lazy" /></div>
         </div>
       </div>
     </section>
@@ -595,8 +606,8 @@
     </div>
   </div>
 
-  <script src="../js/data.js?v=20260930ap1"></script>
-  <script src="../js/script.js?v=20260930ap1"></script>
+  <script src="../js/data.js?v=20260930cj1"></script>
+  <script src="../js/script.js?v=20260930cj1"></script>
   <!--/FOOTER-->
 </body>
 </html>

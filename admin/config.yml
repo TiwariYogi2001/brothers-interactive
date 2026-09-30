@@ -388,12 +388,12 @@ collections:
               - { label: "Summary", name: "d", widget: "string", hint: "One line describing the role." }
 
   - name: "careers-hero"
-    label: "Careers Page Images"
+    label: "Careers Images"
     label_singular: "Careers Image"
-    description: "The images at the top of the Careers page. They show one at a time, each for 10 seconds, with a soft fade. Use PNG or WebP with the background removed (transparent) so they float on the page."
+    description: "The images in the Careers section on the homepage. They show one at a time, each for 10 seconds, with a soft fade. Use PNG or WebP with the background removed (transparent) so they float on the page."
     files:
       - name: "items"
-        label: "Careers Page Images"
+        label: "Careers Images"
         file: "data/careers-hero.json"
         format: "json"
         fields:
@@ -423,4 +423,4 @@ collections:
           - { label: "Capabilities deck (PDF)", name: "deckPdf", widget: "file", required: false, media_folder: "/assets", public_folder: "../assets" }
           - { label: "Contact email", name: "email", widget: "string", hint: "Where the contact and job-application forms actually deliver to (via formsubmit.co, no signup needed) and the mailto fallback." }
           - { label: "Address", name: "address", widget: "string" }
-          - { label: "Careers application form (Google Form link)", name: "careersFormUrl", widget: "string", required: false, hint: "Paste the Google Form share link (starts with https://forms.gle/ or https://docs.google.com/forms/). The Apply button on the Careers page opens it in a new tab. Leave empty to show Application form opening soon." }
+          - { label: "Careers application form (Google Form link)", name: "careersFormUrl", widget: "string", required: false, hint: "Paste the Google Form share link (starts with https://forms.gle/ or https://docs.google.com/forms/). The Apply now button in the homepage Careers section opens it in a new tab. Leave empty to show Applications opening soon." }
