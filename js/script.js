@@ -47,6 +47,24 @@ function siteMain() {
   function inAnyCat(p, keys) { for (var k = 0; k < keys.length; k++) { if (inCat(p, keys[k])) return true; } return false; }
   var BASE = "https://brothersinteractive.com/projects/";
 
+  /* Grid images: a 640px WebP thumbnail (assets/img/thumbs/<folder>/<name>.webp) with the
+     full image offered for high-res screens via srcset, so grids don't download 1000px+
+     files to show them at ~400-600px. A missing thumbnail (e.g. a brand-new /admin upload)
+     falls back to the full image automatically. Returns the src/srcset/sizes attributes. */
+  var THUMB_RE = /assets\/img\/(portfolio|games|categories)\/([^\/?#]+)\.(webp|jpe?g|png)$/i;
+  function imgAttrs(u, sizes) {
+    u = u || "";
+    if (!THUMB_RE.test(u)) return 'src="' + u + '"';
+    var t = u.replace(THUMB_RE, "assets/img/thumbs/$1/$2.webp");
+    return 'src="' + t + '" srcset="' + t + ' 640w, ' + u + ' 1280w" sizes="' + (sizes || "33vw") + '" data-full="' + u + '"';
+  }
+  document.addEventListener("error", function (e) {
+    var img = e.target;
+    if (img && img.tagName === "IMG" && img.dataset.full && !img.dataset.fellBack) {
+      img.dataset.fellBack = "1"; img.removeAttribute("srcset"); img.src = img.dataset.full;
+    }
+  }, true);
+
   /* All editable content lives in data/*.json (not data.js) so the /admin
      CMS can change it without touching any code. Loaded synchronously here
      so the rest of this file can keep assuming the data is ready. A file
@@ -334,7 +352,7 @@ function siteMain() {
         var ar = p.w && p.h ? 'aspect-ratio:' + p.w + '/' + p.h + ';' : '';
         return (
           '<article class="work-card ripple-host" data-index="' + PROJECTS.indexOf(p) + '" style="' + ar + '--i:' + idx + ';animation-delay:' + (idx % PAGE) * 40 + 'ms" tabindex="0" role="button" aria-label="Open ' + esc(p.t) + '">' +
-            '<img src="' + p.i + '" alt="' + esc(p.t) + '" loading="lazy"' + (p.w ? ' width="' + p.w + '" height="' + p.h + '"' : '') + ' />' +
+            '<img ' + imgAttrs(p.i, "(max-width: 600px) 50vw, (max-width: 1100px) 33vw, 25vw") + ' alt="' + esc(p.t) + '" loading="lazy"' + (p.w ? ' width="' + p.w + '" height="' + p.h + '"' : '') + ' />' +
             '<span class="work-zoom" aria-hidden="true">&#x2922;</span>' +
             // On a category page, a piece shown via "Also show in" is labelled with that page's category
             '<div class="work-info"><span class="work-cat">' + esc(activeBrowseCat && activeBrowseCat.match.indexOf(p.c) === -1 ? activeBrowseCat.label : CAT[p.c]) + '</span><span class="work-title">' + esc(p.t) + '</span></div>' +
@@ -391,7 +409,7 @@ function siteMain() {
       }
       return (
         '<a class="style-tile reveal" href="category.html?cat=' + encodeURIComponent(b.slug) + '" style="transition-delay:' + (i % 3) * 70 + 'ms" aria-label="Browse ' + esc(b.label) + '">' +
-          '<img src="' + (TILE_IMG[b.slug.replace(/-/g, "_")] || thumb.i) + '" alt="" loading="lazy" />' +
+          '<img ' + imgAttrs(TILE_IMG[b.slug.replace(/-/g, "_")] || thumb.i, "(max-width: 600px) 50vw, 33vw") + ' alt="" loading="lazy" />' +
           '<span class="style-tile-label">' + esc(b.label) + '</span>' +
         '</a>'
       );
@@ -499,7 +517,7 @@ function siteMain() {
       lbLink.textContent = "Asset details & breakdown \u2192";
       var variants = [p.i].concat(p.imgs || []);
       lbThumbs.innerHTML = variants.length > 1 ? variants.map(function (u, i) {
-        return '<button class="asset-thumb' + (i === 0 ? ' active' : '') + '" data-src="' + u + '" aria-label="View ' + (i + 1) + '"><img src="' + u + '" alt="" loading="lazy" /></button>';
+        return '<button class="asset-thumb' + (i === 0 ? ' active' : '') + '" data-src="' + u + '" aria-label="View ' + (i + 1) + '"><img ' + imgAttrs(u, "120px") + ' alt="" loading="lazy" /></button>';
       }).join("") : "";
     };
     if (!dir || reduceMotion) { swap(); return; }
@@ -557,7 +575,7 @@ function siteMain() {
   if (gamesGrid) gamesGrid.innerHTML = GAMES.map(function (g, i) {
     return (
       '<article class="game-card reveal" data-yt="' + esc(ytId(g.yt)) + '" tabindex="0" role="button" aria-label="Play trailer: ' + esc(g.t) + '" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
-        '<img src="' + g.i + '" alt="' + esc(g.t) + ' key art" loading="lazy" />' +
+        '<img ' + imgAttrs(g.i, "(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 25vw") + ' alt="' + esc(g.t) + ' key art" loading="lazy" />' +
         '<span class="game-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
         '<div class="game-info"><div><span class="game-studio">' + esc(g.s || "") + '</span><span class="game-title">' + esc(g.t) + '</span></div><span class="game-tag">Watch trailer</span></div>' +
       '</article>'
@@ -908,8 +926,8 @@ function siteMain() {
     cmp.innerHTML = PAIRS.slice(0, 3).map(function (pr, i) {
       return '<figure class="compare reveal" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
         '<div class="compare-stage">' +
-          '<img class="compare-after" src="' + pr.after + '" alt="' + esc(pr.t) + ' final" loading="lazy" />' +
-          '<img class="compare-before" src="' + pr.before + '" alt="' + esc(pr.t) + ' sculpt" loading="lazy" style="clip-path: inset(0 50% 0 0)" />' +
+          '<img class="compare-after" ' + imgAttrs(pr.after, "(max-width: 600px) 100vw, 33vw") + ' alt="' + esc(pr.t) + ' final" loading="lazy" />' +
+          '<img class="compare-before" ' + imgAttrs(pr.before, "(max-width: 600px) 100vw, 33vw") + ' alt="' + esc(pr.t) + ' sculpt" loading="lazy" style="clip-path: inset(0 50% 0 0)" />' +
           '<span class="compare-handle" style="left:50%" aria-hidden="true"></span>' +
           '<span class="compare-label compare-label--a">Sculpt</span><span class="compare-label compare-label--b">Final</span>' +
           '<input type="range" class="compare-range" min="0" max="100" value="50" aria-label="Compare sculpt and final for ' + esc(pr.t) + '" />' +
@@ -1009,7 +1027,7 @@ function siteMain() {
     $("#assetDesc").innerHTML = paras.length ? paras.map(function (t) { return '<p>' + esc(t).replace(/\n/g, '<br>') + '</p>'; }).join("") : '<p>Breakdown and technical details available on request.</p>';
     var all = [P.i].concat(P.imgs || []);
     $("#assetMain").src = all[0]; $("#assetMain").alt = P.t;
-    $("#assetThumbs").innerHTML = all.map(function (u, i) { return '<button class="asset-thumb' + (i ? '' : ' active') + '" data-src="' + u + '" aria-label="View ' + (i + 1) + '"><img src="' + u + '" alt="' + esc(P.t) + ' view ' + (i + 1) + '" loading="lazy" /></button>'; }).join("");
+    $("#assetThumbs").innerHTML = all.map(function (u, i) { return '<button class="asset-thumb' + (i ? '' : ' active') + '" data-src="' + u + '" aria-label="View ' + (i + 1) + '"><img ' + imgAttrs(u, "120px") + ' alt="' + esc(P.t) + ' view ' + (i + 1) + '" loading="lazy" /></button>'; }).join("");
     $("#assetThumbs").addEventListener("click", function (e) {
       var b = e.target.closest(".asset-thumb"); if (!b) return;
       $("#assetMain").src = b.dataset.src; $$(".asset-thumb").forEach(function (x) { x.classList.toggle("active", x === b); });
@@ -1037,7 +1055,7 @@ function siteMain() {
     var rel = PROJECTS.filter(function (x) { return x.c === P.c && x.id !== P.id; }).slice(0, 4);
     $("#assetRelated").innerHTML = rel.map(function (x) {
       var ar = x.w && x.h ? ' style="aspect-ratio:' + x.w + '/' + x.h + '"' : '';
-      return '<a class="work-card ripple-host" href="asset.html?id=' + x.id + '"' + ar + '><img src="' + x.i + '" alt="' + esc(x.t) + '" loading="lazy" /><div class="work-info"><span class="work-cat">' + esc(CAT[x.c]) + '</span><span class="work-title">' + esc(x.t) + '</span></div></a>';
+      return '<a class="work-card ripple-host" href="asset.html?id=' + x.id + '"' + ar + '><img ' + imgAttrs(x.i, "(max-width: 600px) 50vw, 25vw") + ' alt="' + esc(x.t) + '" loading="lazy" /><div class="work-info"><span class="work-cat">' + esc(CAT[x.c]) + '</span><span class="work-title">' + esc(x.t) + '</span></div></a>';
     }).join("");
   }
 
@@ -1173,17 +1191,20 @@ function siteMain() {
     ring.className = "art-cursor-ring";
     document.body.appendChild(ring); document.body.appendChild(cur);
     document.body.classList.add("art-cursor-on");
-    var mx = -100, my = -100, rx = -100, ry = -100, shown = false;
+    var mx = -100, my = -100, rx = -100, ry = -100, shown = false, ringRaf = 0;
+    // The lagging ring eases toward the pointer and stops its frame loop once it has caught up,
+    // so an idle page isn't redrawing 60 times a second; the next pointer move restarts it.
+    function ringLoop() {
+      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+      ring.style.transform = "translate(" + rx + "px," + ry + "px) translate(-50%,-50%)";
+      ringRaf = (Math.abs(mx - rx) + Math.abs(my - ry) > 0.3) ? requestAnimationFrame(ringLoop) : 0;
+    }
     document.addEventListener("pointermove", function (e) {
       mx = e.clientX; my = e.clientY;
       cur.style.transform = "translate(" + (mx - 2) + "px," + (my - 2) + "px)";
       if (!shown) { shown = true; rx = mx; ry = my; cur.classList.add("on"); ring.classList.add("on"); }
+      if (!ringRaf) ringRaf = requestAnimationFrame(ringLoop);
     });
-    (function ringLoop() {
-      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-      ring.style.transform = "translate(" + rx + "px," + ry + "px) translate(-50%,-50%)";
-      requestAnimationFrame(ringLoop);
-    })();
     document.addEventListener("pointerover", function (e) {
       var t = e.target;
       if (!(t instanceof Element)) return;
