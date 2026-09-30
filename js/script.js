@@ -918,23 +918,190 @@ function siteMain() {
   }
 
   /* ------------------------------------------------------------------
-     Sculpt-to-final comparison sliders
+     Shared media helpers: YouTube, looping GIF/video, Sketchfab
+     ------------------------------------------------------------------ */
+  function isVideoFile(u) { return /\.(mp4|webm)(\?|#|$)/i.test(u || ""); }
+  function isGif(u) { return /\.gif(\?|#|$)/i.test(u || ""); }
+  function ytThumb(v) { return "https://img.youtube.com/vi/" + ytId(v) + "/hqdefault.jpg"; }
+  function sketchfabId(v) { var m = String(v || "").match(/([0-9a-f]{32})/i); return m ? m[1] : ""; }
+  function loopMedia(u, alt, cls) {
+    return isVideoFile(u)
+      ? '<video class="' + cls + '" src="' + esc(u) + '" autoplay muted loop playsinline preload="metadata" aria-label="' + esc(alt) + '"></video>'
+      : '<img class="' + cls + '" src="' + esc(u) + '" alt="' + esc(alt) + '" loading="lazy" />';
+  }
+  // Plays a YouTube video in the page's pop-up player (homepage); elsewhere opens YouTube.
+  function openYouTube(v) {
+    var m = $("#videoModal"), fr = $("#videoIframe"), id = ytId(v);
+    if (!m || !fr) { window.open("https://www.youtube.com/watch?v=" + id, "_blank", "noopener"); return; }
+    track("trailer_played", { video: id });
+    fr.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
+    m.classList.add("open"); m.setAttribute("aria-hidden", "false"); document.body.classList.add("no-scroll");
+  }
+
+  /* ------------------------------------------------------------------
+     Sculpt-to-final cards (homepage). Each pair (/admin > Sculpt to Final) shows,
+     in order of priority: a YouTube video (plays in the pop-up), a looping GIF or
+     video file, or the before/after drag slider.
      ------------------------------------------------------------------ */
   var cmp = $("#compareGrid");
   if (cmp) {
-    // Homepage shows the first 3 pairs only; reorder them in /admin to choose which.
-    cmp.innerHTML = PAIRS.slice(0, 3).map(function (pr, i) {
-      return '<figure class="compare reveal" style="transition-delay:' + (i % 3) * 90 + 'ms">' +
-        '<div class="compare-stage">' +
+    // Homepage shows the first 3 usable pairs only; reorder them in /admin to choose which.
+    var pairsShown = PAIRS.filter(function (p) { return p && (p.youtube || p.video || (p.before && p.after)); }).slice(0, 3);
+    cmp.innerHTML = pairsShown.map(function (pr, i) {
+      var stage;
+      if (pr.youtube) {
+        stage = '<button type="button" class="compare-stage compare-media compare-yt" data-yt="' + esc(ytId(pr.youtube)) + '" aria-label="Play the ' + esc(pr.t) + ' video">' +
+          '<img src="' + ytThumb(pr.youtube) + '" alt="" loading="lazy" /><span class="play-badge" aria-hidden="true">&#9654;</span></button>';
+      } else if (pr.video) {
+        stage = '<div class="compare-stage compare-media">' + loopMedia(pr.video, pr.t, "compare-loop") + '</div>';
+      } else {
+        stage = '<div class="compare-stage">' +
           '<img class="compare-after" ' + imgAttrs(pr.after, "(max-width: 600px) 100vw, 33vw") + ' alt="' + esc(pr.t) + ' final" loading="lazy" />' +
           '<img class="compare-before" ' + imgAttrs(pr.before, "(max-width: 600px) 100vw, 33vw") + ' alt="' + esc(pr.t) + ' sculpt" loading="lazy" style="clip-path: inset(0 50% 0 0)" />' +
           '<span class="compare-handle" style="left:50%" aria-hidden="true"></span>' +
           '<span class="compare-label compare-label--a">Sculpt</span><span class="compare-label compare-label--b">Final</span>' +
           '<input type="range" class="compare-range" min="0" max="100" value="50" aria-label="Compare sculpt and final for ' + esc(pr.t) + '" />' +
-        '</div>' +
-        '<figcaption><span>' + esc(pr.t) + '</span><a href="asset.html?id=' + pr.id + '">Details &rarr;</a></figcaption>' +
+        '</div>';
+      }
+      return '<figure class="compare reveal" style="transition-delay:' + (i % 3) * 90 + 'ms">' + stage +
+        '<figcaption><span>' + esc(pr.t) + '</span>' + (pr.id ? '<a href="asset.html?id=' + encodeURIComponent(pr.id) + '">Details &rarr;</a>' : '') + '</figcaption>' +
       '</figure>';
     }).join("");
+    cmp.addEventListener("click", function (e) {
+      var b = e.target.closest(".compare-yt");
+      if (b) openYouTube(b.dataset.yt);
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Production breakdowns (/admin > Breakdowns -> data/breakdowns.json)
+     Homepage: tiles, 3 per row, each opening breakdown.html?id=<id>.
+     breakdown.html: one breakdown (any mix of Sketchfab / Marmoset 3D viewer,
+     sculpt-to-final slider, YouTube, GIF/video, gallery, pipeline steps), or
+     the list of all breakdowns when no id is given.
+     ------------------------------------------------------------------ */
+  var BREAKDOWNS = loadList("breakdowns", []).filter(function (b) { return b && b.t && b.id; });
+  function bdCover(b) { return b.cover || b.after || (b.gallery && b.gallery[0]) || (b.youtube ? ytThumb(b.youtube) : "") || (b.video && !isVideoFile(b.video) ? b.video : "") || b.before || ""; }
+  function bdBadges(b) {
+    var t = [];
+    if (b.sketchfab || b.marmoset) t.push("3D viewer");
+    if (b.youtube || isVideoFile(b.video)) t.push("Video");
+    if (isGif(b.video)) t.push("GIF");
+    if (b.before && b.after) t.push("Sculpt → Final");
+    return t;
+  }
+  function bdTile(b, i) {
+    var c = bdCover(b), badges = bdBadges(b);
+    return '<a class="style-tile bd-tile reveal" href="breakdown.html?id=' + encodeURIComponent(b.id) + '" style="transition-delay:' + (i % 3) * 70 + 'ms" aria-label="Open the ' + esc(b.t) + ' breakdown">' +
+      (c ? '<img ' + imgAttrs(c, "(max-width: 600px) 50vw, 33vw") + ' alt="" loading="lazy" />' : '') +
+      '<span class="style-tile-label">' + esc(b.t) +
+        (badges.length ? '<small class="bd-badges">' + badges.map(function (x) { return '<i>' + esc(x) + '</i>'; }).join("") + '</small>' : '') +
+      '</span></a>';
+  }
+  var bdGrid = $("#breakdownGrid");
+  if (bdGrid) {
+    bdGrid.innerHTML = BREAKDOWNS.length ? BREAKDOWNS.slice(0, 6).map(bdTile).join("") : '<p class="portfolio-empty">Breakdowns coming soon.</p>';
+    if (BREAKDOWNS.length > 6 && $("#breakdownMore")) $("#breakdownMore").hidden = false;
+  }
+
+  var bdPage = $("#breakdownPage");
+  if (bdPage) {
+    var bdId = decodeURIComponent((location.search.match(/[?&]id=([^&#]+)/) || [])[1] || "");
+    var B = bdId ? BREAKDOWNS.filter(function (b) { return b.id === bdId; })[0] : null;
+    var DEFAULT_STEPS = [
+      { t: "Brief & Reference", d: "Concept art and reference gathered, style and quality target confirmed before any sculpting starts." },
+      { t: "Blockout", d: "Fast proportion and silhouette pass to lock the read of the character early." },
+      { t: "High-poly Sculpt", d: "Full anatomy, cloth and hard-surface detail." },
+      { t: "Retopology & UVs", d: "Clean, animation-friendly topology and UV layouts packed for the target texel density." },
+      { t: "Baking & Texturing", d: "Normal, AO and ID bakes, then textures matched to the art direction." },
+      { t: "Final Polish", d: "Lighting, render setup and the final presentation pass." }
+    ];
+    if (!B) {
+      // List of every breakdown
+      bdPage.innerHTML =
+        '<section class="page-hero page-hero--compact"><div class="container page-hero-inner"><div class="reveal">' +
+          '<p class="eyebrow"><span class="eyebrow-dot"></span> <a href="index.html#breakdown">&larr; Home</a> / Breakdowns</p>' +
+          '<h1 class="page-title">Production <span class="accent">breakdowns</span></h1>' +
+          '<p class="page-sub">' + (bdId ? 'That breakdown could not be found. Here are all of them.' : 'Sculpt to final, in detail, for selected characters.') + '</p>' +
+        '</div></div></section>' +
+        '<section class="section section--flush-top"><div class="container"><div class="style-grid">' +
+          (BREAKDOWNS.length ? BREAKDOWNS.map(bdTile).join("") : '<p class="portfolio-empty">Breakdowns coming soon.</p>') +
+        '</div></div></section>';
+    } else {
+      document.title = B.t + " Breakdown | Brothers Interactive";
+      var n = 0, secs = [];
+      var pad = function (k) { return (k < 10 ? "0" : "") + k; };
+      var sec = function (label, titleHtml, sub, body) {
+        n++;
+        return '<section class="section' + (n % 2 ? '' : ' section--alt') + '"><div class="container">' +
+          '<div class="section-head reveal"><p class="eyebrow">// ' + pad(n) + ' &middot; ' + esc(label) + '</p>' +
+          '<h2 class="section-title">' + titleHtml + '</h2>' + (sub ? '<p class="section-sub">' + esc(sub) + '</p>' : '') + '</div>' +
+          body + '</div></section>';
+      };
+      var sfId = sketchfabId(B.sketchfab);
+      if (sfId || B.marmoset) {
+        secs.push(sec("Interactive 3D", 'Explore it <span class="accent">in 3D</span>', "Drag to orbit, scroll to zoom. The real asset, not a render.",
+          (sfId ? '<div class="bd-embed reveal"><iframe title="' + esc(B.t) + ' 3D model" src="https://sketchfab.com/models/' + sfId + '/embed?autostart=0&ui_theme=dark&dnt=1" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen loading="lazy"></iframe></div>' : '') +
+          (B.marmoset ? '<div class="bd-embed reveal' + (sfId ? ' bd-embed--gap' : '') + '" id="bdMarmoset"><p class="bd-embed-note">Loading Marmoset viewer&hellip;</p></div>' : '')));
+      }
+      if (B.before && B.after) {
+        secs.push(sec("Sculpt to final", 'Drag to see the <span class="accent">work underneath</span>', "High-poly sculpt on the left, textured game-ready asset on the right.",
+          '<figure class="compare compare--large reveal"><div class="compare-stage">' +
+            '<img class="compare-after" src="' + esc(B.after) + '" alt="' + esc(B.t) + ' final" loading="lazy" />' +
+            '<img class="compare-before" src="' + esc(B.before) + '" alt="' + esc(B.t) + ' sculpt" loading="lazy" style="clip-path: inset(0 50% 0 0)" />' +
+            '<span class="compare-handle" style="left:50%" aria-hidden="true"></span>' +
+            '<span class="compare-label compare-label--a">Sculpt</span><span class="compare-label compare-label--b">Final</span>' +
+            '<input type="range" class="compare-range" min="0" max="100" value="50" aria-label="Compare sculpt and final for ' + esc(B.t) + '" />' +
+          '</div></figure>'));
+      }
+      if (B.youtube) {
+        secs.push(sec("Video", 'Watch the <span class="accent">process</span>', "",
+          '<div class="bd-embed reveal"><iframe title="' + esc(B.t) + ' video" src="https://www.youtube-nocookie.com/embed/' + esc(ytId(B.youtube)) + '?rel=0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>'));
+      }
+      if (B.video) {
+        secs.push(sec(isGif(B.video) ? "In motion" : "Turntable", 'In <span class="accent">motion</span>', "",
+          '<div class="bd-media reveal">' + loopMedia(B.video, B.t + " in motion", "bd-loop") + '</div>'));
+      }
+      if (B.gallery && B.gallery.length) {
+        secs.push(sec("Gallery", 'Final <span class="accent">renders</span>', "Click any image to see it full size.",
+          '<div class="bd-gallery">' + B.gallery.map(function (u, i) {
+            return '<a class="reveal" href="' + esc(u) + '" target="_blank" rel="noopener" style="transition-delay:' + (i % 3) * 70 + 'ms"><img ' + imgAttrs(u, "(max-width: 600px) 50vw, 33vw") + ' alt="' + esc(B.t) + ' render ' + (i + 1) + '" loading="lazy" /></a>';
+          }).join("") + '</div>'));
+      }
+      var steps = (B.steps && B.steps.length) ? B.steps : DEFAULT_STEPS;
+      secs.push(sec("How this piece was made", 'Stage by <span class="accent">stage</span>', "The same pipeline behind every character we ship.",
+        '<ol class="process-grid">' + steps.map(function (s, i) {
+          return '<li class="process-step reveal"><span class="process-num">' + pad(i + 1) + '</span><h3>' + esc(s.t || "") + '</h3><p>' + esc(s.d || "") + '</p></li>';
+        }).join("") + '</ol>'));
+
+      var descHtml = String(B.desc || "").split(/\n\s*\n/).filter(Boolean).map(function (p) { return '<p class="page-sub bd-desc">' + esc(p.trim()) + '</p>'; }).join("");
+      bdPage.innerHTML =
+        '<section class="page-hero page-hero--compact"><div class="container page-hero-inner"><div class="reveal">' +
+          '<p class="eyebrow"><span class="eyebrow-dot"></span> <a href="index.html#breakdown">&larr; Breakdowns</a> / ' + esc(B.t) + '</p>' +
+          '<h1 class="page-title">' + esc(B.t) + ' <span class="accent">Breakdown</span></h1>' +
+          (B.sub ? '<p class="page-sub">' + esc(B.sub) + '</p>' : '') + descHtml +
+          '<div class="hero-actions">' +
+            (B.assetId ? '<a href="asset.html?id=' + encodeURIComponent(B.assetId) + '" class="btn btn--primary">View full asset page</a>' : '') +
+            '<a href="contact.html" class="btn btn--ghost">Get a breakdown like this</a>' +
+          '</div>' +
+        '</div></div></section>' + secs.join("");
+
+      // Marmoset Viewer: .mview file uploaded in /admin, rendered with Marmoset's official player.
+      if (B.marmoset) {
+        var mBox = $("#bdMarmoset");
+        var startMarmoset = function () {
+          if (!window.marmoset || !mBox) { if (mBox) mBox.innerHTML = '<p class="bd-embed-note">The Marmoset viewer could not load.</p>'; return; }
+          var w = mBox.clientWidth, h = mBox.clientHeight;
+          var viewer = new window.marmoset.WebViewer(w, h, B.marmoset);
+          mBox.innerHTML = ""; mBox.appendChild(viewer.domRoot); viewer.loadScene();
+          window.addEventListener("resize", function () { viewer.resize(mBox.clientWidth, mBox.clientHeight); });
+        };
+        var ms = document.createElement("script");
+        ms.src = "https://viewer.marmoset.co/main/marmoset.js";
+        ms.onload = startMarmoset; ms.onerror = startMarmoset;
+        document.head.appendChild(ms);
+      }
+    }
   }
 
   /* ------------------------------------------------------------------
@@ -1391,7 +1558,7 @@ function siteMain() {
    edits still show on the next refresh without re-downloading everything.
    ------------------------------------------------------------------ */
 (function () {
-  var names = ["portfolio", "games", "cases", "posts", "testimonials", "roles", "pairs", "clients", "press", "team", "hero-showcase", "config", "hero"];
+  var names = ["portfolio", "games", "cases", "posts", "testimonials", "roles", "pairs", "clients", "press", "team", "hero-showcase", "config", "hero", "breakdowns"];
   if (document.getElementById("categoryGrid")) names.push("category-tiles");
   var store = window.__BI_JSON = {};
   if (!window.fetch || !window.Promise) { siteMain(); return; }

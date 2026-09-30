@@ -269,7 +269,7 @@ collections:
   - name: "sculpt-to-final"
     label: "Sculpt to Final"
     label_singular: "Comparison"
-    description: "Before/after sculpt comparison pairs shown on the homepage. Only the first 3 in this list are shown — drag entries up or down to choose which."
+    description: "Cards shown in the homepage Sculpt to Final section. Only the first 3 in this list are shown — drag entries up or down to choose which. Each card shows, in this order of priority: a YouTube video, a GIF/video file, or the before/after drag slider."
     files:
       - name: "items"
         label: "Comparisons"
@@ -283,9 +283,51 @@ collections:
             summary: "{{fields.t}}"
             fields:
               - { label: "Title", name: "t", widget: "string" }
-              - { label: "Piece ID", name: "id", widget: "string", hint: "Matches this piece's ID in the Portfolio collection, if it's also a portfolio piece." }
-              - { label: "Before Image", name: "before", widget: "image" }
-              - { label: "After Image", name: "after", widget: "image" }
+              - { label: "Piece ID", name: "id", widget: "string", required: false, hint: "Matches this piece's ID in the Portfolio collection, if it's also a portfolio piece (adds a Details link). Leave empty if not." }
+              - { label: "Before Image (sculpt)", name: "before", widget: "image", required: false, hint: "For the drag slider. Needs the After image too, and both should be the same size and framing." }
+              - { label: "After Image (final)", name: "after", widget: "image", required: false }
+              - { label: "YouTube video", name: "youtube", widget: "string", required: false, hint: "Optional. Paste a YouTube link — the card then shows the video's thumbnail and plays it in the pop-up player instead of the slider." }
+              - { label: "GIF or video file", name: "video", widget: "file", required: false, media_folder: "/assets/videos", public_folder: "../assets/videos", pattern: ['\.(mp4|webm|gif|MP4|WEBM|GIF)$', "Only an MP4, WebM or GIF file."], hint: "Optional. A GIF or short MP4/WebM that loops silently in the card instead of the slider. Keep it under ~8 MB." }
+
+  - name: "breakdowns"
+    label: "Breakdowns"
+    label_singular: "Breakdown"
+    description: "Production breakdowns. The homepage Breakdown section shows the first 6 as tiles (3 per row); each opens its own page. Every block below is optional — a breakdown page only shows the parts you fill in."
+    files:
+      - name: "items"
+        label: "Breakdowns"
+        file: "data/breakdowns.json"
+        format: "json"
+        fields:
+          - label: "Breakdowns"
+            name: "items"
+            widget: "list"
+            label_singular: "Breakdown"
+            summary: "{{fields.t}}"
+            fields:
+              - { label: "Title", name: "t", widget: "string", hint: "e.g. \"Orc Fanart\" — the page shows it as \"Orc Fanart Breakdown\"." }
+              - { label: "ID", name: "id", widget: "string", pattern: ['^[a-z0-9-]+$', "Lowercase letters, numbers and dashes only (e.g. orc-fanart)."], hint: "Short unique code used in the page link, e.g. orc-fanart. Lowercase, numbers and dashes only; don't change it once shared." }
+              - { label: "Tile image", name: "cover", widget: "image", required: false, hint: "The picture on the homepage tile (landscape ~4:3 fills best). Empty = uses the final image, first gallery image or video thumbnail." }
+              - { label: "Short description", name: "sub", widget: "string", required: false, hint: "One line under the title, e.g. \"Stylized creature sculpt, from blockout to game-ready.\"" }
+              - { label: "Longer description", name: "desc", widget: "text", required: false, hint: "Optional. Leave a blank line between paragraphs." }
+              - { label: "Sketchfab model", name: "sketchfab", widget: "string", required: false, hint: "Optional 3D viewer. Paste the Sketchfab model link (or just its ID). The model must be public or unlisted with embedding allowed." }
+              - { label: "Marmoset Viewer file (.mview)", name: "marmoset", widget: "file", required: false, media_folder: "/assets/mview", public_folder: "../assets/mview", pattern: ['\.(mview|MVIEW)$', "Only a Marmoset .mview file."], hint: "Optional 3D viewer. Export from Marmoset Toolbag (File > Export > Marmoset Viewer) and upload the .mview. Keep it small — it downloads when the page opens." }
+              - { label: "Sculpt image (before)", name: "before", widget: "image", required: false, hint: "With the Final image, adds the sculpt-to-final drag slider. Same size and framing for both." }
+              - { label: "Final image (after)", name: "after", widget: "image", required: false }
+              - { label: "YouTube video", name: "youtube", widget: "string", required: false, hint: "Optional. Paste a YouTube link — shown as a video player on the page." }
+              - { label: "GIF or video file", name: "video", widget: "file", required: false, media_folder: "/assets/videos", public_folder: "../assets/videos", pattern: ['\.(mp4|webm|gif|MP4|WEBM|GIF)$', "Only an MP4, WebM or GIF file."], hint: "Optional. A GIF or short MP4/WebM turntable that loops silently. Keep it under ~8 MB." }
+              - { label: "Gallery images", name: "gallery", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" }, hint: "Optional. Extra renders and angles, shown 3 per row." }
+              - { label: "Asset page ID", name: "assetId", widget: "string", required: false, hint: "Optional. The Portfolio piece ID (e.g. vbNvDE) to add a \"View full asset page\" button." }
+              - label: "Pipeline steps"
+                name: "steps"
+                widget: "list"
+                required: false
+                label_singular: "Step"
+                summary: "{{fields.t}}"
+                hint: "Optional. Leave empty to show the standard 6-step pipeline."
+                fields:
+                  - { label: "Step title", name: "t", widget: "string" }
+                  - { label: "Description", name: "d", widget: "string" }
 
   - name: "clients"
     label: "Clients"

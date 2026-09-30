@@ -48,7 +48,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/style.css?v=20260930perf3" />
+  <link rel="stylesheet" href="../css/style.css?v=20260930bd1" />
   <script>try { var q = (location.search.match(/[?&]theme=([a-z]+)/) || [])[1]; var t = q || localStorage.getItem("bi-theme"); if (t && t !== "midnight" && "arctic ocean steel aurora desert".split(" ").indexOf(t) !== -1) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
 </head>
 <body>
@@ -265,21 +265,13 @@
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow">// Breakdown</p>
-          <h2 class="section-title">Orc Fanart <span class="accent">Production Breakdown</span></h2>
-          <p class="section-sub">Stylized creature sculpt, from first blockout to final game-ready asset. Drag to compare the high-poly sculpt with the textured final.</p>
+          <h2 class="section-title">Production <span class="accent">breakdowns</span></h2>
+          <p class="section-sub">Sculpt to final, in detail: 3D viewers, videos and every stage of the pipeline for selected characters.</p>
         </div>
-        <figure class="compare compare--large reveal">
-          <div class="compare-stage">
-            <img class="compare-after" src="../assets/img/portfolio/orc-fanart-vbnvde-after.webp" alt="Orc Fanart final textured asset" loading="lazy" />
-            <img class="compare-before" src="../assets/img/portfolio/orc-fanart-vbnvde-before.webp" alt="Orc Fanart high-poly sculpt" loading="lazy" style="clip-path: inset(0 50% 0 0)" />
-            <span class="compare-handle" style="left:50%" aria-hidden="true"></span>
-            <span class="compare-label compare-label--a">Sculpt</span><span class="compare-label compare-label--b">Final</span>
-            <input type="range" class="compare-range" min="0" max="100" value="50" aria-label="Compare sculpt and final for Orc Fanart" />
-          </div>
-        </figure>
-        <div class="portfolio-more reveal">
-          <a class="btn btn--link" href="breakdown.html">See the full production breakdown &rarr;</a>
-          <a class="btn btn--link" href="asset.html?id=vbNvDE">View full asset page &rarr;</a>
+        <!-- Rendered by script.js from data/breakdowns.json (edit in /admin > Breakdowns); each tile opens breakdown.html?id=... -->
+        <div class="style-grid" id="breakdownGrid" aria-label="Production breakdowns"></div>
+        <div class="portfolio-more reveal" id="breakdownMore" hidden>
+          <a class="btn btn--link" href="breakdown.html">See all breakdowns &rarr;</a>
         </div>
       </div>
     </section>
@@ -664,8 +656,8 @@
     </div>
   </div>
 
-  <script src="../js/data.js?v=20260930perf3"></script>
-  <script src="../js/script.js?v=20260930perf3"></script>
+  <script src="../js/data.js?v=20260930bd1"></script>
+  <script src="../js/script.js?v=20260930bd1"></script>
   <!--/FOOTER-->
 </body>
 </html>
